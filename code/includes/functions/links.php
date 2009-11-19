@@ -182,14 +182,15 @@ function link_url($params,&$smarty){
 			default									:  $uri = 'http://'.$_SERVER['SERVER_NAME'] .DPORTAL_PATH. "/".$section . '.html'; break;
 		}
 	
-	}else{			switch($script){
+	}else{
+			switch($script){
 			case 'login'						:  $uri = 'http://'.$_SERVER['SERVER_NAME'] .DPORTAL_PATH. "/index.php?LOGIN"; break;
 			case 'logout'						:  $uri = 'http://'.$_SERVER['SERVER_NAME'] .DPORTAL_PATH. "/index.php?LOGOUT"; break;
 			case 'panel'						: $uri = 'http://'.$_SERVER['SERVER_NAME'] .DPORTAL_PATH."/panel.php$argument"; break;
 			case 'edit'							:  $uri = 'http://' . $_SERVER['SERVER_NAME'] . DPORTAL_PATH. "/edit.php$argument$section"; break;
 			case 'edit_section'			:  $uri = 'http://'.$_SERVER['SERVER_NAME'] . DPORTAL_PATH. "/edit.php"; break;
-			case 'blog'							:  $uri = 'http://'.$_SERVER['SERVER_NAME'] . DPORTAL_PATH. "/blog.php"; break;
-			case 'blog_edit'				:  $uri = 'http://'.$_SERVER['SERVER_NAME'] .DPORTAL_PATH. "/blog.php?EDIT&amp;section=$section"; break;
+			case 'blog'							:  $uri = 'http://'.$_SERVER['SERVER_NAME'] . DPORTAL_PATH. "/blog.php$argument"; break;
+			case 'blog_edit'				:  $uri = 'http://'.$_SERVER['SERVER_NAME'] .DPORTAL_PATH. "/blog.php?EDIT&amp;entry=$section"; break;
 			case 'blog_delete'			:  $uri = 'http://'.$_SERVER['SERVER_NAME'] .DPORTAL_PATH. "/blog.php?DELETE&amp;section=$section"; break;
 			case 'blog_save'				:  $uri = 'http://'.$_SERVER['SERVER_NAME'] .DPORTAL_PATH. "/blog.php?POST"; break;
 			case 'blog_goto'				:  $uri = 'http://'.$_SERVER['SERVER_NAME'] . DPORTAL_PATH. "/blog.php?page=".$section; break;
