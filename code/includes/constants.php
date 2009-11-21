@@ -34,6 +34,6 @@ define('VIDEOS_PATH',DPORTAL_ABSOLUTE_PATH.'/videos/');
 define('FUNCTIONS_PATH',DPORTAL_ABSOLUTE_PATH.'/includes/functions/');
 define('INCLUDES_PATH',DPORTAL_ABSOLUTE_PATH.'/includes/');
 define('CONFIG_PATH',DPORTAL_ABSOLUTE_PATH.'/config/');
-define('SMARTY_DIR',DPORTAL_ABSOLUTE_PATH.'/libs/smarty3/');
+define('SMARTY_DIR',DPORTAL_ABSOLUTE_PATH.'/libs/smarty/');
 
 ?>

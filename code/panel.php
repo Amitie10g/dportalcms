@@ -43,7 +43,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	}
 
 	$smarty->clear_cache('panel.tpl');
-	redir('new',$filename,$title); die();
+	redir('new',$filename); die();
 
 // Delete section
 }elseif(isset($_GET['DELETE'])){

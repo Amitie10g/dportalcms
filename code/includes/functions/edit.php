@@ -18,6 +18,8 @@
 // bool create_section(string filename, string title)
 function create_section($filename,$title){
 
+	global $LANG;
+
 	if(file_exists(CONTENT_PATH.$filename)) return 2;
 
 	$timestamp = time();
@@ -27,12 +29,12 @@ function create_section($filename,$title){
 
 	if($check_file>=1&&$check_title>=1){
 	    
-		$file = fopen(CONTENT_PATH.$filename,'x') or die("Can't create the File! Please check if file alredy exists or check the permissions");
-		$list = fopen(CONTENT_PATH.'.list', "a") or die("Missing or inaccesible List file! Please be sure that the file exist and is writable");
+		$file = fopen(CONTENT_PATH.$filename,'xb') or die("Can't create the File! Please check if file alredy exists or check the permissions");
+		$list = fopen(CONTENT_PATH.'.list', "ab") or die("Missing or inaccesible List file! Please be sure that the file exist and is writable");
 
 		$output_list = "0;\"$filename\";\"$title\";1;$timestamp\n";
 		$output_file = $LANG['content_newly_created'];
-		
+
 		if(fwrite($list,$output_list)&&fwrite($file,$output_file)) $created = true;	
 
 		fclose($list);fclose($file);
@@ -65,7 +67,7 @@ function edit_section($filename,$title,$content,$timestamp,$exclusive = null,$ca
 	$list_update = "0;$filename;\"$title\";$exclusive;$timestamp";
 
 	// Open the File for read
-	$list_file = fopen("content/.list", "r") or die('Missing or inaccesible Filelist!');
+	$list_file = fopen("content/.list", "rb") or die('Missing or inaccesible Filelist!');
 	while (($data = fgetcsv($list_file, 1000, ";")) !== FALSE) {
 
 		// Ask if the filename variable matchs. If match,
@@ -83,8 +85,8 @@ function edit_section($filename,$title,$content,$timestamp,$exclusive = null,$ca
 	preg_replace("/target=\"[_\w]+\"/","rel=\"external\"",stripslashes($content)));
 
 	// Open the files for write
-	$file = fopen("content/$filename",'w') or die('Missing or inaccesible File!');
-	$list = fopen("content/.list",'w') or die('Missing or inaccesible Filelist');
+	$file = fopen("content/$filename",'wb') or die('Missing or inaccesible File!');
+	$list = fopen("content/.list",'wb') or die('Missing or inaccesible Filelist');
 	flock($file,2);
 	flock($list,2);
 
@@ -121,7 +123,7 @@ function edit_section($filename,$title,$content,$timestamp,$exclusive = null,$ca
 function delete_section($filename){
 
 	// Open the File for read
-	$list_file = fopen("content/.list", "r") or die();
+	$list_file = fopen("content/.list", "rb") or die();
 	while (($data = fgetcsv($list_file, 1000, ";")) !== FALSE) {
 
 		if($data[1] == $filename) $put_list .= null;
@@ -130,7 +132,7 @@ function delete_section($filename){
 	}
 	fclose($list_file);
 
-	$list = fopen("content/.list",'w');	flock($list,2);
+	$list = fopen("content/.list",'wb');	flock($list,2);
 
 	if(file_exists("content/$filename")) $unlinked = unlink("content/$filename");
 

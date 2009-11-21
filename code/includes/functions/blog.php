@@ -173,7 +173,7 @@ function title2name($title){
 
 	// Sets the Name
 	$name = substr_replace(strtolower(
-	preg_replace("/([\s]*(&)*(acute;|grave;|tilde;|sup;)*)*/","",htmlentities(utf8_decode($title)))),'',20);
+	preg_replace("/([\s]*(&)*(acute;|grave;|tilde;|sup;|edill;)*)*/","",htmlentities(utf8_decode($title)))),'',20);
 	
 	// Check if entry Name exist
 	$chkentries = fopen("entries/.entries", "r") or die('<b>Fatal error:</b> Missing or inaccesible Entries filelist!');

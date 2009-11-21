@@ -6,7 +6,7 @@
 <li class="list"><a href="{{LINK script='edit' section=$SECTION  page='section:' argument='?section='}}" >{{$LANG.edit|ucfirst}} {{$LANG.page}}</a></li>
 <li class="list"><a href="{{LINK script="panel" marker="#create_section"}}">{{$LANG.add|ucfirst}} {{$LANG.section}}</a></li>
 {{/if}}
-{{if $IS_BLOG}}<li class="list"><a href="{{LINK script='blog' page='NEW'}}">{{$LANG.new|ucfirst}} {{$LANG.entry}}</a></li>{{/if}}
+{{if $IS_BLOG}}<li class="list"><a href="{{LINK script='blog' page='NEW' argument="?NEW"}}">{{$LANG.new|ucfirst}} {{$LANG.entry}}</a></li>{{/if}}
 <li class="list"><a href="{{LINK script='panel'}}" rel="external">{{$LANG.administration|ucfirst}}</a></li>
 {{/if}}
 {{if $PHPBB_URL_PATH != null}}<li class="list"><a href="{{$PHPBB_URL_PATH}}ucp.php">{{$LANG.goto_phpbb_panel|ucfirst}}  -&gt;</a></li>

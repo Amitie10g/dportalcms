@@ -60,7 +60,7 @@ function redir($script,$section,$argument = null,$marker = null){
 	
 		switch($script){
 			case "edit"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH."/edit/section:$section"); break;
-			case "new"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH."/edit/section:$section/title:$argument"); break;
+			case "new"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH."/edit/new_section:$section"); break;
 			case "panel"	: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH."/panel/$argument"); break;
 			case "gallery"	: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH."/gallery/$section.html$argument$marker"); break;
 			case "gallery_ajax"	: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH."/gallery/".$_GET['gallery']."_ajax"); break;
@@ -72,12 +72,12 @@ function redir($script,$section,$argument = null,$marker = null){
 	
 	}else{
 	
-		if($argument != null) $argument = "?argument";
+		if($argument != null) $argument = "?$argument";
 		if($marker != null) $marker = "#$marker";
 	
 		switch($script){
-			case "edit"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH."/edit.php?file=$section"); break;
-			case "new"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH."/edit.php?file=$section&title=".str_replace('?','',$argument).'&NEW'); break;
+			case "edit"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH."/edit.php$argument&section=$section"); break;
+			case "new"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH."/edit.php?section=$section&NEW"); break;
 			case "panel"	: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH."/panel.php$argument$marker"); break;
 			case "gallery"	: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH."/gallery.php$argument&gallery=$section$marker"); break;
 			case "gallery_ajax"	: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH."/gallery.php?gallery=".$_GET['gallery']."&ajax"); break;
@@ -182,8 +182,7 @@ function link_url($params,&$smarty){
 			default									:  $uri = 'http://'.$_SERVER['SERVER_NAME'] .DPORTAL_PATH. "/".$section . '.html'; break;
 		}
 	
-	}else{
-			switch($script){
+	}else{			switch($script){
 			case 'login'						:  $uri = 'http://'.$_SERVER['SERVER_NAME'] .DPORTAL_PATH. "/index.php?LOGIN"; break;
 			case 'logout'						:  $uri = 'http://'.$_SERVER['SERVER_NAME'] .DPORTAL_PATH. "/index.php?LOGOUT"; break;
 			case 'panel'						: $uri = 'http://'.$_SERVER['SERVER_NAME'] .DPORTAL_PATH."/panel.php$argument"; break;
@@ -191,7 +190,7 @@ function link_url($params,&$smarty){
 			case 'edit_section'			:  $uri = 'http://'.$_SERVER['SERVER_NAME'] . DPORTAL_PATH. "/edit.php"; break;
 			case 'blog'							:  $uri = 'http://'.$_SERVER['SERVER_NAME'] . DPORTAL_PATH. "/blog.php$argument"; break;
 			case 'blog_edit'				:  $uri = 'http://'.$_SERVER['SERVER_NAME'] .DPORTAL_PATH. "/blog.php?EDIT&amp;entry=$section"; break;
-			case 'blog_delete'			:  $uri = 'http://'.$_SERVER['SERVER_NAME'] .DPORTAL_PATH. "/blog.php?DELETE&amp;section=$section"; break;
+			case 'blog_delete'			:  $uri = 'http://'.$_SERVER['SERVER_NAME'] .DPORTAL_PATH. "/blog.php?DELETE&amp;entry=$section"; break;
 			case 'blog_save'				:  $uri = 'http://'.$_SERVER['SERVER_NAME'] .DPORTAL_PATH. "/blog.php?POST"; break;
 			case 'blog_goto'				:  $uri = 'http://'.$_SERVER['SERVER_NAME'] . DPORTAL_PATH. "/blog.php?page=".$section; break;
 			case 'blog_entry'				:  $uri = 'http://'.$_SERVER['SERVER_NAME'] . DPORTAL_PATH. "/blog.php?entry=" . $section; break;
