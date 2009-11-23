@@ -1,0 +1,9 @@
+; Don't edit this file unless you know doing!
+
+RewriteEngine On
+RewriteRule ^LOGIN$ index.php?LOGIN
+RewriteRule ^LOGOUT$ index.php?LOGOUT
+RewriteRule ^([^/]+)\.html$ index.php?section=$1
+RewriteRule ^([^/]+)\/([^/]+)\.html$ index.php?section=$1_$2
+RewriteRule ^([^/]+)\/([^/]+)\/([^/]+)\.html$ index.php?section=$1_$2_$3
+RewriteRule ^([^/]+)\/([^/]+)\/([^/]+)\/([^/]+)\.html$ index.php?section=$1_$2_$3_$4
