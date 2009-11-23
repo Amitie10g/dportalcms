@@ -1,0 +1,1 @@
+Put Affiliates or another kind of Links here.
