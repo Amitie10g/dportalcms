@@ -1,1 +1,0 @@
-sfHover=function(){var B=document.getElementById("nav").getElementsByTagName("LI");for(var A=0;A<B.length;A++){B[A].onmouseover=function(){this.className+=" sfhover"};B[A].onmouseout=function(){this.className=this.className.replace(new RegExp(" sfhover\\b"),"")}}};if(window.attachEvent){window.attachEvent("onload",sfHover)};
