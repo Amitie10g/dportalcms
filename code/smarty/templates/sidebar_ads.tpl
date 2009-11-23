@@ -1,1 +1,0 @@
-{{include file="sidebar_c.tpl"}}
