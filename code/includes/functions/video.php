@@ -6,7 +6,7 @@
 		#                                              #
 		#  Functions for Media Player (video.php)      #
 		#                                              #
-		#  Copyright Davod.                            #
+		#  Copyright (c) Davod.                        #
 		#                                              #
 		#  This program is published under the         #
 		#  GNU general Public License.                 #
@@ -26,7 +26,7 @@
  *
  * Parameters:
  *
- *	 *String dirname: that is the Fullpath to
+ *	*	String dirname: that is the Fullpath to
  *		the Directory containing Videos.
  *
  * Returned values:
@@ -184,7 +184,7 @@ function getvideoinfo($filename){
  *
  * Note: Position are given form $_GET['pos'], that is Global
  *
-*/
+ */
 
 // bool streaming_download($filename);
 function streaming_download($filename){
@@ -193,7 +193,7 @@ function streaming_download($filename){
 
 	if (($filename != "") && (file_exists($filename)) && ($ext==".flv")) {
 
-  // ----- NO CACHE -----
+	// ----- NO CACHE -----
 	session_cache_limiter('nocache');
 
 	// General header for no caching
@@ -280,6 +280,7 @@ function streaming_download($filename){
  *		really RERALLY faster). This slould be the default behaviour.
  *
  */
+ 
 // bool getvideothumb(string path_to_video[, int frame[, bool to_file]])
 function getvideothumb($video, $frame = null, $to_file = true){
 

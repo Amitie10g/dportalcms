@@ -5,7 +5,7 @@
 		#                                              #
 		#  Sections editor (edit.php)                  #
 		#                                              #
-		#  Copyright Davod.                            #
+		#  Copyright (c) Davod.                        #
 		#                                              #
 		#  This program is published under the         #
 		#  GNU general Public License                  #
@@ -24,7 +24,8 @@ if(!$user_admin){
 	redir('home','index');
 	die();
 }
-/* NOTE:
+
+/* NOTE:
  *
  * $filename stands for the File Name recived from the URL, and
  * $file is the Variable with the Path, four use in {fetch}

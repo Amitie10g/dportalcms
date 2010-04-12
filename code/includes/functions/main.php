@@ -6,10 +6,10 @@
 		#                                              #
 		#  Functions for Main Portal (main.php)        #
 		#                                              #
-		#  Copyright Davod.                            #
+		#  Copyright (c) Davod.                        #
 		#                                              #
 		#  This program is published under the         #
-		#  GNU general Public License                  #
+		#  GNU General Public License                  #
 		#                                              #
 		#  Please see README and LICENSE for details   #
 		#                                              #
@@ -35,7 +35,8 @@ function getlist($section){
 
 
 /* This function return the Contents of the Section and
- * data provided to Smarty variables *
+ * data provided to Smarty variables
+ *
  * This function is DEPRECATED and is replaced
  * with {fetch} in Template. Please don't call.
 */

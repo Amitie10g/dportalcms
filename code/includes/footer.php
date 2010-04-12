@@ -6,7 +6,7 @@
 		#                                              #
 		#  Footer include script (footer.php)          #
 		#                                              #
-		#  Copyright Davod.                            #
+		#  Copyright (c) Davod.                        #
 		#                                              #
 		#  This program is published under the         #
 		#  GNU general Public License                  #
@@ -27,10 +27,14 @@ require_once('includes/erase_session_vars.php');
 
 // Optionals
 
-// For debug purposes only
+// For timing debug purposes only
 $timeb = microtime(true);
+
+// Show the Time of Execution of the Program in the tail of the page
+// for debug purposes (uncomment if you want to show them)
 //echo $timeb - $timea;
 
+// End Script safethy here
 die();
 
 ?>

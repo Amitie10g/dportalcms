@@ -6,7 +6,7 @@
 		#                                              #
 		#  Header include file (header.php)            #
 		#                                              #
-		#  Copyright Davod.                            #
+		#  Copyright (c) Davod.                        #
 		#                                              #
 		#  This program is published under the         #
 		#  GNU general Public License                  #
@@ -15,19 +15,21 @@
 		#                                              #
 		################################################
 
-// This script contains the Headers of ally Script
+// This script contains the Headers of ally Scripts
 // in DPortal CMS, as the Configuration include and 
 // the Session manage.
 
-// For debug purposes only
+// For timing debug purposes only
 $timea = microtime(true);
 
-if(!defined('DPORTAL')) die();
+//if(!defined('DPORTAL')) die();
 
 // Starts the session
 session_start();
 
 // Gets the Config file
 require_once('config/config.php');
+
+// Add your custom headers here, but with care.
 
 ?>

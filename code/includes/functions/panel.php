@@ -6,25 +6,28 @@
 		#                                              #
 		#  Functions for Panel (panel.php)             #
 		#                                              #
-		#  Copyright Davod.                            #
+		#  Copyright (c) Davod.                        #
 		#                                              #
 		#  This program is published under the         #
-		#  GNU general Public License                  #
+		#  GNU General Public License                  #
 		#                                              #
 		#  Please see README and LICENSE for details   #
 		#                                              #
 		################################################
 
-// The following function checks if the User and Password
-// is checked or not and return an INTEGER value.
-
-// If changes are made (all values are NOT NULL and User and passwords match),
-// returns INT 1, that is interpreted as TRUE.
-//
-// If Passwords not match, returns 2.
-//
-// If one of the data are NULL, return INT 0, that is interpreted as FALSE
-
+/* ABOUT THIS FUNCTION
+ * 
+ * The following function checks if the User and Password
+ * is checked or not and return an INTEGER value.
+ * 
+ * If changes are made (all values are NOT NULL and User and passwords match),
+ * returns INT 1, that is interpreted as TRUE.
+ * 
+ * If Passwords not match, returns 2.
+ * 
+ * If one of the data are NULL, return INT 0, that is interpreted as FALSE
+ */
+ 
 // int check_change_user_pass([string user, string password, string password_repeat)
 function check_change_user_pass($curr_user = null, $user = null,$password = null,$password_repeat = null){
 
@@ -38,6 +41,12 @@ function check_change_user_pass($curr_user = null, $user = null,$password = null
 	
 	else return 2; // Unchanged
 }
+
+/* ABOUT THIS FUNCTION
+ * 
+ * This function Updates the site.ini file, that is the Configuration file for Site
+ *
+ */
 
 // bool update_config()
 function update_config($sitename,$site_desc,$phpbb_dir,$robotstxt,$user,$password,$use_rewrite = null,$banner = null,$style = null,$smarty_debugging = null,$language = null){
@@ -69,7 +78,14 @@ function update_config($sitename,$site_desc,$phpbb_dir,$robotstxt,$user,$passwor
 	$robotstxt_written = fwrite($robotstxt_file,$robotstxt);	
 	fclose($robotstxt_file);
 
-	if($written !== false && $robotstxt_written !== false) return true;}
+	if($written !== false && $robotstxt_written !== false) return true;
+}
+
+/* ABOUT THIS FUNCTION
+ * 
+ * This function get the List of Sections in order to be displayed in Section selection
+ *
+ */
 
 // array get_sections(void)
 function get_sections(){
@@ -85,6 +101,12 @@ function get_sections(){
   return $sections;
 }
 
+/* ABOUT THIS FUNCTION
+ * 
+ * This function get the List of Templates in order to be displayed in Manual Templates edition
+ *
+ */
+
 // bool get_templates(void)
 function get_templates(){
 
@@ -97,6 +119,12 @@ function get_templates(){
  	sort($templates);
     return $templates;
 }
+
+/* ABOUT THIS FUNCTION
+ * 
+ * This function save the Template edited
+ *
+ */
 
 // bool template_save(string name, string content
 function template_save($name,$content){
@@ -120,7 +148,7 @@ function template_save($name,$content){
  *
  */
 
-//bool backup_content(array mode)
+// bool backup_content([array mode])
 function backup(array $mode = null){
 
 	global $sitename;
@@ -132,7 +160,9 @@ function backup(array $mode = null){
 		$config = $mode['config'];
 	}
 
-	$zip_comment = "DPortal CMS backup file\n\n";
+	// The Zip comment in the output archiver.
+
+	$zip_comment = "== DPortal CMS backup file ==\n\n";
 	$zip_comment.= "Sitename:\t$sitename\n";
 	$zip_comment.= "URL:\t\thttp://" . $_SERVER['SERVER_NAME'] . DPORTAL_PATH . "\n";
 	$zip_comment.= "Created:\t" . date("m/d/Y H:i",$date) . "\n\n";
@@ -140,10 +170,10 @@ function backup(array $mode = null){
 	$zip_comment.= "\t* Sections (by default).\n";
 	if($blog) $zip_comment.= "\t* Blog (entries and comments).\n"; 
 	if($templates) $zip_comment.= "\t* Templates.\n"; 
-	if($config) $zip_comment.= "\t* Configuration file ('siten.ini').\n"; 
-	$zip_comment.= "\nThis is a Backup of your Portal. Contain the\nfolders of content and configuration.\n\n";
+	if($config) $zip_comment.= "\t* Configuration file ('siten.ini').\n\n"; 
+	$zip_comment.= "This is a Backup of your Portal. Contain the\nfolders of contents and configuration.\n\n";
 	$zip_comment.= "If you need to Restore this Backup, use the\nControl panel for them, or upload the contents\ndirectly to the root of your Portal.\n\n";
-	$zip_comment.= "Please don't modify the contents if you don't know.\n";
+	$zip_comment.= "Please don't modify the contents unless you know doing.\n";
 
 	$sections_path = 'content/';
 	$config_path = 'config/';
@@ -151,9 +181,9 @@ function backup(array $mode = null){
 	$comments_path = 'comments/';
 	$templates_path = 'smarty/templates/';
 
-	// Declare the ZipArchive Class
+	// Initialize the ZipArchive Class
 	$zip = new ZipArchive;
-	$archive = $zip->open('backups/backup_' . date("d-m-Y_H-i",$date) . '.zip' , ZipArchive::CREATE) or die('Error opening or creating file file');
+	$archive = $zip->open('backups/backup_' . date("d-m-Y_H-i",$date) . '.zip' , ZipArchive::CREATE) or die('Error opening or creating file!');
 
 	if($archive){
 
@@ -225,9 +255,16 @@ function backup(array $mode = null){
  * nofakedir(), I can't use scandir(). Instead, I must be use
  * the traditional Directory listing with fopen() and foreach.
  * I will be create a Function that supress these, and
- * will reeuce the code.
+ * will reduce the code.
  * 
-*/
+ */
+ 
+/* ABOUT THIS FUNCTION
+ *
+ * This function gets the list of Backups archives in /backup/ directory
+ * 
+ */
+ 
 // array get_backup(void)
 function get_backup(){
 
@@ -244,6 +281,13 @@ function get_backup(){
 	return $list;
 }
 
+/* ABOUT THIS FUNCTION
+ *
+ * This function allow to Delete all backups, and optionally,
+ * excluding the Last backup.
+ * 
+ */
+
 // void delete_backups([bool no_last_file])
 function delete_backups($no_last = false){
 
@@ -254,6 +298,12 @@ function delete_backups($no_last = false){
 		if(($no_last && $key != 0)||!$no_last) unlink($dir.$value);
 	}
 }
+
+/* ABOUT THIS FUNCTION
+ *
+ * This function gets the list of directories of Galleries.
+ * 
+ */
 
 // array get_galleries(void)
 function get_galleries(){
@@ -273,6 +323,13 @@ function get_galleries(){
 	return $list;
 }
 
+/* ABOUT THIS FUNCTION
+ *
+ * This function sets the Panel message. This is the message in the
+ * top of the page, that indicates if a operation is completed successfull or not.
+ * This is passed by Session variables; not a nice way, but works.
+ * 
+ */
 
 // string get_pannel_message(void)
 function get_panel_message($params = null,&$smarty){

@@ -35,6 +35,9 @@ if(is_dir(FUNCTIONS_PATH)){
     }
 }
 
+// Set the Default Timezone
+date_default_timezone_set ("America/Santiago");
+
 // :: Libraries
 
 // Smarty

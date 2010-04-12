@@ -6,7 +6,7 @@
 		#                                              #
 		#  Fuctions for Gallery (panel.php)            #
 		#                                              #
-		#  Copyright Davod.                            #
+		#  Copyright (c) Davod.                        #
 		#                                              #
 		#  This program is published under the         #
 		#  GNU general Public License                  #

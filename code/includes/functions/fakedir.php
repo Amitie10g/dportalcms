@@ -7,7 +7,7 @@
 		#  Function for proper                         #
 		#  Directorie listing (fakedir.php)            #
 		#                                              #
-		#  Copyright Davod.                            #
+		#  Copyright (c) Davod.                        #
 		#                                              #
 		#  This program is published under the         #
 		#  GNU general Public License                  #
@@ -36,7 +36,7 @@ function nofakedir($file,$type = 0, $allow_list = true){
 }
 
 function nolistfile($file){
-	if($file != '.htfiles' &&
+	if($file != '.htfiles' && $file != ".svn" &&
 	$file != '.list' && $file != '.name') return true;
 }
 

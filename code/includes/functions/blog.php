@@ -2,17 +2,17 @@
 
 		################################################
 		#                                              #
-		#		DPortal CMS, CMS without Database engine 	 #
-		#																							 #
-		#	Functions for Blog (blog.php)							   #
-		#																							 #
-		#	Copyright Davod.														 #
-		#																							 #
-		#	This program is published under the				   #
-		#	GNU general Public License									 #
-		#																							 #
-		#	Please see README and LICENSE for details	   #
-		#																							 #
+		#    DPortal CMS, CMS without Database engine  #
+		#                                              #
+		#  Functions for Blog (blog.php)               #
+		#                                              #
+		#  Copyright (c) Davod.                        #
+		#                                              #
+		#  This program is published under the         #
+		#  GNU general Public License                  #
+		#                                              #
+		#  Please see README and LICENSE for details   #
+		#                                              #
 		################################################
 
 
@@ -67,11 +67,13 @@ function get_blog_entries($entries_index = 5, $size_limit = 0){
  *
 */
 
-// array get_blog_entries_feed(int max = null)function get_blog_entries_feed(){
+// array get_blog_entries_feed(int max = null)
+function get_blog_entries_feed(){
 
 	$getentries = fopen(ENTRIES_PATH.'.entries', "r") or die();
 	while (($ents = fgetcsv($getentries, 1000, ";")) !== FALSE) {
-		if($ents[0] != null && file_exists(ENTRIES_PATH . $ents[0])){			$entries[] = array('id'=>$ents[0],'name'=>$ents[1],
+		if($ents[0] != null && file_exists(ENTRIES_PATH . $ents[0])){
+			$entries[] = array('id'=>$ents[0],'name'=>$ents[1],
 			'title'=>$ents[2],'file'=>ENTRIES_PATH . $ents[0]);
 		}
 	}
@@ -264,7 +266,8 @@ function blog_post_comment($entry_id,$timestamp,$nick,$comment,$email,$url = nul
 		// Ask if data are valid
 		if($nick == null) { $_SESSION['nick_empty'] = true; return false; }
 		if(!preg_match($email_string,$email)){ $_SESSION['invalid_email'] = true; return false; }
-		//if(!checkdnsrr(array_pop(explode("@",$email)),"MX")){ $_SESSION['invalid_email'] = true; return false; }		if(!preg_match($url_string,$url) && $url != null) { $_SESSION['invalid_url'] = true; return false; }
+		//if(!checkdnsrr(array_pop(explode("@",$email)),"MX")){ $_SESSION['invalid_email'] = true; return false; }
+		if(!preg_match($url_string,$url) && $url != null) { $_SESSION['invalid_url'] = true; return false; }
 		if($comment == null) { $_SESSION['comment_empty'] = true; return false; }
 		if(strlen($comment) > 5000) { $_SESSION['comment_exceeds'] = true; return false; }
 

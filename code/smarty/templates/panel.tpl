@@ -115,7 +115,7 @@
 </div>
 
 <div>
-<strong>{{$LANG.sitedesc}}:</strong> 
+<strong>{{$LANG.sitedesc|ucfirst}}:</strong> 
 <input type="text" name="sitedesc" value="{{$SITE_DESCRIPTION}}"  style="width:220px" />
 </div>
 </div>
@@ -242,7 +242,7 @@
 <div id="item_30" class="hidden" style="text-align:left;padding:0 5px">{{$LANG.create_section_warn}}</div>
 
 <p><strong style="cursor:pointer" onclick="items(31)">{{$LANG.about_subdirs|ucfirst}}</strong></p>
-<div id="item_31" class="hidden" style="text-align:left;padding:0 5px">{{$LANG.create_section_warn}}</div>
+<div id="item_31" class="hidden" style="text-align:left;padding:0 5px">{{$LANG.about_subdirs_desc}}</div>
 
 <div style="float:center;margin:auto">
 <form id="form4" method="post" action="{{LINK script='panel' section='section:create' argument='?CREATE'}}">

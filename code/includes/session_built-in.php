@@ -6,7 +6,7 @@
 		#  Built-in session manager                    #
 		#  (session_built-in.php)                      #
 		#                                              #
-		#  Copyright Davod.                            #
+		#  Copyright (c) Davod.                        #
 		#                                              #
 		#  This program is published under the         #
 		#  GNU general Public License                  #

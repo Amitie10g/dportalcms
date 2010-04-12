@@ -1,11 +1,28 @@
 <?php
 
+		################################################
+		#                                              #
+		#    DPortal CMS, CMS without Database engine  #
+		#                                              #
+		#  Installer - functions (install.php)         #
+		#                                              #
+		#  Copyright (c) Davod.                        #
+		#                                              #
+		#  This program is published under the         #
+		#  GNU general Public License                  #
+		#                                              #
+		#  Please see README and LICENSE for details   #
+		#                                              #
+		################################################
+
 session_start();
 
-//define('INSTALLER',true);
+// The following, only for security reasons
+// define('INSTALLER',true);
 
 function install($sitename,$sitedesc,$user,$password,$phpbb_dir = null,$banner = null,$use_rewrite = null){
 
+	// Regular expressions to check if data recived is sane
 	$check_site = preg_match("/[\w\s&;]{5,50}/",$sitename);
 	$check_site_desc = preg_match("/[\w\s,;&.-_]{3,100}/",$sitedesc);
 	$check_user = preg_match("/[\w\s-_]{3,15}/",$user);
@@ -13,6 +30,7 @@ function install($sitename,$sitedesc,$user,$password,$phpbb_dir = null,$banner =
 	$check_phpbb_dir = preg_match("/(^(\/[\w\/]+\/)+$)/",$phpbb_dir);
 	if($phpbb_dir == null) $check_phpbb_dir = 1;
 
+	// If data is sane, create the CSV config file.
 	if($check_site>=1&&$check_site_desc>=1&&$check_user>=1&&$check_pass>=1&&$check_phpbb_dir>=1){
 		$output = ";Site config CSV file generated automaticaly. DO NOT EDIT!\n";
 		$output.= "sitename = \"$sitename\"\n";
@@ -31,12 +49,15 @@ function install($sitename,$sitedesc,$user,$password,$phpbb_dir = null,$banner =
 
 	}else{
 
-		return array('check_site'=>$check_site,'sitename'=>$sitename,
-								'check_sitedesc'=>$check_site_desc,'sitedesc'=>$sitedesc,
-								'check_user'=>$check_user,'user'=>$user,
-								'check_pass'=>$check_pass,'pass'=>$pass,
-								'check_phpbb_dir'=>$check_phpbb_dir,'phpbb_dir'=>$phpbb_dir);
-			}
+		return array('check_site'=>$check_site,
+		'sitename'=>$sitename,
+		'check_sitedesc'=>$check_site_desc,
+		'sitedesc'=>$sitedesc,
+		'check_user'=>$check_user,'user'=>$user,
+		'check_pass'=>$check_pass,'pass'=>$pass,
+		'check_phpbb_dir'=>$check_phpbb_dir,
+		'phpbb_dir'=>$phpbb_dir);
+	}
 }
 
 if(isset($_GET['INSTALL']) && !file_exists('config/site.ini')){

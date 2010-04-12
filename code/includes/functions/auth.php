@@ -6,7 +6,7 @@
 		#                                              #
 		#  Built-in Authentation (auth.php)            #
 		#                                              #
-		#  Copyright Davod.                            #
+		#  Copyright (c) Davod.                        #
 		#                                              #
 		#  This program is published under the         #
 		#  GNU general Public License                  #

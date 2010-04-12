@@ -8,7 +8,7 @@
 		#                                              #
 		#  This is Third party code. The author don't  #
 		#  display a License, then, I licensed this    #
-		#  under the GPL.
+		#  under the GPL.                              #
 		#                                              #
 		#  Please see README and LICENSE for details   #
 		#                                              #
@@ -18,7 +18,7 @@ define('IN_PHPBB', true);
 
 /* NOTE:
  *
- * DOCUMENT_ROOT eas be deniden in config.php as Constant,
+ * DOCUMENT_ROOT is be defided in config.php as Constant,
  * because the Superglobal variable $_SERVER['DOCUMENT_ROOT']
  * may no reflect the REAL DocumentRoot path, to the Script.
  *

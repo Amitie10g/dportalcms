@@ -1,5 +1,20 @@
 <?php
 
+		################################################
+		#                                              #
+		#    DPortal CMS, CMS without Database engine  #
+		#                                              #
+		#  General functions (general.php)             #
+		#                                              #
+		#  Copyright (c) Davod.                        #
+		#                                              #
+		#  This program is published under the         #
+		#  GNU general Public License                  #
+		#                                              #
+		#  Please see README and LICENSE for details   #
+		#                                              #
+		################################################
+
 /* ABOUT THIS FUNCTION:
  *
  * This function performs a RAW Download from Server, in binary format.
@@ -16,6 +31,7 @@
  * 'application/octet-stream' by default
  *
  */
+ 
 // stream raw_download(string path_to_file[, string MIME type])
 function raw_download($file, $mimetype = null){
 
@@ -112,6 +128,7 @@ function count_files_cache($dir){
  *	the Delimiters are in preg_match function
  *
  */
+ 
 // float get_dir_size (string directory[,int pow, string pattern]) 
 function dircontents_size($directory, $pow = 0, $pattern = null){
 

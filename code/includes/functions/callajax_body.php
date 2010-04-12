@@ -1,5 +1,20 @@
 <?php
 
+		################################################
+		#                                              #
+		#    DPortal CMS, CMS without Database engine  #
+		#                                              #
+		#  Callajax body (viewfeedback.php)            #
+		#                                              #
+		#  Copyright (c) Davod.                        #
+		#                                              #
+		#  This program is published under the         #
+		#  GNU general Public License                  #
+		#                                              #
+		#  Please see README and LICENSE for details   #
+		#                                              #
+		################################################
+
 /* ABOUT THIS FUNCTION:
  *
  * This is a Smarty Function, that returns a String with a Call
@@ -8,10 +23,10 @@
  * Parameters form tamplate:
  *
  * *	String url: The URL of you want to Call AJAX
- * 		If URL are null, the function will return null.
+ *		    If URL are null, the function will return null.
  *
  * *	String block: The DIV Block by ID where you want to
- *		deploy the content obtained Asynchronusly.
+ *		      deploy the content obtained Asynchronusly.
  *
  * Returned values:
  *

@@ -6,7 +6,7 @@
 		#                                              #
 		#  User defined Constants (constants.php)      #
 		#                                              #
-		#  Copyright Davod.                            #
+		#  Copyright (c) Davod.                        #
 		#                                              #
 		#  This program is published under the         #
 		#  GNU general Public License                  #
@@ -23,6 +23,7 @@ define('DPORTAL_PATH',preg_replace("/^\/$/",'',dirname($_SERVER['PHP_SELF'])));
 define('DOCUMENT_ROOT',str_replace(DPORTAL_PATH,'',DPORTAL_ABSOLUTE_PATH));
 
 // Absolute paths for Inclusion
+define('UPDATES_PATH',DPORTAL_ABSOLUTE_PATH.'/updates/');
 define('CONTENT_PATH',DPORTAL_ABSOLUTE_PATH.'/content/');
 define('COMMENTS_PATH',DPORTAL_ABSOLUTE_PATH.'/comments/');
 define('ENTRIES_PATH',DPORTAL_ABSOLUTE_PATH.'/entries/');

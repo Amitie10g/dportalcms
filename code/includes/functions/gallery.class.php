@@ -6,7 +6,7 @@
 		#                                              #
 		#  Class to generate images (gallery.class.php)#
 		#                                              #
-		#  Copyright Davod.                            #
+		#  Copyright (c) Davod.                        #
 		#                                              #
 		#  This program is published under the         #
 		#  GNU general Public License                  #
@@ -31,43 +31,45 @@ class image{
 		$this->ext = $this->split_file[2];
 		$this->mime = image_type_to_mime_type(exif_imagetype($this->file));
 
-    switch($this->mime){
- 			case 'image/jpeg': $this->image = imagecreatefromjpeg($this->file); break;
-    	case 'image/pjpeg' : $this->image = imagecreatefromjpeg($this->file); break;
-    	case 'image/gif' : $this->image = imagecreatefromgif($this->file); break;
-    	case 'image/png' : $this->image = imagecreatefrompng($this->file); break;
-    }
+		switch($this->mime){
+			case 'image/jpeg'  : $this->image = imagecreatefromjpeg($this->file); break;
+			case 'image/pjpeg' : $this->image = imagecreatefromjpeg($this->file); break;
+			case 'image/gif'   : $this->image = imagecreatefromgif($this->file); break;
+			case 'image/png'   : $this->image = imagecreatefrompng($this->file); break;
+		}
 	}
 
 	// void original_image(void)
 	public function original_image(){
 
-    header('Content-Description: File Transfer');
+		header('Content-Description: File Transfer');
 		header('content-type:'.$this->mime);
 		header("content-disposition: attachment; filename=\"".basename($this->description.'.'.$this->ext)."\"\n\n"); 
-    header('Content-Transfer-Encoding: binary');
-    header('Pragma: public');
+		header('Content-Transfer-Encoding: binary');
+		header('Pragma: public');
 
 		switch($this->mime){
-    	case 'image/jpeg'		: imagejpeg($this->image); break;
-    	case 'image/gif'		: imagegif($this->image); break;
-    	case 'image/png'		: imagepng($this->image); break;
-   	}
-		imagedestroy($this->image);
+			case 'image/jpeg'	: imagejpeg($this->image); break;
+			case 'image/gif'	: imagegif($this->image); break;
+			case 'image/png'	: imagepng($this->image); break;
+		}
+			imagedestroy($this->image);
 	}
 
 	/* 
 	 * Outputs a JPEG Image from the original image, against the type	
-	*/
+	 */
+	 
 	// void image_thumb([int maxwidth])
 	public function thumb_image($maxwidth = 200){
+
 		if(!is_integer($maxwidth)) $maxwidth = 200;
 
-    header('Content-Description: File Transfer');
+		header('Content-Description: File Transfer');
 		header('content-type:image/jpeg');
 		header('content-disposition: attachment; filename="'.$this->description.'_thumb.jpg"'); 
-    header('Content-Transfer-Encoding: binary');
-    header('Pragma: public');
+		header('Content-Transfer-Encoding: binary');
+		header('Pragma: public');
 
 		// Factor is a value calculated form the Width divised by 200 (maximum width).
 		// These value will be used to divide the Width and Height

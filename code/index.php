@@ -6,7 +6,7 @@
 		#                                              #
 		#  Index/main portal (index.php)               #
 		#                                              #
-		#  Copyright Davod.                            #
+		#  Copyright (c) Davod.                        #
 		#                                              #
 		#  This program is published under the         #
 		#  GNU general Public License                  #
@@ -20,7 +20,7 @@ require_once('includes/header.php');
 
 // :: Start the Application
 
-$get_section = $_GET['section'];
+if($_GET['section'] != null) $get_section = $_GET['section'];
 $url = $_SERVER['REQUEST_URI'];
 	
 if(!isset($_GET['section']) && $_GET['section'] != 'home'){
@@ -68,7 +68,8 @@ if(file_exists("content/$get_section")&&isset($get_section)){
 	header("Last-Modified: $last_mod GMT");
 
 	$smarty->assign('FILENAME',"content/$section");
-	$smarty->assign('TITLE',$title);}
+	$smarty->assign('TITLE',$title);
+}
 
 $smarty->assign('SECTION',$section);
 $smarty->assign('EDITABLE',true);

@@ -38,7 +38,8 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 		$_SESSION['CREATED'] = true;
 		$_SESSION['SECTION_CREATED'] = $filename;
 	}elseif($created == 2){
-		$_SESSION['FILE_EXISTS'] = true;	}else{
+		$_SESSION['FILE_EXISTS'] = true;
+	}else{
 		$_SESSION['CREATED_ERROR'] = true;
 	}
 
@@ -279,6 +280,65 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 
 	redir('panel','panel'); die();
 
+// Updates via SVN the Working copy of files for update.
+// Note: Files in Working directory are hard links to
+// the files in Application directory instead of copy them.
+// This is more practical, but if you use non-UNIX server
+// (as Windows), you should create hard links to these files
+// manually. See README_UPDATES for details.
+}elseif(isset($_GET['SVN_UPDATE'])){
+
+	if(!file_exists(UPDATES_PATH.'/.svn')) $checkout = svn_checkout($conf['updates_url'],UPDATES_DIR);
+	else $update = svn_update(UPDATES_PATH);
+
+	if($checkout || $update) $_SESSION['UPDATED_SVN'] = true;
+	else $_SESSION['UPDATE_ERROR'] = true;
+
+	redir('panel','panel'); die();
+
+}elseif(isset($_GET['SVN_COPY'])){
+
+	if($dir1 = opendir(UPDATES_PATH)) {
+			while (false !== ($file = readdir($dir1))) {
+				if(nofakedir($file) && !is_dir($file)) copy(UPDATES_PATH."/$file",DPORTAL_ABSOLUTE_PATH."/$file");
+			}
+		closedir($dir1);
+	}
+
+	if($dir2 = opendir(UPDATES_PATH."/includes")) {
+			while (false !== ($file = readdir($dir2))) {
+				if(nofakedir($file) && !is_dir($file)) copy(UPDATES_PATH."/includes/$file",DPORTAL_ABSOLUTE_PATH."/includes/$file");
+			}
+		closedir($dir2);
+	}
+
+	if($dir3 = opendir(UPDATES_PATH."/includes/functions")) {
+			while (false !== ($file = readdir($dir3))) {
+				if(nofakedir($file) && !is_dir($file)) copy(UPDATES_PATH."/includes/functions/$file",DPORTAL_ABSOLUTE_PATH."/includes/functions/$file");
+			}
+		closedir($dir3);
+	}
+
+	if($dir4 = opendir(UPDATES_PATH."/smarty/templates")) {
+			while (false !== ($file = readdir($dir4))) {
+				if(nofakedir($file) && !is_dir($file)) copy(UPDATES_PATH."/includes/functions/$file",DPORTAL_ABSOLUTE_PATH."/includes/functions/$file");
+			}
+		closedir($dir4);
+	}
+
+	if($dir5 = opendir(UPDATES_PATH."/lang")) {
+			while (false !== ($file = readdir($dir5))) {
+				if(nofakedir($file) && !is_dir($file)) copy(UPDATES_PATH."/lang/$file",DPORTAL_ABSOLUTE_PATH."/lang/$file");
+			}
+		closedir($dir5);
+	}
+
+	copy(UPDATES_PATH."/config.php",DPORTAL_ABSOLUTE_PATH."/config.php");
+
+	if(!$error) $_SESSION['UPDATERS_COPIED'] = true;
+	else $_SESSION['UPDATE_ERROR'] = true;
+
+	redir('panel','panel');die();
 
 // :: Normal mode
 
@@ -295,6 +355,9 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 		$templates = get_templates();
 		$galleries = get_galleries();
 		$backups = get_backup();
+
+		// Get list of files to be updated
+		$files = diff_updated_files();
 
 		// Iteration for select num of Images per page
 		for($num = 10; $num <= 50;$num++)	$max[] = $num;
