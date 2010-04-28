@@ -1,5 +1,0 @@
-#IndexOptions ShowForbidden
-IndexIgnore *
-RewriteEngine On
-RewriteBase /test/editor/
-RewriteRule ^$ - [F]
