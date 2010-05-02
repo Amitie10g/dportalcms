@@ -170,6 +170,7 @@ function link_url($params,&$smarty){
 			case 'blog'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/blog/$page"; break;
 			case 'blog_edit'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/blog/edit:$section"; break;
 			case 'blog_delete'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/blog/delete:$section"; break;
+			case 'blog_delete_comments'	: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/blog/DELETE_COMMENTS"; break;
 			case 'blog_save'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/blog/POST"; break;
 			case 'blog_goto'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/blog/page:".$section; break;
 			case 'blog_entry'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/blog/".$section.'.html'; break;

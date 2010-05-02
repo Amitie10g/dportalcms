@@ -71,13 +71,15 @@ function get_blog_entries_feed(){
 	$getentries = fopen(ENTRIES_PATH.'.entries', "rb") or die();
 	while (($ents = fgetcsv($getentries, 1000, ";")) !== FALSE) {
 		if($ents[0] != null && file_exists(ENTRIES_PATH . $ents[0])){
-			$entries[] = array('id'=>$ents[0],'name'=>$ents[1],'title'=>$ents[2],'file'=>ENTRIES_PATH . $ents[0],'updated'=>filemtime(ENTRIES_PATH . $ents[0]));
+			$entries[] = array('id'=>$ents[0],'name'=>$ents[1],'title'=>$ents[2],'file'=>ENTRIES_PATH . $ents[0],'updated'=>filemtime(ENTRIES_PATH . $ents[0]),'atom_id'=>sha1($ents[0]));
 		}
 	}
 	fclose($getentries);
 
-	if($entries != null){ rsort($entries); return $entries; }
-	else return null;
+	if($entries != null){
+		rsort($entries);
+		return $entries;
+	}else return null;
 }
 
 
@@ -275,12 +277,14 @@ function blog_post_comment($entry_id,$timestamp,$nick,$comment,$email,$url = nul
 		$output = "$timestamp;";
 		$output.= "\"" . str_replace('"','',htmlentities(strip_tags($nick),null,'UTF-8')) . "\";";
 		$output.= "\"" . preg_replace("/^(([\w]+\.)*([\w]+\.[\w]+)){1}$/","http://$url",$url) . "\";"; // Adds 'http://' if them is not given in URL, if is valid.
-
+	
 		// Normal mode (uncomment if deflate have problems)
 		//$output.= "\"" . preg_replace(array('/&lt;/','/&gt;/','/"/',"/[\r\n]*/"),array('<','>','&quot;',''),nl2br(htmlspecialchars(strip_tags($comment,'<b><i><u><s>'),null,'UTF-8',false))) . "\"\n";
 
 		// Compressed  mode. Compress the Comment string with deflate (comment as indicated avobe)
-		$output.= "\"" . gzdeflate(preg_replace(array('/&lt;/','/&gt;/','/"/'),array('<','>','&quot;',''),nl2br(htmlspecialchars(strip_tags($comment,'<b><i><u><s>'),null,'UTF-8',false))),9) . "\"\n";
+		$output.= "\"" . gzdeflate(preg_replace(array('/&lt;/','/&gt;/','/"/'),array('<','>','&quot;',''),nl2br(htmlspecialchars(strip_tags($comment,'<b><i><u><s>'),null,'UTF-8',false))),9) . "\";";
+
+		$output.= "true\n"; // Ig boolean TRUE, Comment doesn't appear. If is null, comment is moderated and will appear 
 		
 		if(fwrite($comment_file,$output)) $written = true;
 
@@ -359,37 +363,78 @@ function delete_entry($entry_name){
 		if(unlink(ENTRIES_PATH.$id) && unlink(COMMENTS_PATH.$id)) $deleted = true;
 	}
 	
+	clearstatcache();
+	
 	if($removed && $deleted) return true;
 }
 
-/* ABOUT THIS FUNCTION
+/* Delete comments
  *
- * This function set an aditional link for Editing entries,
- * that be appended to the Entrie title.
+ * This function delete comments, by passing the ID (timestamp)
+ * of the comment. Then, ID recived is converted to String with
+ * delimiters to be used with preg_replace().
+ *
+ * Now, preg_replace() finds the ID recived. If ID recived is
+ * the same as ID in the Comments file, correspondient line
+ * is null; then, if not, recreate the Line with data in CSV.
+ *
+ * Finally, write the lines with file_put_contents()
+ *
+ * Warning: This can be hardy for server if Data is too big.
+ * I' working in alternative Write methods, minside the while.
  *
  */
 
-// string edit_entry_admin(array params, class smarty)
-function edit_entry_admin($params, &$smarty){
+//bool moderate_comments(string entry, mixed comments)
+function moderate_comments($id,$comments,$action){
 
-	global $user_admin; global $LANG;
+	// Check if file exists and is readable
+	if(!is_readable(COMMENTS_PATH . $id) &&
+	   !is_writable(COMMENTS_PATH . $id) &&
+	   !is_file(COMMENTS_PATH . $id)) return false;
 
-	$entry = $params['entry'];
+	$file = fopen(COMMENTS_PATH . $id,'rb');
+	flock($file,LOCK_SH);
+	
+	foreach($comments as $comment){
+		$comments_preg[] = "/$comment/";
+	}
 
-	if($user_admin){
-
-		$edit = DPORTAL_PATH.'blog.php?EDIT&entry='.$entry;
-		$delete = DPORTAL_PATH.'blog.php?DELETE&entry='.$entry;
-
-		$output = " | ";
-		$output.= "<a href=\"".DPORTAL_PATH."/blog.php?EDIT&amp;entry=$entry\">".ucfirst($LANG['edit'])."</a> | ";
-		$output.= "<a href=\"".DPORTAL_PATH."/blog.php?DELETE&amp;entry=$entry\" onclick=\"return confirm('".$LANG['delete_entry_warn']."');\">".ucfirst($LANG['delete'])."</a>";
-
-		return $output;
-
-	}else return null;
+	while($line = fgetcsv($file,8192,";")){
+		if($action === 0){ // Delete mode
+			$key = preg_replace($comments_preg,'',$line[0]);
+			if($key != null) $line[0] . ';"' . $line[1] . '";"' . $line[2] . '";"' . $line[3] . "\";" . $line[4] . "\n";
+		}elseif($action === 1){ // Moderate mode
+			if($comments == $line[0]) $line[0] . ';"' . $line[1] . '";"' . $line[2] . '";"' . $line[3] . "\";;\n";
+			$output.= $line[0] . ';"' . $line[1] . '";"' . $line[2] . '";"' . $line[3] . '";' . $line[4] . "\n";
+		}
+	}
+	
+	clearstatcache(true,COMMENTS_PATH . $id);
+	
+	fclose($file);
+	
+	// And, put contents
+	if(file_put_contents(COMMENTS_PATH . $id,$output,LOCK_EX) !== false) return true;
 }
 
+function get_post_name($id){
+
+	if(!file_exists(ENTRIES_PATH . $id)) return false;
+	
+	$file = fopen(ENTRIES_PATH . ".entries",'rb');
+	while($line = fgetcsv($file,8192,";")){
+		if($id == $line[0]){
+			$name = $line[1];
+			break;
+		}
+	}
+	
+	fclose($file);
+	
+	if($name != null) return $name;
+	else return false;
+}
 
 
 // string blog_message(void);
@@ -406,6 +451,8 @@ function get_blog_message(){
 	elseif($_SESSION['blog_entry_deleted']){ $type = 'index'; $message = array('ok',$LANG['entry_deleted']); }
 	elseif($_SESSION['blog_entry_deleted']){ $type = 'entry'; $message = array('error',$LANG['post_error']);}
 	elseif($_SESSION['blog_entry_doesnt_exist']){ $type = 'index'; $message = array('error',$LANG['entry_doesnt_exist']); }
+	elseif($_SESSION['blog_comment_deleted']){ $type = 'comment'; $message = array('ok',$LANG['comment_deleted']); }
+	elseif($_SESSION['blog_comment_not_deleted']){ $type = 'comment'; $message = array('error',$LANG['comment_not_deleted']); }
 
 	if($message != null) return array($type,$message);
 }

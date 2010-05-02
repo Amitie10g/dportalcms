@@ -196,7 +196,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 
 	$smarty->display('template_edit.tpl'); die();
 
-// Clrear Smarty Cache	
+// Clear Smarty Cache	
 }elseif(isset($_GET['CLR_CACHE'])){
 	$smarty->clear_all_cache();
 	$smarty->clear_compiled_tpl();	
@@ -271,6 +271,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	if($created) $_SESSION['GALLERY_CREATED'] = true;
 	else $_SESSION['GALLERY_CREATE_ERROR'] = true;
 
+	$smarty->clear_cache(null,'gallery');
 	$smarty->clear_cache('panel.tpl');
 
 	redir('panel','panel'); die();
@@ -331,9 +332,9 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	$smarty->clear_all_cache();
 
 	// Cache is not cleaned correctly O_o
-	$smarty->clear_cache('gallery_gallery.tpl',$gallery);
-	$smarty->clear_cache('gallery_goto.tpl',$gallery);
-	$smarty->clear_cache('gallery.tpl',$gallery);
+	$smarty->clear_cache(null,'gallery_gallery');
+	$smarty->clear_cache(null,'gallery_goto');
+	$smarty->clear_cache(null,'gallery');
 	$smarty->clear_cache('panel.tpl');
 
 	redir('gallery',$gallery); die();

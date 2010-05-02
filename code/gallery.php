@@ -84,13 +84,9 @@ if(isset($_GET['IMAGE'])&&isset($_GET['token'])){
 
 	$directory = GALLERY_PATH . "$getgallery";
 
-	// Get Page by Session or Cookie
-	$get_page = $_SESSION['gallery_page'];
-	if($get_page[0] == $_GET['gallery_page']) $page = $get_page[1];
-	else $page = 1;
-
 	// Gets the Number of page. If not give, default is '1' 
-	if(isset($_GET['page'])) $getpage = $_GET['page'];
+	if(isset($_SESSION['gallery_page'][$getgallery]) && !isset($_GET['page'])) $getpage = $_SESSION['gallery_page'][$getgallery];
+	elseif(isset($_GET['page'])) $getpage = $_GET['page'];
 	else $getpage = 1;
 
 	// Enable Smarty Cache
@@ -99,16 +95,16 @@ if(isset($_GET['IMAGE'])&&isset($_GET['token'])){
 	$dirconf = getgalconf($directory);
 	$title = str_replace("\"","",$dirconf[0]);
 
-	if(!$smarty->is_cached('gallery_gallery.tpl',"$getgallery|$getpage")){
+	if(!$smarty->is_cached('gallery_gallery.tpl',"gallery_gallery|$getgallery|$getpage")){
 
-		$dircontents = getgallerycontents($directory,$page,$dirconf[1]);
+		$dircontents = getgallerycontents($directory,$getpage,$dirconf[1]);
 
 		if($dircontents != null){
 
 			$numpage = $dircontents['numpage'];
 			$list = $dircontents['list'];
 			$imp = $dircontents['imp'];
-			$pages = round(count($list) / $imp);
+			$getpages = round(count($list) / $imp);
 			
 			if(preg_match("/[0-9]+/",$getpage)>0) $smarty->assign('PAGE',page($getpage,$imp));
 			else $smarty->assign('PAGE',1);
@@ -122,8 +118,11 @@ if(isset($_GET['IMAGE'])&&isset($_GET['token'])){
 		}
 	}
 
-	$ajax_url = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH.'/gallery.php?gallery='.$getgallery.'&amp;AJAX&amp;page='.$page;
+	$ajax_url = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH.'/gallery.php?gallery='.$getgallery.'&amp;AJAX&amp;page='.$getpage;
 	$ajax_block = 'gallery_content';
+
+	$smarty->assign('CREATED',filemtime($directory . '/.name'));
+	$smarty->assign('UPDATED',filemtime($directory));
 
 	$smarty->assign('AJAX_URL',$ajax_url);
 	$smarty->assign('AJAX_BLOCK',$ajax_block);
@@ -153,23 +152,22 @@ if(isset($_GET['IMAGE'])&&isset($_GET['token'])){
 // AJAX mode
 if(isset($_GET['AJAX'])){
 
-	$_SESSION['gallery_page'] = array($_GET['gallery'],$_GET['page']);
+	$_SESSION['gallery_page'] = array($_GET['gallery']=>$_GET['page']);
 
-	$page = $_GET['page'];
-	if($page < 1 || $page == null) $page = 1;
+	if($getpage < 1 || $getpage == null) $getpage = 1;
 
-	$start = (($page - 1) * $imp);
-	$prev = ($page - 1);
-	$next = ($page + 1);
+	$start = (($getpage - 1) * $imp);
+	$prev = ($getpage - 1);
+	$next = ($getpage + 1);
 
-	$smarty->assign('PAGE',$page);
+	$smarty->assign('PAGE',$getpage);
 	$smarty->assign('START',$start);
 	$smarty->assign('PREV',$prev);
 	$smarty->assign('NEXT',$next);
 	$smarty->assign('IPP',$imp);
 
 	$smarty->caching = 2;$smarty->cache_lifetime = 3600;
-	$smarty->display('gallery_gallery.tpl',"$getgallery|$page");
+	$smarty->display('gallery_gallery.tpl',"gallery_gallery|$getgallery|$getpage");
 	die();
 
 // Feed mode (template is for now empty)
@@ -205,7 +203,7 @@ if(isset($_GET['AJAX'])){
 	$smarty->display('sidebar_f.tpl');
 
 	$smarty->caching = 2;$smarty->cache_lifetime = 2592000;
-	$smarty->display('gallery.tpl',$getgallery);
+	$smarty->display('gallery.tpl',"gallery|$getgallery");
 
 	$smarty->display('footer.tpl');
 }

@@ -9,6 +9,8 @@ unset_global_var('blog_entry_error');
 unset_global_var('blog_entry_saved');
 unset_global_var('blog_post_error');
 unset_global_var('blog_post_saved');
+unset_global_var('blog_comment_deleted');
+unset_global_var('blog_comment_not_deleted');
 unset_global_var('CLEANED');
 unset_global_var('comment_empty');
 unset_global_var('comment_exceeds');

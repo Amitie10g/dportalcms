@@ -70,17 +70,39 @@ if(isset($_GET['NEW']) && $user_admin){
 
 	$entry = $_GET['entry'];
 
-	// Cleaning all cache, because the Cache bellow is not cleaned
-	$smarty->clear_all_cache();	
+	$smarty->clear_cache('feed_atom_index.tpl');
+	$smarty->clear_cache(null,'blog_index');
+	$smarty->clear_cache(null,$entry);
 
-	$smarty->clear_cache('blog_index.tpl');
-	$smarty->clear_cache('blog_entry_comments.tpl',$entry);
-	$smarty->clear_cache('blog_entry_content.tpl',$entry);
-	$smarty->clear_cache('feed_xml.tpl');
-	
-	if(delete_entry($entry))$_SESSION['blog_entry_deleted'] = true;
+	if(delete_entry($entry)) $_SESSION['blog_entry_deleted'] = true;
 
 	redir('blog','blog'); die();
+	
+// Moderate comments mode
+}elseif(isset($_GET['DELETE_COMMENTS']) && $user_admin){
+
+	$id = $_POST['entry'];
+	$comments = $_POST['comments'];
+	$action = $_POST['action'];
+	
+	$name = get_post_name($id);
+
+	$smarty->clear_cache('feed_atom_index.tpl');
+	$smarty->clear_cache(null,'blog_index');
+	$smarty->clear_cache(null,$id);
+
+	if($id != null && $comments != null){
+		if(moderate_comments($id,$comments,0)) $moderated = true;
+	}
+	
+	$smarty->clear_cache(null,"blog_comments|$id");
+	
+	clearstatcache(true,COMMENTS_PATH . $id);
+	
+	if($moderated) $_SESSION['blog_comment_deleted'] = true;
+	else $_SESSION['blog_comment_not_deleted'] = true;
+
+	redir('blog_entry',$name,null,null,'comments'); die();
 
 // Publish/update mode
 }elseif(isset($_GET['POST'])  && $user_admin){
@@ -118,43 +140,40 @@ if(isset($_GET['NEW']) && $user_admin){
 	if($posting) $_SESSION['blog_entry_saved'] = true;
 	else $_SESSION['blog_entry_error'] = true;
 
-	// Cleaning all cache, because the Cache bellow is not cleaned
-	$smarty->clear_all_cache();	
-
-	$smarty->clear_cache('feed_xml.tpl');
-	$smarty->clear_cache('blog_index.tpl');
-	$smarty->clear_cache('blog_entry_content.tpl',$id);
+	$smarty->clear_cache(null,'blog_index');
+	$smarty->clear_cache(null,"blog_comments|$id");
+	$smarty->clear_cache("blog_entry_content.tpl",$id);
 
 	// Redir to the Entry
-	redir('blog_entry',$name,null,null,"comments");die();
+	redir('blog_entry',$name,null,null,"comments"); die();
 
 // Publish comment mode
 }elseif(isset($_GET['POST_COMMENT'])){
 
-    // Get the data form GET
-    $id = $_POST['id'];
-	  $name = $_POST['name'];
-    $nick = stripslashes($_POST['nick']);
-    $email = stripslashes($_POST['email']);
-    $url = stripslashes($_POST['url']);
-    $comment = stripslashes($_POST['comment']);
-    $timestamp = time();
+	// Get the data form GET
+	$id = $_POST['id'];
+	$nick = stripslashes($_POST['nick']);
+	$email = stripslashes($_POST['email']);
+	$url = stripslashes($_POST['url']);
+	$comment = stripslashes($_POST['comment']);
+	$timestamp = time();
+	
+	$name = get_post_name($id);
 
-    $posting = blog_post_comment($id,$timestamp,$nick,$comment,$email,$url);
+	$posting = blog_post_comment($id,$timestamp,$nick,$comment,$email,$url);
 
-    if($posting) $_SESSION['blog_post_saved'] = true;
-		else $_SESSION['blog_post_error'] = true;
+	if($posting) $_SESSION['blog_post_saved'] = true;
+	else $_SESSION['blog_post_error'] = true;
 
-		// Cleaning all cache, because the Cache bellow is not cleaned
-		$smarty->clear_all_cache();	
+	$smarty->clear_cache(null,"blog_comments|$id");
+	
+	clearstatcache(true,COMMENTS_PATH . $id);
 
-		//$smarty->clear_cache('blog_entry_comments.tpl',$id);
-
-    // Dedir to the Entry page, comments section
-		if($posting) redir('blog_entry',$name,null,null,'comments');
-		else redir('blog_entry',$name,null,null,'comment');
+	// Dedir to the Entry page, comments section
+	if($posting) redir('blog_entry',$name,null,null,'comments');
+	else redir('blog_entry',$name,null,null,'comment');
 		
-		die();
+	die();
 
 // Entry mode
 }elseif(isset($entry_name) &&!isset($_GET['EDIT']) && !isset($_GET['FEED'])){
@@ -166,52 +185,52 @@ if(isset($_GET['NEW']) && $user_admin){
 	$page = $_GET['page'];
 	if($_GET['page'] < 1) $page = 1;
 
-	if(!$smarty->is_cached('blog_entry_comments.tpl',$page)){
+	$get_entry = get_blog_entry($entry_name);
 
-		$get_entry = get_blog_entry($entry_name);
+	if($get_entry != false){
 
-		if($get_entry != false){
+		$smarty->caching = true;
 
-			$comments_per_page = 10;
-			$start = (($page - 1) * $comments_per_page);
-			$prev = ($page - 1);
-			$next = ($page + 1);
+		$comments_per_page = 10;
+		$start = (($page - 1) * $comments_per_page);
+		$prev = ($page - 1);
+		$next = ($page + 1);
 	
-			$title = $get_entry['title'];
-			$id = $get_entry['id'];
-			$name = $get_entry['name'];
-			$file = $get_entry['file'];
-			$tags = $get_entry['tags'];
+		$title = $get_entry['title'];
+		$id = $get_entry['id'];
+		$name = $get_entry['name'];
+		$file = $get_entry['file'];
+		$tags = $get_entry['tags'];
 		
-			$comments = get_comments_post($id);
+		if(!$smarty->is_cached("blog_entry_comments.tpl","blog_comments|$id|$page") || $user_admin) $comments = get_comments_post($id);
+		elseif(filesize(COMMENTS_PATH.$id) === 0) $comments = false;
 
-			$total = count($comments);
+		$total = count($comments);
 
-			if($start > $total){
-				header('HTTP/1.1 307 Redirection');
-				redir('blog_entry',$name); die();
-			}
-	
-			$smarty->assign('PAGE',$page);
-			$smarty->assign('START',$start);
-			$smarty->assign('PREV',$prev);
-			$smarty->assign('NEXT',$next);
-			$smarty->assign('CPP',$comments_per_page);
-
-			$smarty->assign('ID',$id);
-			$smarty->assign('NAME',$name);	
-			$smarty->assign('FILE',$file);
-			$smarty->assign('TAGS',$tags);
-			$smarty->assign('TITLE',$title);
-	
-			$smarty->assign('COMMENTS',$comments);
-			
-			$smarty->assign('IS_ENTRY',true);
-	
-		}else{
-			header('HTTP/1.1 404 Not found');
-			$smarty->assign('TITLE',"Not found");
+		if($start > $total){
+			header('HTTP/1.1 307 Redirection');
+			redir('blog_entry',$name); die();
 		}
+	
+		$smarty->assign('PAGE',$page);
+		$smarty->assign('START',$start);
+		$smarty->assign('PREV',$prev);
+		$smarty->assign('NEXT',$next);
+		$smarty->assign('CPP',$comments_per_page);
+
+		$smarty->assign('ID',$id);
+		$smarty->assign('NAME',$name);	
+		$smarty->assign('FILE',$file);
+		$smarty->assign('TAGS',$tags);
+		$smarty->assign('TITLE',$title);
+	
+		$smarty->assign('COMMENTS',$comments);
+		
+		$smarty->assign('IS_ENTRY',true);
+	
+	}else{
+		header('HTTP/1.1 404 Not found');
+		$smarty->assign('TITLE',"Not found");
 	}
 
 	// :: Output
@@ -241,8 +260,9 @@ if(isset($_GET['NEW']) && $user_admin){
 		$smarty->display('blog_entry_content.tpl',$id);
 		$smarty->caching = false;
 		$smarty->display('blog_entry_comments_h.tpl');
+		if($IS_ADMIN) $smarty->display('blog_entry_comments_moderate.tpl');
 		$smarty->caching = 2;$smarty->cache_lifetime = 262800;
-		$smarty->display('blog_entry_comments.tpl',"$id|$page");
+		$smarty->display('blog_entry_comments.tpl',"blog_comments|$id|$page");
 		$smarty->caching = false;
 		$smarty->display('blog_entry_comments_f.tpl');
 		$smarty->display('blog_entry_form.tpl');
@@ -351,7 +371,7 @@ if(isset($_GET['NEW']) && $user_admin){
 	$smarty->display('sidebar_c.tpl');
 	$smarty->display('sidebar_f.tpl');
 	$smarty->caching = 2;$smarty->cache_lifetime = 262800;
-	$smarty->display('blog_index.tpl',$page);
+	$smarty->display('blog_index.tpl',"blog_index|$page");
 	$smarty->caching = false;
 	$smarty->display('footer.tpl');
 

@@ -152,96 +152,16 @@ function getvideo($filename,$use_streaming = null){
 // array getvideoinfo(string filename)
 function getvideoinfo($filename){
 
+	if(!class_exists("ffmpeg_movie")) return false;
+
 	if(!is_readable($filename) || !is_file($filename)) return false;
 
 	$filename_hq = str_replace('.flv','_hq.flv',$filename);
 
-	if(($movie = new ffmpeg_movie($filename)) == false) return false;
+	$movie = new ffmpeg_movie($filename);
 	$movie_hq = new ffmpeg_movie($filename_hq);
 
 	return array('duration'=>$movie->getDuration(),'filesize'=>round((filesize($filename)/1048576),1),'filesize_hq'=>round((filesize($filename_hq)/1048576),1),'rate'=>round($movie->getBitRate() / 1024),'rate_hq'=>round($movie_hq->getBitRate()/1024));
-}
-
-/* Output a Video with Streamingh support
- *
- * This function performas a Streaming Video, by seeking
- * position of a particular place form Media Player. This
- * function output the Vioeo form these place.
- *
- * This function was be obtained form some examples about
- * Streaming FLV, and I put them into a Function. Please find
- * on Internet for more information.
- *
- * Parameters:
- *
- *	Filename: The full path to the Video.
- *
- * Returned values:
- *
- *	Returns BOOLEAN true if all are correct.
- *	If an error ocurrs (as the Filename does not exists or
- *	can't be opened for Reading) Return value is BOOLEAN false.
- *
- * Note: Position are given form $_GET['pos'], that is Global
- *
- */
-
-// bool streaming_download($filename);
-function streaming_download($filename){
-
-	$ext = strrchr($filename, ".");
-
-	if (($filename != "") && (file_exists($filename)) && ($ext==".flv")) {
-
-	// ----- NO CACHE -----
-	session_cache_limiter('nocache');
-
-	// General header for no caching
-	$now = gmdate('D, d M Y H:i:s') . ' GMT';
-	header('Expires: ' . $now); // rfc2616 - Section 14.21
-	header('Last-Modified: ' . $now);
-	header('Cache-Control: no-store, no-cache, must-revalidate, pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
-	header('Pragma: no-cache'); // HTTP/1.0
-
-	// ----- Seek position -----
-	$seekat = 0;
-	if (isset($_GET["pos"])) {
-		$position = $_GET["pos"];
-		if (is_numeric ($position)) {
-			$seekat = intval($position);
-		}
-		if ($seekat < 0) $seekat = 0;
-	}
-
-		header("Content-Type: video/x-flv");
-		header("Content-Disposition: attachment; filename=\"" . basename($filename) . "\"");
-		
-		//Be sure to post the correct Content Length.
-		if ($seekat > 0) header('Content-Length: ' . (filesize($filename)-$seekat));
-		else header('Content-Length: ' . filesize($filename));
-		
-		if ($seekat != 0) {
-			print("FLV");
-			print(pack('C', 1 ));
-			print(pack('C', 1 ));
-			print(pack('N', 9 ));
-			print(pack('N', 9 ));
-		}
-
-		$fh = @fopen($filename, "rb");
-		if(!$fh) return false;
-
-		fseek($fh, $seekat);
-		fpassthru($fh);
-		fclose($fh);
-
-		return true;
-
-	}else{
-		header('http/1.1 404: Not found');
-		echo 'Not found';
-		return false;
-	}
 }
 
 /* Generate and output a Thumbnail of a Video.
@@ -284,14 +204,13 @@ function streaming_download($filename){
 // bool getvideothumb(string path_to_video[, int frame[, bool to_file]])
 function getvideothumb($video, $frame = null, $to_file = true){
 
+	// If ffmpeg_frame Chass does not exist, use
+	// an alternative, generic image.
+	if(!class_exists("ffmpeg_frame")) return generic_img();
+
 	if(!file_exists($video)) return false;
 
 	header('content-type:image/jpeg');
-
-	if(!class_exists('ffmpeg_movie')){
-		generic_img();
-		return false;
-	}
 
 	// Reads the Dumped Thumbnail instead of calling FFMPEG functions
 	$thumb = IMAGES_PATH.'thumbs/'.base64_encode(basename($video));
@@ -359,8 +278,90 @@ function clear_thumbs(){
 }
 
 function generic_img(){
-	//header('content-type:image/png');
-	die();
+	header('content-type:image/png');
+	return @readfile(IMAGES_PATH . 'thumbs/generic_video.jpg');
+}
+
+/* Output a Video with Streamingh support
+ *
+ * This function performas a Streaming Video, by seeking
+ * position of a particular place form Media Player. This
+ * function output the Vioeo form these place.
+ *
+ * This function was be obtained form some examples about
+ * Streaming FLV, and I put them into a Function. Please find
+ * on Internet for more information.
+ *
+ * Parameters:
+ *
+ *	Filename: The full path to the Video.
+ *
+ * Returned values:
+ *
+ *	Returns BOOLEAN true if all are correct.
+ *	If an error ocurrs (as the Filename does not exists or
+ *	can't be opened for Reading) Return value is BOOLEAN false.
+ *
+ * Note: Position are given form $_GET['pos'], that is Global
+ *
+ */
+
+// bool streaming_download($filename);
+function streaming_download($filename){
+
+	$ext = strrchr($filename, ".");
+
+	if (($filename != "") && (file_exists($filename)) && ($ext==".flv")) {
+
+		// ----- NO CACHE -----
+		session_cache_limiter('nocache');
+
+		// General header for no caching
+		$now = gmdate('D, d M Y H:i:s') . ' GMT';
+		header('Expires: ' . $now); // rfc2616 - Section 14.21
+		header('Last-Modified: ' . $now);
+		header('Cache-Control: no-store, no-cache, must-revalidate, pre-check=0, post-check=0, max-age=0'); // HTTP/1.1
+		header('Pragma: no-cache'); // HTTP/1.0
+
+		// ----- Seek position -----
+		$seekat = 0;
+		if (isset($_GET["pos"])) {
+			$position = $_GET["pos"];
+			if (is_numeric ($position)) {
+				$seekat = intval($position);
+			}
+			if ($seekat < 0) $seekat = 0;
+		}
+
+			header("Content-Type: video/x-flv");
+			header("Content-Disposition: attachment; filename=\"" . basename($filename) . "\"");
+		
+			//Be sure to post the correct Content Length.
+			if ($seekat > 0) header('Content-Length: ' . (filesize($filename)-$seekat));
+			else header('Content-Length: ' . filesize($filename));
+		
+			if ($seekat != 0) {
+				print("FLV");
+				print(pack('C', 1 ));
+				print(pack('C', 1 ));
+				print(pack('N', 9 ));
+				print(pack('N', 9 ));
+			}
+
+			$fh = @fopen($filename, "rb");
+			if(!$fh) return false;
+
+			fseek($fh, $seekat);
+			fpassthru($fh);
+			fclose($fh);
+
+			return true;
+
+	}else{
+		header('http/1.1 404: Not found');
+		echo 'Not found';
+		return false;
+	}
 }
 
 ?>

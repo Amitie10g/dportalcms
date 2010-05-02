@@ -3,16 +3,20 @@
      <title type="text">{{$LANG.blog_entries}}Blog entries :: {{$SITENAME|default:'DPortal CMS'}}</title>
      <link rel="alternate" type="text/html" hreflang="en" href="{{LINK script="blog"}}"/>
      <link rel="self" type="application/atom+xml" href="{{LINK script="blog_feed"}}"/>
+     <id>tag:{{$smarty.server.SERVER_NAME}},{{$ENTRIES.0.id|date_format:"%Y-%m-%d"}}:blog/</id>
+     <updated>{{$ENTRIES.0.updated|date_format:"%Y-%m-%dT%H:%M:%SZ"}}</updated>
 
 {{section name="entries" loop=$ENTRIES}}
      <entry>
        <title>{{$ENTRIES[entries].title}}</title>
        <link rel="alternate" type="text/html" href="{{LINK section=$ENTRIES[entries].name script='blog_entry'}}"/>
-       <id>tag:example.org,2003:3.2397</id>
+       <id>tag:{{$smarty.server.SERVER_NAME}},{{$ENTRIES[entries].id|date_format:"%Y-%m-%d"}}:{{$ENTRIES[entries].name}}</id>
        <updated>{{$ENTRIES[entries].updated|date_format:"%Y-%m-%dT%H:%M:%SZ"}}</updated>
        <published>{{$ENTRIES[entries].updated|date_format:"%Y-%m-%dT%H:%M:%SZ"}}</published>
-
-        <content type="xhtml" xml:lang="en"
+       <author>
+	<name>{{$PHPBB_USERNAME|default:"Administrator"}}</name>
+       </author>
+        <content type="html" xml:lang="en"
         xml:base="http://diveintomark.org/">
          {{fetch2 file=$ENTRIES[entries].file truncate=200}}
        </content>

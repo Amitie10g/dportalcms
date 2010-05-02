@@ -28,7 +28,7 @@ if(isset($_GET['file'])){
 		$video = VIDEOS_PATH.base64_decode(str_replace('.flv','',basename($_GET['file'])));
 		getvideo($video, true); die();
 	}else{
-		header('http/1.1 403 Forbidden'); die('Please login');
+		header('http/1.1 403 Forbidden'); die('Access denied. Please login');
 	}
 
 // Thumbnail mode
@@ -90,7 +90,6 @@ if(isset($_GET['file'])){
 		$include_file = 'playlist.tpl';
 		
 	}else{
-
 		$section = 'not_found';
 
 		header('http/1.1: 404 not found');

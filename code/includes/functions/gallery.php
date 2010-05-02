@@ -27,7 +27,7 @@ function getgallerycontents($directory,$page,$images_per_page) {
 				$uri = base64_encode("$directory;$filename");
 				$name = explode('.',$filename);
 				$mime = image_type_to_mime_type(exif_imagetype("$directory/$filename"));
-				$list[] = array('filename'=>$filename,'desc'=>$name[0],'ext'=>$name[1],'uri'=>$uri,'mimetype'=>$mime);
+				$list[] = array('filename'=>$filename,'desc'=>$name[0],'ext'=>$name[1],'uri'=>$uri,'mimetype'=>$mime,'updated'=>filemtime("$directory/$filename"));
 			}
 		}
 		

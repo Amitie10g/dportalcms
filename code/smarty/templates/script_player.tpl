@@ -31,3 +31,4 @@
 		swfobject.embedSWF("{{$smarty.const.DPORTAL_PATH}}/player/player.swf", "player", "{{if $HQ}}640{{else}}400{{/if}}", "{{if $HQ}}380{{else}}245{{/if}}", "9.0.0", "playerProductInstall.swf", flashvars, params, attributes);
 
 </script>
+

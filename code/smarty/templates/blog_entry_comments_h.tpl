@@ -10,3 +10,4 @@
 		{{BLOG_MESSAGE stype='comment' dtype=$MESSAGE.0 message=$MESSAGE.1}}
 		<div class="blog_commens">
 		<h3 style="text-align:center">{{$LANG.comments|ucfirst}}</h3>
+
