@@ -1,0 +1,13 @@
+Place your 'own Fucntions' here. These will be automaticaly
+included on 'config.php' file and may be Functions or Classes.
+
+Only files with '.php' extension, without any other character
+after will be included. 'video.php', 'image.class.php' are
+valid filenames, but 'panel' (wihtout extension)
+or 'foobar.php~' (backup copy) or any file with other extension
+(as this file) will not be included.
+
+Any error on these files affect the entry site! Please don't
+delete the files included in the distribution!!!
+
+You can delete this file safetly.
