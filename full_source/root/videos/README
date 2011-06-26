@@ -1,0 +1,3 @@
+If possible, place this directory OUTSIDE of
+your Public access HTML directory,  and edit
+/config/constants.php to reflect the change.

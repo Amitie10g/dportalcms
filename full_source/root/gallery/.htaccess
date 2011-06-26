@@ -1,0 +1,9 @@
+RewriteEngine On
+RewriteRule ^([^/]+)\.html$ ../gallery.php?gallery=$1
+RewriteRule ^([^/]+)_feed\.xml$ ../gallery.php?FEED&gallery=$1
+RewriteRule ^([^/]+)_ajax$ ../gallery.php?AJAX&gallery=$1
+RewriteRule ^([^/]+)_ajax/page:([^/]+)$ ../gallery.php?AJAX&gallery=$1&page=$2
+RewriteRule ^$ ../gallery.php
+RewriteRule ^([^/]+)_orig\.(jpg|gif|png)$ ../gallery.php?IMAGE&token=$1&ORIG
+RewriteRule ^([^/]+)_prev\.(jpg|gif|png)$ ../gallery.php?IMAGE&token=$1&PREV
+RewriteRule ^([^/]+)\.(jpg|gif|png)$ ../gallery.php?IMAGE&token=$1

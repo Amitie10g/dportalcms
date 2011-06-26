@@ -1,0 +1,11 @@
+RewriteEngine On
+RewriteRule ^$ ../tv.php
+RewriteRule ^page:([^/]+)$ ../tv.php?page=$1
+RewriteRule ^([^/]+)/$ ../tv.php?playlist=$1
+RewriteRule ^([^/]+)/page:([^/]+)$ ../tv.php?playlist=$1&page=$2
+RewriteRule ^([^/]+)/([^/]+)_hq\.html$ ../tv.php?playlist=$1&video=$2&HQ
+RewriteRule ^([^/]+)/([^/]+)\.html$ ../tv.php?playlist=$1&video=$2
+RewriteRule ^([^/]+)/([^/]+)\.jpg$ ../tv.php?THUMB&video=$2
+RewriteRule ^([^/]+)/([^/]+)_hq\.flv$ ../tv.php?file=$2&HQ
+RewriteRule ^([^/]+)/([^/]+)\.flv$ ../tv.php?file=$2
+RewriteRule ^([^/]+)/download:([^/]+)\.flv$ ../tv.php?file=$2&DOWNLOAD
