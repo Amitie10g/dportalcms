@@ -1,0 +1,91 @@
+DPortal CMS - Installation
+
+DPortal CMS is easy to install. Only follow this instructions.
+
+1.- Upload the directories "root" and "libs"
+
+	* "root" contains the scripts to be executed in the Web Server.
+   These files must be uploaded inside the DocumentRoot (eg /var/www).
+
+	* "libs" directory contains the libraries and contents files.
+	  For security purposes, this directory should be placed outta
+	  the DocumentRoot directory (eg /var/lib/dportalcms).
+   
+	Be sure than the files and directories have the proper permissions.
+ 
+	* "root/config" must be (temporary) writable, in order to write the
+	  "config.inc.php" file. Once installed, you may consider to change
+	  the permissions of "root/config" directory to read-only.
+   
+	* "libs/dportalcms_default" is the contents directory, and must be writable.
+	
+	For security reasosn, you must consider than the rest of the directories
+	be read-only.
+	
+2.- Installation.
+
+	Once uploaded, go to "install/index.php" and follow the instructions.
+	Here is an explanation of the fields and options available.
+	
+	* Site name: You should provide this information.
+	  50 characters is allowed, and must indicate the name of your Website.
+ 
+	* Site description: A description of your Website. This text will be placed
+	  in META tags. 200 characters is alowed, and you should provide a clear
+	  description of your website, and also some keywords for search engines.
+	  
+	* Admin Email: Your email address.
+	
+	* Language: The language used. Currently, only English is available and
+	  this option is disabled by default.
+	  
+	* Use Canonical URL: You enable can frindly URL, or formelly Canonical URL.
+	  This will replace the "index.php?section=home" to "home.html" in the
+	  address bar, and will be translated internally. In order to enable this
+	  feature, your Webserver should have the "mod_rewrite" and the
+	  AllowOverride directive enabled (simple words, enable the use of
+	  .htaccess files).
+	  
+	* Memcached server and Memcached port: To enable Memcached, fill these
+	  fields with the Mmecached server and Memcached port. Leave blank
+	  to disable Memcached support and use the default Caching-on-Files.
+	  
+	* Username and Passwords: Obvious!
+	  This is obligatory, even if you will use phpBB.
+	
+	* Nick: Optional, to use a Nickname different than the Username.
+	
+	* phpBB path: If you want to use phpBB, you can enable them here.
+	  This path is relative to DocumentRoot (eg "/forum/"). Don't forget
+	  to include the two slashes in extremes on the directory name!
+	  
+	* Site ID: The Site identificator, a code generated automatically. Really
+	  inteded to be used in multiple installations in a shared Webserver.
+	  The directory "libs/dportalcms_default" contains the Contents files.
+	  This directory must be renamed with the Site ID resultant code;
+	  replace the "default" part of the directory name, with the site_ID
+	  (eg dportalcms_23xcf642f4). Don't forget to rename the directory
+	  BEFORE proced to the installation, or DPortal CMS will have an error.
+	  
+	* Use the Default Site ID: If you don't want to use an auto-generated
+	  Site ID, you can use the Default site ID (that is "default" in the
+	  "dportalcms_default" directory; then, changing the name of thees
+	  directory is not necesary.
+	  
+	* DPortal Absolute path: Read-only field. This is provided only for
+	  reference purposes, and to be used for the rest of the path config.
+	  
+	* DocumentRoot: The actual DocumentRoot directory. You should indicate
+	  the DocumentRoot path here, because the DocumentRoot constant declared
+	  in Apache may not reflex the real path of them.
+	  
+	* Libraries Path: The directory when is stored the Libraries.
+	  For security purposes, this directory SHOULD be plabed outside the
+	  DocumentRoot (not accesible by the world).
+	  
+3.- Check the parameters before procede the Installation.
+
+4.- Once installed, rename or delete the "install" directory.
+
+5.- Enjoy!
+	  
