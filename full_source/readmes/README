@@ -1,0 +1,257 @@
+= "DPortal CMS", CMS for personal Web pages, without Database engine. =
+
+PLEASE READ CAREFULLY THE ENTRY TEXT IN THIS FILE
+AND THE OTHERS README FILES BEFORE INSTALL!
+
+FOR INSTALATION INTRUCTIONS, SEE "INSTALL"
+
+== The DPortal CMS Project ==
+
+=== License and disclamier ===
+
+DPortal CMS
+All scripts and templates written by the Autor except
+the third party code, Copyright (C) 2008-2011 Davod.
+
+This program is Free Software: you can redistribute it and/or modifyit under the terms of the GNU General Public License as published bythe Free Software Foundation, either version 3 of the License, or(at your option) any later version.
+This program is distributed in the hope that it will be useful,but WITHOUT ANY WARRANTY; without even the implied warranty ofMERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See theGNU General Public License for more details.You should have received a copy of the GNU General Public Licensealong with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+This document, Copyright (c) 2009-2010, Davod.
+This document and the other README files and Documentation 
+written by the Autor of this Program are distributed under the 
+GNU Free Documentation License.
+
+The third party code are owned by their correspondients authors and
+are distributed under the correspondient licenses. 
+All of them are free licenses and free distributable.
+
+
+Copyright notes:
+
+Please don't remove the Copyright notes in Templates
+(especially 'footer_c.tpl'. You can Comment them with
+HTML comments to hide them to users, but you should't
+comment with PHP or Smarty Comments.
+
+You can't put your Copyright own in this work
+(in Scripts or Templates), overriding or merging the
+original Copyright notes, unless you are a contributor
+that wrote your own code (that you should put your
+Copyright notes and License, and clearly indicate that
+is Thrird-paty code). Modofied versions should be
+marked as them.
+
+
+=== About DPortal CMS ===
+
+DPortal CMS is a Content Management System written in PHP, free and open source,
+that DON'T USE ANY DATABASE ENGINE. Instead, this uses Plain text files for
+Content, and CSV files for configuration and information for the content.
+
+This program use the 'Smarty Template engine', for easily template design and customization.
+
+
+=== Features ===
+
+ * No Database engine required (really nice!)
+ * Easy and cleanly to use and administrate (no useless features)
+ * URL-friendly, with mod_rewrite (if is enabled in server)
+ * Templates fully customizables (manually)
+ * Modular. You can write your own fuctions to enchance the CMS
+ * Integrated with phpBB3 (you can manage a Forum and Portal for your community)
+ * Compression of content files using zlib (if available)
+ * Memcached support (see README_MEMCACHED!)
+ * Printable and PDF version of some pages using FPDF (new!)
+
+
+=== This program include ===
+
+ * 'Main Portal' module, that you can create, edit and delete
+   <<Sections>> (or pages) of your Web site, as well as a Wiki.
+
+ * 'Control Panel', when you can manage your Website easy and cleanly.
+
+ * 'Blog', where you can post your daily live, edit and delete your post,
+   and users can leave comments.
+   It also include Feeds Atom of the 5 last entries (summary),
+   and Feed of each entry (summary).
+
+ * 'Gallery', where you can create a gallery and uploading images easily.
+
+ * 'Media Player', where you can publish Videos as well as Image Gallery.
+
+
+=== State of project ===
+
+This program is <<still in developement>> and contain many Bugs,
+but currently is suitable for Personal or Community Websites.
+Currently, this program have de basic functions to run a Web site
+(see Modules bellow). I strongly recommended to don't be use the CMS
+in a Production or Comercial Website.
+
+
+== For people ==
+
+=== Webmasters and administrators ===
+
+If you are a Webmaster, you can setup and manage your Website easily,
+and customize the Templates. Please try DPortal CMS and tell me your experience.
+
+=== Developers ===
+
+If you are a Programmer or Web developer, you can contribute the project
+by adding enhancements or fixing Bugs. I appreciate it.
+
+
+== Requiriments ==
+
+This program need the following software on the server:
+
+ * Apache 2.0 or later (Apache 2.2 or above recommended) or any Webserver
+   that support PHP 4.3 or later.
+ * php 4.3 or later (I strongly recommended to use php5!).
+
+
+Modules and Libraries required/optionals:
+
+ * mod_rewrite (recommended, for URL rewrite)
+ * GD Library (for the Gallery)
+ * zlib library enabled (*)
+ * Zip Library (for Backups) (**)
+ * Memcached libraries and PECL extension installed and enabled (*3)
+ * MING Library (optional) (*4)
+ * FFMPEG and PHP module (optional, to generate thumbnails of videos) (*5)
+
+	(*) zlib ins included in PHP, but, generally, is not enabled by default.
+	Please ask to your Webhosting administrator if zlib is enabled. Otherwise
+	you should modify parts of the code to disable zlib functions calling.
+
+	(**) Please see the PHP Documentation about ZIP in
+	http://www.php.net/book.zip.html
+	
+	You should install Zip via PECL. Please contact with
+	your Webhosting administrator for more information.
+
+	Alternatively, if Zip is not available,
+	this program use ZLib (available soon).
+	
+	(*3) In order to enable Memcached support, Memcached libraries and the
+	PECL extension Memcache(d) should be installed
+
+	(*4) MING Library is the Library to manage SWF and FLV files.
+	Specifically, this program uses the SWFVideoStream class to
+	generate a Streamming Video.
+
+	Unfortunadely, currently this class is undocumented and
+	will not be used in current versions.
+
+	Don't worry, the Videos are downloaded by raw_download() function.
+
+	These Library is not a requisite.
+
+	(*5) Waining: The Thumbnail generation of a video(s) can "eat"
+	huge processor resources in Server, but for once; the image are
+	cached and in future visiting, and the image cached is displayed
+	instead of calling FFMPEG again.
+
+
+Also, this program need the following PHP libraries and clases:
+
+=== Smarty Template engine ===
+
+Smrty2 is included in this package, but I recommend to
+download the latest version of them form the oficial
+Web stie, http://www.smarty.net.
+
+Smarty class and modules is installed in '/libs/smarty_libs'
+directory. If you or your Web site administrator include Smarty
+as part of the Website and is included in php include_path,
+please edit the 'config.php' file to be include the proper class.
+If any scripts launch an error "Cannot redeclare Class Smarty",
+you should edit "config/config.php" and remove the include()
+reference to the Class Smarty.
+
+Also, Smarty is included as part of Debian distribution.
+Please contact to your Webhosting administrator for details.
+
+Warning: This program was not tested with Smarty3!!!
+Please use the latest version of Smarty2
+
+For more information, see the Smarty Documentation
+
+Smarty is distributed under the GNU Lesser General Public License
+
+Website: http://www.smarty.net
+
+
+=== phpBB3 (optional) ===
+
+This program is integrated in phpBB3, the leading Open Source Forum.
+You can manage the Website with the Administrator account of phpBB3
+instead of the Built-in function.
+
+phpBB3 is not included in this package. You should download
+them from the oficial Website (or from cPanel if available) and
+configure properly BEFORE install DPortal CMS.
+
+The '/config/config.inc.php' file contains the phpBBB path, that
+the Administrator configure.
+
+Website: http://www.phpbb.com
+
+=== FPDF (recommended, optional) ===
+
+Blog and Main support PDF version.
+
+This program includes a MODIFIED VERSION of FPDF and HTML2FPDF
+to have proper support in this CMS.
+
+The version of FPDF included (1.52(modified)) is sufficient to
+handle HTML documents properly and you shouldn't consider to update
+these libraries yourself. I will provide updates of these programs.
+
+Website: http://fpdf.sourceforge.net
+         http://html2fpdf.sourceforge.net
+
+Find FPDF in PECL repository.
+
+
+=== TinyMCE (Editor) ===
+
+TinyMCE is a WYSIWYG Editor fully featured, compatible with XHTML.
+This CMS include the version 2 of the program, and a script for
+XHTML Strict compatibility.
+
+Oviously, you can use your favorite WYSIWYG Editor. Be sure to edit the
+Templates that use the Editor ('editor_h.tpl', 'editor_f.tpl', 'blog_edit.tpl')
+
+TinyMCE is distributed under the GNU lesser General Public License
+
+TinyMCE is also available as part of Debian distribution
+
+Website: http://tinymce.moxiecode.com
+
+=== Highslide JS ===
+
+Highslide JS is a fully featured Javascript library for Image galleries and more.
+
+This program is no included, and you should download from the oficial Website.
+
+These program are distributed under a
+Creative Commons lincense [by-nc], and can be installed
+in any Personal or Non for profit Website without permission.
+For Comercial Websites, you need a paid License. 
+
+Oviously, you can use your favorite Gallery Script.
+If you want to use a Flash gallery, please read README_GALLERY.
+
+== Download, Contact and information ==
+
+ * Wesite with demo: http://dportalcms.org
+
+ * Download from Google Code: http://code.google.com/p/dportalcs/downloads
+ * Update via SVN: svn checkout http://dportalcms.googlecode.com/svn code
+
+For any questions or suggestions, please send your email to <davidkingnt@gmail.com> or to the Group
+
+Please report Bug trought Google Code, section 'Issues'
