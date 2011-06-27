@@ -1,0 +1,5 @@
+#IndexOptions ShowForbidden
+#IndexIgnore *
+#RewriteEngine On
+#RewriteBase /images/
+#RewriteRule ^$ - [F]

@@ -1,0 +1,15 @@
+RewriteEngine On
+RewriteRule ^page:([^/]+)$ ../blog.php?page=$1
+RewriteRule ^$ ../blog.php
+RewriteRule ^edit:([^/]+)$ ../blog.php?EDIT&entry=$1
+RewriteRule ^delete:([^/]+)$ ../blog.php?DELETE&entry=$1
+RewriteRule ^([^/]+)_([^/]+)\.html$ ../blog.php?entry=$1&page=$2
+RewriteRule ^([^/]+)\.pdf$ ../blog.php?entry=$1&PDF
+RewriteRule ^([^/]+)\.html$ ../blog.php?entry=$1
+RewriteRule ^([^/]+)\.html/([0-9]+)$ ../blog.php?entry=$1&start=$2
+RewriteRule ^atom\.xml$ ../blog.php?FEED
+RewriteRule ^([^/]+)_atom\.xml$ ../blog.php?FEED&entry=$1
+RewriteRule ^POST_COMMENT$ ../blog.php?POST_COMMENT
+RewriteRule ^NEW$ ../blog.php?NEW
+RewriteRule ^POST$ ../blog.php?POST
+RewriteRule ^DELETE_COMMENTS$ ../blog.php?DELETE_COMMENTS
