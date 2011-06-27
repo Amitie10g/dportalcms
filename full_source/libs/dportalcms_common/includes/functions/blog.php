@@ -117,7 +117,7 @@ function title2name($title){
 
 	// Sets the Name, replacing any non-ASCII character, and delete HTML entities
 	$name = substr_replace(strtolower(
-	preg_replace("/([\s\W]*(&)*((acute|grave|tilde|sup|edill);)*)*/","",htmlentities(utf8_decode($title)))),'',20);
+	preg_replace(array("/([\s\W]*(&)*((acute|grave|tilde|sup|edill);)*)*/","/[\s]/"),"","-",htmlentities(utf8_decode($title)))),'',30);
 	
 	// Check if entry Name exist
 	$chkentries = fopen(ENTRIES_PATH.'.entries', "rb") or die('Missing or inaccesible entries file');

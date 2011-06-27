@@ -78,8 +78,10 @@ if(isset($_GET['file'])){
 	$page = $_GET['page'];
 	if($_GET['page'] < 1) $page = 1;
 
-	if(file_exists(VIDEOS_PATH.$_GET['playlist'].'/.name')){
+	if(file_exists(VIDEOS_PATH.$section.'/.name')){
 
+		if(strpos($_SERVER['REQUEST_URI'],"/media_player/$section/") === false) redir('playlist',$section);
+	
 		// XML based Playlist, for some Players and Distribution	
 		if(isset($_GET['XSPF'])){
 			if(!$smarty->is_cached('playlist_xml.tpl',$section) || $user_admin){

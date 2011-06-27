@@ -2,7 +2,7 @@
 <div class="content"{{if $HQ}} style="width:97.5% !important"{{/if}}>
 <h5 class="invisible">Content</h5>
 <h1 style="margin: 0 0 10px 0">{{$TITLE}}</h1>
-<div style="width:500px;margin:5px auto 10px auto;text-align:center">
+<div style="width:600px;margin:5px auto 10px auto;text-align:center">
 {{section name="pages" loop=$PLAYLIST step=$VPP}}
 {{if $smarty.section.pages.total != 1}}
 {{if $smarty.section.pages.iteration != $PAGE}}<a href="{{LINK script="playlist_goto" section=$smarty.section.pages.iteration page=$smarty.get.playlist}}">{{/if}}
