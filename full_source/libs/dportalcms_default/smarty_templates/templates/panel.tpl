@@ -20,8 +20,6 @@ else obj.style.display = 'block'
 
 //--></script>
 
-
-
   <style type="text/css">
        .titleItem{
           cursor: pointer;
@@ -39,12 +37,31 @@ else obj.style.display = 'block'
        .content p{
           margin: 3px;
        }
+	   
+	   .panel_menu {
+	   	  display:inline;
+		  background: #AAAAFF;
+		  width:130px;
+		  text-align:center;
+		  padding: 5px;
+		  font-weight:bold
+	   }
   </style>
 </head>
 
 <body>
 
-<div style="width:450px;margin:auto">
+<div style="width:600px;margin:10px auto;padding: 10px 0;">
+<div class="panel_menu">General</div>
+<div class="panel_menu">User and Password</div>
+<div class="panel_menu">Sections</div>
+<div class="panel_menu">Gallery</div>
+<div class="panel_menu">Videos</div>
+<div class="panel_menu">Templates</div>
+<div class="panel_menu">Backup</div>
+</div>
+
+<div style="width:600px;margin:auto">
 <h1 style="margin:0 0 10px 0">DPortal CMS {{$LANG.control_panel|ucfirst}}</h1>
 
 <div style="border:2px solid;background:#CCCCCC">
