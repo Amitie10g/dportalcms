@@ -26,7 +26,7 @@
 
 <ul>
 {{section name="entries" loop=$ENTRIES}}
-   <li><a href="{{LINK script="blog_entry" section=$ENTRIES[entries].name}}">{{$ENTRIES[entries].title}}</a></li>
+   <li><a href="{{LINK script="blog_entry" section=$ENTRIES[entries].name}}">{{$ENTRIES[entries].title}}</a> ({{$ENTRIES[entries].published|date_format:"%m/%d/%Y"}})</li>
 {{/section}}
 </ul>
 

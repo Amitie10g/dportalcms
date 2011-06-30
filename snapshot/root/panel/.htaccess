@@ -1,0 +1,35 @@
+RewriteEngine On
+
+RewriteRule ^style/template:([^/]+)$ ../panel.php?tab=style&mode=template&template_file=$1
+RewriteRule ^gallery/edit:([^/]+)$ ../panel.php?tab=gallery&mode=edit&gallery=$1
+RewriteRule ^([^/]+)/([^/]+)$ ../panel.php?tab=$1&mode=$2
+RewriteRule ^general$ ../panel.php?tab=general
+RewriteRule ^user_pass$ ../panel.php?tab=user_pass
+RewriteRule ^sections$ ../panel.php?tab=sections
+RewriteRule ^gallery$ ../panel.php?tab=gallery
+RewriteRule ^videos$ ../panel.php?tab=videos
+RewriteRule ^style$ ../panel.php?tab=style
+RewriteRule ^backup$ ../panel.php?tab=backup
+RewriteRule ^phpinfo$ ../panel.php?PHPINFO
+RewriteRule ^section:edit$ ../panel.php?EDIT
+RewriteRule ^section:create$ ../panel.php?CREATE
+RewriteRule ^section:delete$ ../panel.php?DELETE
+RewriteRule ^category:create$ ../panel.php?CREATE_CATEGORY
+RewriteRule ^category:delete$ ../panel.php?DELETE_CATEGORY
+RewriteRule ^config:update$ ../panel.php?SITE_CONF
+RewriteRule ^template:save$ ../panel.php?TEMPLATE_SAVE
+RewriteRule ^template:save$ ../panel.php?TEMPLATE_SAVE
+RewriteRule ^clear_cache$ ../panel.php?CLR_CACHE
+RewriteRule ^backup:create$ ../panel.php?BACKUP
+RewriteRule ^backup:restore$ ../panel.php?RESTORE
+RewriteRule ^backup:download$ ../panel.php?DOWNLOAD_BACKUP
+RewriteRule ^backup:delete$ ../panel.php?DELETE_BACKUPS
+RewriteRule ^gallery:create$ ../panel.php?CREATE_GALLERY
+RewriteRule ^gallery:delete$ ../panel.php?DELETE_GALLERY
+RewriteRule ^gallery:delete_image$ ../panel.php?DELETE_IMAGE
+RewriteRule ^gallery:upload$ ../panel.php?UPLOAD_GALLERY
+RewriteRule ^video:create$ ../panel.php?CREATE_PLAYLIST
+RewriteRule ^video:upload$ ../panel.php?UPLOAD_VIDEO
+RewriteRule ^video:delete$ ../panel.php?DELETE_VIDEO
+RewriteRule ^video:delete_playlist$ ../panel.php?DELETE_PLAYLIST
+RewriteRule ^([^/]*)$ ../panel.php

@@ -22,6 +22,68 @@ if(!$user_admin){
 	redir('index','home'); die();
 }
 
+$tab = $_GET['tab'];
+$mode = $_GET['mode'];
+$gallery = $_GET['gallery'];
+
+switch($tab){
+	// general mode by default
+	default :
+		$smarty->assign('TAB','general');
+		switch($mode){
+			default			 : $smarty->assign('MODE','site_conf'); break;
+			case 'robotstxt' : $smarty->assign('MODE','robotstxt'); break;
+			case 'robotstxt' : $smarty->assign('MODE','site_conf'); break;
+			case 'phpbb'	 : $smarty->assign('MODE','phpbb'); break;
+			case 'memcached' : $smarty->assign('MODE','memcached'); break;
+		}
+		break;
+	
+	case 'user_pass' :
+		$smarty->assign('TAB','user_pass');
+		break;
+
+	case 'sections' :
+		$smarty->assign('TAB','sections');
+		switch($mode){
+			default			 : $smarty->assign('MODE','edit_sections'); break;
+			case 'create_section'	 : $smarty->assign('MODE','create_section'); break;
+			case 'create_category'	 : $smarty->assign('MODE','create_category'); break;
+			case 'edit_category'	 : $smarty->assign('MODE','edit_category'); break;
+
+		}
+		break;
+
+	case 'gallery' :
+		$smarty->assign('TAB','gallery');
+		switch($mode){
+			default			 : $smarty->assign('MODE','edit'); break;
+			case 'create'	 : $smarty->assign('MODE','create'); break;
+		}
+		break;
+		
+	case 'videos' :
+		$smarty->assign('TAB','videos');
+		switch($mode){
+			default			 : $smarty->assign('MODE','upload'); break;
+			case 'edit'	 : $smarty->assign('MODE','edit'); break;
+			case 'create'	 : $smarty->assign('MODE','create'); break;
+		}
+		break;
+
+	case 'style' :
+		$smarty->assign('TAB','style');
+		switch($mode){
+			default			: $smarty->assign('MODE','edit_style'); break;
+			case 'template': $smarty->assign('MODE','template'); break;
+		}
+		break;
+
+	case 'backup' :
+		$smarty->assign('TAB','backup');
+		break;
+}
+
 // :: Sections manage
 
 // Show phpinfo()
@@ -78,6 +140,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 }elseif(isset($_GET['EDIT'])){
 
 	$file = $_POST['file'];
+	if(!empty($_POST['panel'])) $_SESSION['PANEL'] = true;
 	
 	if($file != null) redir('edit',$file);
 	else redir ('panel','panel');
@@ -108,7 +171,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	$smarty->clear_cache('categories.tpl');
 	$smarty->clear_cache('panel.tpl');
 
-	redir('panel','panel'); die();
+	redir('panel','sections'); die();
 	
 }elseif(isset($_GET['DELETE_CATEGORY'])){
 
@@ -135,7 +198,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 }elseif(isset($_GET['SITE_CONF'])){
 	$get_sitename = $_POST['sitename'];
 	$get_sitedesc = $_POST['sitedesc'];
-	$robotstxt = $_POST['robotstxt'];
+	$get_robotstxt = $_POST['robotstxt'];
 	$get_admin_email = $_POST['admin_email'];
 	$get_admin_nick = $_POST['admin_nick'];
 	$get_phpbb_dir = $_POST['phpbb_dir'];
@@ -168,8 +231,21 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 		$username = sha1($get_username);
 		$password = sha1($get_password);
 	}
+	
+	if(empty($get_sitename)) $get_sitename = $sitename;
+	if(empty($get_sitedesc)) $get_sitedesc = $sitedesc;
+	if(empty($get_robotstxt)) $get_robotstxt = file_get_contents(DPORTAL_ABSOLUTE_PATH . '/robots.txt');
+	if(empty($get_admin_email)) $get_admin_email = $admin_email;
+	if(empty($get_admin_nick)) $get_admin_nick = $admin_nick;
+	if(empty($get_phpbb_dir)) $get_phpbb_dir = $phpbb_dir;
+	if(empty($get_language)) $get_language = $language;
+	if(empty($get_username)) $get_username = $admin_user;
+	if(empty($get_password)) $get_password = $admin_password;
+	if(empty($get_use_rewrite)) $get_use_rewrite = $use_rewrite;
+	if(empty($get_memcached_server)) $get_memcached_server = $memcached_server;
+	if(empty($get_memcached_port)) $get_memcached_port = $memcached_port;
 
-	$saved = update_config($get_sitename,$get_sitedesc,$get_admin_email,$get_admin_nick,$get_language,$robotstxt,$username,$password,$get_phpbb_dir,$get_use_rewrite,$smarty_debugging,$get_memcached_server,$get_memcached_port);
+	$saved = update_config($get_sitename,$get_sitedesc,$get_admin_email,$get_admin_nick,$get_language,$get_robotstxt,$username,$password,$get_phpbb_dir,$get_use_rewrite,$smarty_debugging,$get_memcached_server,$get_memcached_port);
 
 	$smarty->clear_cache('panel.tpl');
 
@@ -194,28 +270,8 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 
 	$smarty->clear_cache('panel.tpl');
 
-	redir('panel','panel'); die();
+	redir('panel',"style/template:$file"); die();
 
-
-// Edite Template mode
-}elseif($_GET['template_file'] != null){
-
-	// Redir to Panel if template does not exist
-	if(!file_exists(SMARTY_TEMPLATES_PATH."templates/".$_GET['template_file']) && $_GET['template_file'] != 'panel.tpl'){
-		$_SESSION['TEMPLATE_NO_EXIST'] = true;
-		redir('panel','panel');
-	}
-
-	// Redirs for Fancy URL
-	if(preg_match("/(\?template_file)/",basename($_SERVER['REQUEST_URI'])) && $use_rewrite){ header('location:'.DPORTAL_PATH.'/panel/template:'.$_GET['template_file']); die(); }
-
-	$name = $_GET['template_file'];
-	$file = SMARTY_TEMPLATES_PATH."templates/$name";
-
-	$smarty->assign('NAME',$name);
-	$smarty->assign('FILE',$file);
-
-	$smarty->display('template_edit.tpl'); die();
 
 // Clear Smarty Cache/ Templates and Thumbnails of Videos (optional)
 }elseif(isset($_GET['CLR_CACHE'])){
@@ -237,7 +293,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 
 	$smarty->clear_cache('panel.tpl');
 
-	redir('panel','panel'); die();
+	redir('panel','backup'); die();
 
 // Restore Backups
 }elseif(isset($_GET['RESTORE'])){
@@ -331,7 +387,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 
 	$smarty->clear_cache('panel.tpl');
 
-	redir('panel','panel'); die();
+	redir('panel','backup'); die();
 
 // Download Backup mode
 }elseif(isset($_GET['DOWNLOAD_BACKUP'])){
@@ -351,7 +407,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 
 	$smarty->clear_cache('panel.tpl');
 
-	redir('panel','panel'); die();
+	redir('panel','backup'); die();
 
 
 // :: Images mode
@@ -372,7 +428,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	$smarty->clear_cache(null,'gallery');
 	$smarty->clear_cache('panel.tpl');
 
-	redir('panel','panel'); die();
+	redir('panel','gallery'); die();
 
 
 // Upload images for Gallery mode
@@ -451,7 +507,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	$smarty->clear_cache('gallery_feed.tpl',$gallery); // Gallery page
 	$smarty->clear_cache('panel.tpl');
 
-	redir('gallery',$gallery); die();
+	redir('panel',"gallery/edit:$gallery"); die();
 
 
 // Delete Image from Gallery
@@ -471,7 +527,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	$smarty->clear_cache('gallery_feed.tpl',$gallery); // Gallery page	
 	$smarty->clear_cache('panel.tpl');
 
-	redir('gallery',$gallery);
+	redir('panel',"gallery/edit:$gallery");
 
 // Delete Gallery
 }elseif(isset($_GET['DELETE_GALLERY'])){
@@ -756,43 +812,79 @@ die('Not implemented yet');
 
 }else{
 
+if(!empty($_GET['template_file'])){
+
+	// Redir to Panel if template does not exist
+	if(!file_exists(SMARTY_TEMPLATES_PATH."templates/".$_GET['template_file']) && $_GET['template_file'] != 'panel.tpl'){
+		$_SESSION['TEMPLATE_NO_EXIST'] = true;
+		redir('panel','panel');
+	}
+
+	// Redirs for Fancy URL
+	if(preg_match("/(\?template_file)/",basename($_SERVER['REQUEST_URI'])) && $use_rewrite){ header('location:'.DPORTAL_PATH.'/panel/style/template:'.$_GET['template_file']); die(); }
+
+	$smarty->register_function('PANEL_MESSAGE','get_panel_message',false);
+
+	$name = $_GET['template_file'];
+	$file = SMARTY_TEMPLATES_PATH."templates/$name";
+
+	$smarty->assign('NAME',$name);
+	$smarty->assign('FILE',$file);
+
+}
+
+if(!empty($_POST['gallery'])){
+	redir('panel','gallery/edit:' . $_POST['gallery']);
+}
+
+if(!empty($gallery)){
+	if(is_readable(DPORTAL_ABSOLUTE_PATH . "/images/gallery/$gallery/.name")){
+		$get_gallery = explode("|",file_get_contents(DPORTAL_ABSOLUTE_PATH . "/images/gallery/$gallery/.name"));
+		$gallery_title = str_replace('"','',$get_gallery[0]);
+		
+		$dircontents = getgallerycontents($gallery,null,null);
+		
+		$smarty->assign('IMAGELIST',$dircontents['list']);
+		$smarty->assign('GALLERY_NAME',$gallery);
+		$smarty->assign('GALLERY_TITLE',$gallery_title);
+	}
+}
+
+
 	$smarty->register_function('PANEL_MESSAGE','get_panel_message',false);
 
 	$smarty->caching = true;
 
-	if(!$smarty->is_cached('panel.tpl')){
+	// Gets the Sections and Templates list
+	$sections = get_sections("all");
+	$categories = get_categories(true);
+	$templates = get_templates();
+	$galleries = get_galleries();
+	$playlists = getshowcase();
+	$backups = get_backup();
+	$langfiles = get_lang_files();
 
-		// Gets the Sections and Templates list
-		$sections = get_sections("all");
-		$categories = get_categories(true);
-		$templates = get_templates();
-		$galleries = get_galleries();
-		$playlists = getshowcase();
-		$backups = get_backup();
-		$langfiles = get_lang_files();
+	// Get list of files to be updated (not implemented)
+	//$files = diff_updated_files();
 
-		// Get list of files to be updated (not implemented)
-		//$files = diff_updated_files();
+	// Iteration for select num of Images per page
+	for($num = 10; $num <= 50;$num++)	$max[] = $num;
 
-		// Iteration for select num of Images per page
-		for($num = 10; $num <= 50;$num++)	$max[] = $num;
+	$smarty->assign('MAX',$max);
 
-		$smarty->assign('MAX',$max);
+	$smarty->assign('USE_REWRITE',$use_rewrite);
+	$smarty->assign('PHPBB_DIR',$phpbb_dir);
 	
-		$smarty->assign('USE_REWRITE',$use_rewrite);
-		$smarty->assign('PHPBB_DIR',$phpbb_dir);
-	
-		$smarty->assign('SECTIONS',$sections);
-		$smarty->assign('CATEGORIES',$categories);		
-		$smarty->assign('TEMPLATES',$templates);
-		$smarty->assign('GALLERIES',$galleries);
-		$smarty->assign('PLAYLISTS',$playlists);
-		$smarty->assign('BACKUPS',$backups);
-		$smarty->assign('LANGFILES',$langfiles);
+	$smarty->assign('SECTIONS',$sections);
+	$smarty->assign('CATEGORIES',$categories);		
+	$smarty->assign('TEMPLATES',$templates);
+	$smarty->assign('GALLERIES',$galleries);
+	$smarty->assign('PLAYLISTS',$playlists);
+	$smarty->assign('BACKUPS',$backups);
+	$smarty->assign('LANGFILES',$langfiles);
 
-		$smarty->assign('SIDEBAR_TEMPLATE',SMARTY_TEMPLATES_PATH.'/templates/sidebar_c.tpl');
-		$smarty->assign('FOOTER_TEMPLATE',SMARTY_TEMPLATES_PATH.'/templates/footer_c.tpl');
-	}
+	$smarty->assign('SIDEBAR_TEMPLATE',SMARTY_TEMPLATES_PATH.'/templates/sidebar_c.tpl');
+	$smarty->assign('FOOTER_TEMPLATE',SMARTY_TEMPLATES_PATH.'/templates/footer_c.tpl');
 
 	$smarty->display('panel.tpl');
 }
