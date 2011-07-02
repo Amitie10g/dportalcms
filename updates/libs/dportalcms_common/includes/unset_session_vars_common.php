@@ -63,6 +63,7 @@ unset_global_var('TEMPLATE_UPDATED');
 unset_global_var('TITLE');
 unset_global_var('title_empty');
 unset_global_var('UPDATED');
+unset_global_var('VIDEO_UPLOADED');
 
 ?>
 

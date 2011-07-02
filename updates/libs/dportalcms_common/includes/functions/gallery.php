@@ -173,7 +173,7 @@ function delete_image($gallery,$images){
 function get_mime_fallback($filename){
 
 	if(is_callable("exif_imagetype") and is_callable("image_type_to_mime_type")){
-		$mime = image_type_to_mime_type(exif_imagetype(GALLERY_PATH . "$gallery/$filename"));
+		$mime = image_type_to_mime_type(exif_imagetype($filename));
 	}else{
 		$file_ext = end(explode(".", $filename));
 	

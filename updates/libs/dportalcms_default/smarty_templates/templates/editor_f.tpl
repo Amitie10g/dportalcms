@@ -20,6 +20,7 @@
 	</textarea></p>
 <p style="margin:0"><input type="hidden" name="file" value="{{$FILENAME}}" /></p>
 <p style="margin:0"><input type="hidden" name="category" value="{{$CATEGORY}}" /></p>
+{{if $PANEL}}<p style="margin:0"><input type="hidden" name="panel" value="1" /></p>{{/if}}
 </form>
 </body>
 </html>

@@ -11,7 +11,6 @@ var searchControl = new
 google.search.CustomSearchControl
 ("{{$CSE_KEY}}");
 
-// Opciones adicionales para los Resultados (global)
 searchControl.setLinkTarget
 (google.search.Search.LINK_TARGET_SELF);
 searchControl.setResultSetSize

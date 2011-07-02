@@ -25,3 +25,4 @@ document.write("<style type='text/css'>.dock-container2{ position:absolute !impo
 <script type="text/javascript" src="{{$smarty.const.DPORTAL_PATH}}/external_links.js"></script>
 
 {{* Place your own code here *}}
+

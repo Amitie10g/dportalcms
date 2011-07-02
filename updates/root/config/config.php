@@ -116,6 +116,7 @@ $smarty->assign('SITE_DESCRIPTION',$sitedesc);
 $smarty->assign('ADMIN_EMAIL',$admin_email);
 $smarty->assign('ADMIN_NICK',$admin_nick);
 $smarty->assign('PHPBB_DIR',$phpbb_dir);
+$smarty->assign('CSE_KEY',$cse_key);
 $smarty->assign('LANG',$LANG);
 $smarty->assign('USE_REWRITE',$use_rewrite);
 $smarty->assign('MEMCACHED_SERVER',$memcached_server);

@@ -55,7 +55,7 @@ function check_change_user_pass($curr_user = null, $curr_password = null, $new_u
  */
 
 // bool update_config()
-function update_config($sitename,$site_desc,$email,$nick,$language,$robotstxt,$user,$password,$phpbb_dir = null,$use_rewrite = 0,$smarty_debugging = 0,$memcached_server,$memcached_port){
+function update_config($sitename,$site_desc,$email,$nick,$language,$robotstxt,$user,$password,$phpbb_dir = null,$cse_key=null,$use_rewrite = 0,$smarty_debugging = 0,$memcached_server,$memcached_port){
 
 	global $site_id;
 	$dportal_absolute_path = DPORTAL_ABSOLUTE_PATH;
@@ -80,6 +80,7 @@ if(!defined('DPORTAL')) die();
 \x24use_rewrite	= "$use_rewrite";
 \x24smarty_debugging= "0";
 \x24site_id = "$site_id";
+\x24cse_key = "$cse_key";
 \x24memcached_server = "$memcached_server";
 \x24memcached_port = "$memcached_port";
 
@@ -94,13 +95,12 @@ OUTPUT;
 
 	if(!is_writable('config/config.inc.php')) die("The Config file does not exists or don't have permissionf of write!");
 	$written = file_put_contents('config/config.inc.php',$output,LOCK_EX);	
-
 	// Recommended settings to add 'deny *.php' for Search Engines, but may cause problems.
-	if(empty($use_rewrite) && strpos('deny *.php',$robotstxt) == 0) $robotstxt = str_replace("deny *.php\n",'',$robotstxt);
-	elseif(!empty($use_rewrite) && strpos('deny *.php',$robotstxt) == 0) $robotstxt .= "\ndeny *.php\n";
+	if(empty($use_rewrite) && strpos($robotstxt,'disallow *.php') == 0) $robotstxt = str_replace("disallow *.php\n",'',$robotstxt); 
+	elseif(!empty($use_rewrite) && strpos($robotstxt,'disallow *.php') == 0) $robotstxt .= "\ndisallow *.php\n";
 
-	if(!is_writable(REAL_DOCUMENT_ROOT.'/robots.txt')) die("The robots.txt file does not exists or don't have permissionf of write!");
-	$robotstxt_written = file_put_contents(REAL_DOCUMENT_ROOT.'/robots.txt',$robotstxt,LOCK_EX);	
+	if(!is_writable(DPORTAL_ABSOLUTE_PATH.'/robots.txt')) die("The robots.txt file does not exists or don't have permissionf of write!");
+	$robotstxt_written = file_put_contents(DPORTAL_ABSOLUTE_PATH.'/robots.txt',$robotstxt,LOCK_EX);	
 
 	if($written !== false && $robotstxt_written !== false) return true;
 }
@@ -448,6 +448,9 @@ function get_panel_message($params = null,&$smarty){
 	
 	}elseif($_SESSION['CATEGORY_CREATED']){
 		$message = $LANG['category_created'];
+	
+	}elseif($_SESSION['VIDEO_UPLOADED']){
+		$message = $LANG['video_uploaded'];
 	}
 
 	else $message = $LANG['control_panel_preface'];
