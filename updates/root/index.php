@@ -88,6 +88,7 @@ if(file_exists(CONTENT_PATH . $get_section) && isset($get_section)){
 	
 	$smarty->assign('SECTION',$section);
 	$smarty->assign('EDITABLE',true);
+	$smarty->assign('EXCLUSIVE',$exclusive);
 
 // Category page
 }elseif(isset($_GET['category'])){

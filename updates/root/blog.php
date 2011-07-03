@@ -396,7 +396,13 @@ if(isset($_GET['NEW'])){
 // Index mode
 }else{
 
-	$entries_per_page = 5; // 5 by default. You van modify manually or by Configuration
+	$entries_per_page = 5; // 5 by default. You can modify manually or by Configuration
+
+	$show_ad_index_pair = (($page - 1) * $entries_per_page);
+	$show_ad_index_impair = ((($page - 1) * $entries_per_page) + 2);
+	
+	$smarty->assign('SHOW_AD_INDEX_PAIR',$show_ad_index_pair);
+	$smarty->assign('SHOW_AD_INDEX_IMPAIR',$show_ad_index_impair);
 	
 	if(isset($_GET['FEED'])) $limit = $entries_per_page;
 	

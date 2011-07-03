@@ -1,5 +1,3 @@
-<hr />
-
   <p style="margin:0;text-align:center">
     
     <img src="http://img89.imageshack.us/img89/47/gplv388x31uf3.png" style="border:0;"

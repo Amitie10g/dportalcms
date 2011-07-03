@@ -78,8 +78,12 @@ if(isset($_GET['file'])){
 	$page = $_GET['page'];
 	if($_GET['page'] < 1) $page = 1;
 
-	if(file_exists(VIDEOS_PATH.$_GET['playlist'].'/.name')){
+	if(file_exists(VIDEOS_PATH.$section.'/.name')){
+	
+		$smarty->assign('PLAYLIST_GET',$section);
 
+		if(strpos($_SERVER['REQUEST_URI'],"/media_player/$section/") === false) redir('playlist',$section);
+	
 		// XML based Playlist, for some Players and Distribution	
 		if(isset($_GET['XSPF'])){
 			if(!$smarty->is_cached('playlist_xml.tpl',$section) || $user_admin){
@@ -147,11 +151,16 @@ if(isset($_GET['file'])){
 	$smarty->assign('NEXT',$next);
 	$smarty->assign('PPP',$playlists_per_page);
 
+
 	$smarty->assign('SHOWCASE',$get_showcase);
 	$include_file = 'showcase.tpl';
 }
 
 // :: Output;
+
+$smarty->assign('TYPE',$type);
+
+$smarty->assign('IS_MEDIA_PLAYER',true);
 
 $smarty->caching = false;
 $smarty->display('header.tpl');

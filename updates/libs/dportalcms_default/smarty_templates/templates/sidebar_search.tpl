@@ -2,5 +2,5 @@
 Loading...</div>
 
 <!-- Results -->
-<div id="searchResults"></div>
+<div id="searchResults">Loading results...</div>
 <hr />

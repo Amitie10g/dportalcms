@@ -134,9 +134,10 @@ function get_templates(){
 // bool template_save(string name, string content
 function template_save($name,$content){
 
-	$file = fopen(SMARTY_TEMPLATES_PATH."templates/$name",'wb');
-	if(fwrite($file,$content)) $saved = true;
-	fclose($file);
+	$filename = SMARTY_TEMPLATES_PATH."templates/$name";
+
+	if(is_readable($filename) && is_file($filename)) $saved = file_put_contents(SMARTY_TEMPLATES_PATH."templates/$name",$content,LOCK_EX);
+	else die('No'); //return false;
 	
 	return $saved;
 

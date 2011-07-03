@@ -88,6 +88,8 @@ if(isset($_GET['IMAGE'])&&isset($_GET['token'])){
 // Gallery
 }elseif(file_exists(GALLERY_PATH . "$getgallery/.name")){
 
+	$type = "gallery";
+
 	$directory = GALLERY_PATH . "$getgallery";
 
 	// Gets the Number of page. If not give, default is '1' 
@@ -136,10 +138,11 @@ if(isset($_GET['IMAGE'])&&isset($_GET['token'])){
 	$smarty->assign('GALLERY',$directory);
 
 	$smarty->assign('TEMPLATE','gallery_c.tpl');
-	$smarty->assign('IS_GALLERY',true);
 
 // Main page
 }else{
+
+	$type = "galleries";
 
 	$smarty->caching = true;
 
@@ -189,6 +192,12 @@ if(isset($_GET['AJAX'])){
 // Gallery
 }else{
 
+	$smarty->assign('IS_GALLERY',true);
+	
+	$smarty->assign('GALLERY_NAME',$getgallery);
+
+	$smarty->assign('TYPE',$type);
+
 	$smarty->assign('TITLE',$title);
 
 	$smarty->caching = false;
@@ -212,8 +221,7 @@ if(isset($_GET['AJAX'])){
 	$smarty->display('sidebar_c.tpl');
 	$smarty->display('sidebar_f.tpl');
 
-	if($user_admin && file_exists($directory . '/.name')) $smarty->display('gallery_admin.tpl');
-	else $smarty->display('gallery.tpl',"gallery|$getgallery");
+	$smarty->display('gallery.tpl',"gallery|$getgallery");
 
 	$smarty->display('footer_page.tpl');
 	$smarty->display('footer.tpl');

@@ -19,6 +19,9 @@ else obj.style.display = 'block'
 }
 
 //--></script>
+{{if !empty($smarty.get.template_file)}}
+{{include file="editarea_script.tpl"}}
+{{/if}}
 
   <style type="text/css">
        .titleItem{
@@ -116,6 +119,8 @@ else obj.style.display = 'block'
 {{if $MODE != 'edit'}}<a href="{{LINK script="panel" section="gallery/edit"}}">{{/if}}Edit Galleries{{if $MODE != 'edit'}}</a>{{/if}} | 
 {{/if}}
 {{if $MODE != 'create' && !empty($GALLERIES)}}<a href="{{LINK script="panel" section="gallery/create"}}">{{/if}}Create Gallery{{if $MODE != 'create' && !empty($GALLERIES)}}</a>{{/if}}
+{{if !empty($GALLERY_NAME)}} | <a href="{{LINK script="gallery_gallery" section="$GALLERY_NAME"}}">Go to Gallery</a>{{/if}}
+
 
 {{elseif $TAB == "videos"}}
 {{if !empty($PLAYLISTS)}}

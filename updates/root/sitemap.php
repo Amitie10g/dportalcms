@@ -4,7 +4,7 @@
 		#                                              #
 		#    DPortal CMS, CMS without Database engine  #
 		#                                              #
-		#  XML Sitemap generator (sitemap.php)         #
+		#  HTML and XML Sitemap gen (sitemap.php)      #
 		#                                              #
 		#  Copyright Davod.                            #
 		#                                              #
@@ -25,11 +25,17 @@ if($mode == 'XML' || isset($_GET['XML'])){
 	
 	$smarty->caching = true;
 	
+	$getlist = getlist_sitemap();
+	$getgal = getlist_sitemap();
+	$getentries = getentries_sitemap();
+	$getvideos = getshowcase_sitemap();
+
 	if(!$smarty->is_cached('sitemap_xml.tpl')){
-		$smarty->assign('SECTIONS',getlist_sitemap());
-		$smarty->assign('GALLERIES',getgal_sitemap());
-		$smarty->assign('ENTRIES',getentries_sitemap());
-		$smarty->assign('VIDEOS',getshowcase_sitemap());
+		$smarty->assign('SECTIONS',$getlist);
+		$smarty->assign('GALLERIES',$getgal);
+		$smarty->assign('ENTRIES',$getentries);
+		$smarty->assign('VIDEOS',$getvideos);
+		$smarty->assign('LAST_ENTRY',$getentries[0]['updated']);
 	}
 	
 	$smarty->display('sitemap_xml.tpl');

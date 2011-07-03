@@ -1,3 +1,6 @@
+RewriteCond %{HTTP_HOST} ^190.98.197.102$ [NC]
+RewriteRule ^(.*)$ http://dportalcms.org/$1 [R=301,L]
+
 RewriteEngine On
 RewriteRule ^sitemap.xml$ sitemap.php?mode=XML
 RewriteRule ^sitemap.html$ sitemap.php
@@ -12,4 +15,3 @@ RewriteRule ^([^/]+)\.html$ index.php?section=$1
 RewriteRule ^([^/]+)\/([^/]+)\.html$ index.php?section=$1_$2
 RewriteRule ^([^/]+)\.pdf$ index.php?section=$1&PDF
 RewriteRule ^([^/]+)\/([^/]+)\.pdf$ index.php?section=$1_$2&PDF
-
