@@ -55,6 +55,9 @@ function fetch2($params, &$smarty)
     }
        
     if(!empty($params['truncate'])) $truncate = $params['truncate'];
+	
+	if(!isset($params['truncate_chars'])) $truncate_chars = substr_replace($params['truncate_chars'],'',10);
+	else $truncate_chars = " (...)";
     
     if(!empty($params['page'])) $page = $params['page'];
     if(!empty($params['num'])) $num = $params['num'];
@@ -77,7 +80,7 @@ function fetch2($params, &$smarty)
 	if(isset($strip)) $content = strip_tags(str_ireplace(array('<h1>','</h1>','<h2>','</h2>'),array('<b>','</b>','<b>','</b>'),$content),$tags);
 
 	// Use truncate() to limit the lengh of content
-	if(is_int($truncate) && $truncate >= 10) $content = truncate($content,$truncate," (...)");
+	if(is_int($truncate) && $truncate >= 10) $content = truncate($content,$truncate,$truncate_chars);
 
 	// Use wordwrap() to wrap the contents
 	if((is_int($wrap) && $wrap >= 10)) $content = wordwrap($content,$wrap);
