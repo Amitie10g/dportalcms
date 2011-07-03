@@ -1,6 +1,6 @@
   <p style="margin:0;text-align:center">
     
-    <img src="http://img89.imageshack.us/img89/47/gplv388x31uf3.png" style="border:0;"
+    <img src="{{$smarty.const.DPORTAL_PATH}}/gplv388x31uf3.png" style="border:0;"
     alt="GPL3" title="DPortal is Free Software" />
   </p>
 

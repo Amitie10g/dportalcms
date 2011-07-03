@@ -121,7 +121,7 @@ function title2name($title){
 	
 	// Check if entry Name exist
 	$chkentries = fopen(ENTRIES_PATH.'.entries', "rb") or die('Missing or inaccesible entries file');
-	while (($data = fgetcsv($chkentries, 1000, ";")) !== FALSE) {
+	while (($data = fgetcsv($chkentries, 1000000, ";")) !== FALSE) {
 		if($name == $data[1]) { $name = $name . rand(10,99); break; }
 	}
 	fclose($chkentries);
