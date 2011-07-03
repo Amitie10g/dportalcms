@@ -24,21 +24,6 @@
     
  <div style="margin:0 0 10px 0"><a href="{{LINK script='blog_entry' section=$ENTRIES[entries].name marker="comment"}}">{{$LANG.post_comment|ucfirst}}</a></div>
 </div>
-{{if !$IS_ADMIN && ($smarty.section.entries.index == $SHOW_AD_INDEX_PAIR || $smarty.section.entries.index == $SHOW_AD_INDEX_IMPAIR)}}
-<div style="margin:10px 0;padding:5px 0 25px 0;border-bottom:1px #000000 dotted;text-align:center">
-<script type="text/javascript"><!--
-google_ad_client = "pub-6520136901650033";
-/* 728x90, Blog index */
-google_ad_slot = "3724442520";
-google_ad_width = 728;
-google_ad_height = 90;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-</div>
-{{/if}}
 {{sectionelse}}
 {{DYNAMIC}}<div style="text-align:center;font-style:italic;font-size:15px;margin:10px">{{$LANG.no_entries_published|ucfirst}}.{{if $IS_ADMIN}} {{$LANG.create_entry_now|ucfirst}}.{{/if}}</div>{{/DYNAMIC}}
 {{/section}}
