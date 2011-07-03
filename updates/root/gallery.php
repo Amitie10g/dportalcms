@@ -103,7 +103,8 @@ if(isset($_GET['IMAGE'])&&isset($_GET['token'])){
 	$dirconf = getgalconf($directory);
 	$title = str_replace("\"","",$dirconf[0]);
 
-	if(!$smarty->is_cached('gallery_gallery.tpl',"gallery_gallery|$getgallery|$getpage") || $user_admin){
+	if((!$smarty->is_cached('gallery_gallery.tpl',"gallery_gallery|$getgallery|$getpage") ||
+	    !$smarty->is_cached('gallery_feed.tpl',"gallery_feed|$getgallery")) || $user_admin){
 
 		$dircontents = getgallerycontents($getgallery,$getpage,$dirconf[1]);
 
@@ -177,7 +178,7 @@ if(isset($_GET['AJAX'])){
 	$smarty->assign('NEXT',$next);
 	$smarty->assign('IPP',$imp);
 
-	$smarty->caching = 2;$smarty->cache_lifetime = 3600;
+	$smarty->caching = 2;$smarty->cache_lifetime = 432000;
 	$smarty->display('gallery_gallery.tpl',"gallery_gallery|$getgallery|$getpage");
 	die();
 
@@ -186,8 +187,8 @@ if(isset($_GET['AJAX'])){
 
 	$smarty->assign('TITLE',$title);
 
-	if($getpage<=$numpages&&$getpage>0) $smarty->caching = 2;$smarty->cache_lifetime = 3600;
-	$smarty->display('gallery_feed.tpl',$getgallery);die();
+	$smarty->caching = 2;$smarty->cache_lifetime = 432000;
+	$smarty->display('gallery_feed.tpl',"gallery_feed|$getgallery"); die();
 
 // Gallery
 }else{
@@ -221,7 +222,9 @@ if(isset($_GET['AJAX'])){
 	$smarty->display('sidebar_c.tpl');
 	$smarty->display('sidebar_f.tpl');
 
+	$smarty->caching = 2;$smarty->cache_lifetime = 432000;
 	$smarty->display('gallery.tpl',"gallery|$getgallery");
+	$smarty->caching = false;
 
 	$smarty->display('footer_page.tpl');
 	$smarty->display('footer.tpl');
