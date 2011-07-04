@@ -15,7 +15,7 @@
 	<updated>{{$UPDATED|date_format:"%Y-%m-%dT%H:%M:%SZ"}}</updated>
 	<id>tag:{{$smarty.server.SERVER_NAME}},{{$CREATED|date_format:"%Y-%m-%d"}}:{{$NAME}}/</id>
 	<content type="html" xml:lang="en"><![CDATA[
-	{{fetch2 file=$FILE truncate=1000}}
+	{{fetch2 file=$FILE truncate=1000 strip='b'}}
 	]]></content>
      </entry>
    </feed>

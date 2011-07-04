@@ -1,3 +1,4 @@
+<div style="padding: 10px">{{$LANG.upload_videos_note}}</div>
 <div style="padding:10px;width:500px;margin:auto">
 {{if !empty($PLAYLISTS)}}
   <form id="form6" method="post"

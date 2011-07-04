@@ -60,6 +60,8 @@ define('DESCRIPTION',$sitedesc);
 define('ADMIN_NICK',$admin_nick); // Should be a Nick, different from User!!!
 if(!empty($phpbb_dir)) define('PHPBB_DIR',$phpbb_dir);
 
+// Get the Style list
+$style_list = parse_ini_file(DPORTAL_ABSOLUTE_PATH . 'config/style.ini');
 
 // Set the Default Timezone (only available in PHP 5 >= 5.1.0)
 @date_default_timezone_set ($timezone);
@@ -123,6 +125,7 @@ $smarty->assign('MEMCACHED_SERVER',$memcached_server);
 $smarty->assign('MEMCACHED_PORT',$memcached_port);
 $smarty->assign('USER_LANG',$language);
 $smarty->assign('USER_LANG_STRING',$LANG['book_lang_'.$language]);
+$smarty->assign('STYLE_LIST',$style_list);
 
 // :: Registering Functions for Smarty
 

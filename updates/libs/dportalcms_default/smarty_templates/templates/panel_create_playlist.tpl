@@ -1,5 +1,4 @@
-<div style="text-align:center;padding:10px;">
-{{$LANG.create_playlist_preface}}</div>
+<div style="padding:10px;">{{$LANG.create_playlist_preface}}</div>
 
 <div style="text-align:right;width:400px;margin:auto">
 

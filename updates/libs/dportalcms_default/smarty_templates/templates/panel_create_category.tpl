@@ -1,5 +1,4 @@
-<div style="text-align:center;padding:10px">
-{{$LANG.create_category_warn}}</div>
+<div style="padding:10px">{{$LANG.create_category_warn}}</div>
 
 <div style="margin:auto;width:400px">
 

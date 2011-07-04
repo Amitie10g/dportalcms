@@ -7,18 +7,7 @@
   <title>{{$LANG.control_panel|ucfirst}} :: {{$SITENAME}}</title>
   <link rel="stylesheet" type="text/css"
   href="{{$smarty.const.DPORTAL_PATH}}/default.css" />
-  <script type="text/javascript"
-  src="{{$smarty.const.DPORTAL_PATH}}/external_links.js">
-  </script>
-  <script type="text/javascript">
-      <!--
-function items(id){
-var obj = document.getElementById('item_' + id)
-if(obj.style.display == 'block') obj.style.display = 'none'
-else obj.style.display = 'block'
-}
-
-//--></script>
+  <script type="text/javascript" src="{{$smarty.const.DPORTAL_PATH}}/external_links.js"></script>
 {{if !empty($smarty.get.template_file)}}
 {{include file="editarea_script.tpl"}}
 {{/if}}
@@ -92,46 +81,51 @@ else obj.style.display = 'block'
   <div style="clear:both;height:10px"></div>
 
 <div style="padding:5px 0 0 0;width:800px;margin:auto;">
-<span class="panel_menu{{if $TAB == "general"}} selected{{/if}} titre">{{if $TAB != "general"}}<a href="{{LINK script="panel" section="general"}}">{{/if}}General{{if $TAB != "general"}}</a>{{/if}}</span>
-<span class="panel_menu{{if $TAB == "user_pass"}} selected{{/if}} titre">{{if $TAB != "user_pass"}}<a href="{{LINK script="panel" section="user_pass"}}">{{/if}}User &amp; Password{{if $TAB != "user_pass"}}</a>{{/if}}</span>
-<span class="panel_menu{{if $TAB == "sections"}} selected{{/if}} titre">{{if $TAB != "sections"}}<a href="{{LINK script="panel" section="sections"}}">{{/if}}Sections{{if $TAB != "sections"}}</a>{{/if}}</span>
-<span class="panel_menu{{if $TAB == "gallery"}} selected{{/if}} titre">{{if $TAB != "gallery"}}<a href="{{LINK script="panel" section="gallery"}}">{{/if}}Gallery{{if $TAB != "gallery"}}</a>{{/if}}</span>
-<span class="panel_menu{{if $TAB == "videos"}} selected{{/if}} titre">{{if $TAB != "videos"}}<a href="{{LINK script="panel" section="videos"}}">{{/if}}Videos{{if $TAB != "videos"}}</a>{{/if}}</span>
-<span class="panel_menu{{if $TAB == "style"}} selected{{/if}} titre">{{if $TAB != "style"}}<a href="{{LINK script="panel" section="style"}}">{{/if}}Style{{if $TAB != "style"}}</a>{{/if}}</span>
-<span class="panel_menu{{if $TAB == "backup"}} selected{{/if}} titre">{{if $TAB != "backup"}}<a href="{{LINK script="panel" section="backup"}}">{{/if}}Backups{{if $TAB != "backup"}}</a>{{/if}}</span>
+<span class="panel_menu{{if $TAB == "general"}} selected{{/if}} titre">{{if $TAB != "general"}}<a href="{{LINK script="panel" section="general"}}">{{/if}}{{$LANG.general}}{{if $TAB != "general"|ucfirst}}</a>{{/if}}</span>
+<span class="panel_menu{{if $TAB == "user_pass"}} selected{{/if}} titre">{{if $TAB != "user_pass"}}<a href="{{LINK script="panel" section="user_pass" argument="?tab=user_pass"}}">{{/if}}{{$LANG.user_and_password|ucfirst}}{{if $TAB != "user_pass"}}</a>{{/if}}</span>
+<span class="panel_menu{{if $TAB == "sections"}} selected{{/if}} titre">{{if $TAB != "sections"}}<a href="{{LINK script="panel" section="sections" argument="?tab=sections"}}">{{/if}}{{$LANG.sections|ucfirst}}{{if $TAB != "sections"}}</a>{{/if}}</span>
+<span class="panel_menu{{if $TAB == "gallery"}} selected{{/if}} titre">{{if $TAB != "gallery"}}<a href="{{LINK script="panel" section="gallery" argument="?tab=gallery"}}">{{/if}}{{$LANG.gallery|ucfirst}}{{if $TAB != "gallery"}}</a>{{/if}}</span>
+<span class="panel_menu{{if $TAB == "videos"}} selected{{/if}} titre">{{if $TAB != "videos"}}<a href="{{LINK script="panel" section="videos" argument="?tab=videos"}}">{{/if}}{{$LANG.videos|ucfirst}}{{if $TAB != "videos"}}</a>{{/if}}</span>
+<span class="panel_menu{{if $TAB == "style"}} selected{{/if}} titre">{{if $TAB != "style"}}<a href="{{LINK script="panel" section="style" argument="?tab=style"}}">{{/if}}{{$LANG.style|ucfirst}}{{if $TAB != "style"}}</a>{{/if}}</span>
+<span class="panel_menu{{if $TAB == "backup"}} selected{{/if}} titre">{{if $TAB != "backup"}}<a href="{{LINK script="panel" section="backup" argument="?tab=backup"}}">{{/if}}{{$LANG.backup|ucfirst}}{{if $TAB != "backup"}}</a>{{/if}}</span>
 <div class="panel_submenu">
 {{if $TAB == "general"}}
-{{if $MODE != 'site_conf'}}<a href="{{LINK script="panel" section="general/site_conf"}}">{{/if}}Site configuration{{if $MODE != 'site_conf'}}</a>{{/if}} | 
-{{if $MODE != 'robotstxt'}}<a href="{{LINK script="panel" section="general/robotstxt"}}">{{/if}}robots.txt{{if $MODE != 'robotstxt'}}</a>{{/if}} | 
-{{if $MODE != 'phpbb'}}<a href="{{LINK script="panel" section="general/phpbb"}}">{{/if}}phpBB integration{{if $MODE != 'phpbb'}}</a>{{/if}} | 
-{{if $MODE != 'memcached'}}<a href="{{LINK script="panel" section="general/memcached"}}">{{/if}}Memcached configuration{{if $MODE != 'memcached'}}</a>{{/if}} | 
-{{if $MODE != 'cse'}}<a href="{{LINK script="panel" section="general/cse"}}">{{/if}}Google CSE options{{if $MODE != 'cse'}}</a>{{/if}}
+{{if $MODE != 'site_conf'}}<a href="{{LINK script="panel" section="general/site_conf" argument="?tab=general&amp;mode=site_conf"}}">{{/if}}{{$LANG.site_conf}}{{if $MODE != 'site_conf'}}</a>{{/if}} | 
+{{if $MODE != 'robotstxt'}}<a href="{{LINK script="panel" section="general/robotstxt" argument="?tab=general&amp;mode=robotstxt"}}">{{/if}}robots.txt{{if $MODE != 'robotstxt'}}</a>{{/if}} | 
+{{if $MODE != 'phpbb'}}<a href="{{LINK script="panel" section="general/phpbb" argument="?tab=general&amp;mode=phpbb"}}">{{/if}}{{$LANG.phpbb_integration}}{{if $MODE != 'phpbb'}}</a>{{/if}} | 
+{{if $MODE != 'memcached'}}<a href="{{LINK script="panel" section="general/memcached" argument="?tab=general&amp;mode=memcached"}}">{{/if}}{{$LANG.memcached_conf}}{{if $MODE != 'memcached'}}</a>{{/if}} | 
+{{if $MODE != 'cse'}}<a href="{{LINK script="panel" section="general/cse" argument="?tab=general&amp;mode=cse"}}">{{/if}}{{$LANG.google_cse_conf}}{{if $MODE != 'cse'}}</a>{{/if}}
 
 {{elseif $TAB == "sections"}}
-{{if $MODE != 'edit_sections'}}<a href="{{LINK script="panel" section="sections/edit_section"}}">{{/if}}Edit Sections{{if $MODE != 'edit_sections'}}</a>{{/if}} | 
-{{if $MODE != 'create_section'}}<a href="{{LINK script="panel" section="sections/create_section"}}">{{/if}}Create Section{{if $MODE != 'create_section'}}</a>{{/if}} |
-{{if $MODE != 'create_category'}}<a href="{{LINK script="panel" section="sections/create_category"}}">{{/if}}Create Category{{if $MODE != 'create_category'}}</a>{{/if}} | 
-
-{{if $MODE != 'edit_category'}}<a href="{{LINK script="panel" section="sections/edit_category"}}">{{/if}}Edit Category{{if $MODE != 'edit_category'}}</a>{{/if}}
+{{if $MODE != 'edit_sections'}}<a href="{{LINK script="panel" section="sections/edit_section" argument="?tab=sections&amp;mode=edit_section"}}">{{/if}}{{$LANG.edit_sections}}{{if $MODE != 'edit_sections'}}</a>{{/if}} | 
+{{if $MODE != 'create_section'}}<a href="{{LINK script="panel" section="sections/create_section" argument="?tab=sections&amp;mode=create_section"}}">{{/if}}{{$LANG.create_section}}{{if $MODE != 'create_section'}}</a>{{/if}} |
+{{if $MODE != 'create_category'}}<a href="{{LINK script="panel" section="sections/create_category" argument="?tab=sections&amp;mode=create_category"}}">{{/if}}{{$LANG.create_category}}{{if $MODE != 'create_category'}}</a>{{/if}} | 
+{{if $MODE != 'edit_category'}}<a href="{{LINK script="panel" section="sections/edit_category" argument="?tab=sections&amp;mode=edit_category"}}">{{/if}}{{$LANG.edit_category}}{{if $MODE != 'edit_category'}}</a>{{/if}}
 
 {{elseif $TAB == "gallery"}}
 {{if !empty($GALLERIES)}}
-{{if $MODE != 'edit'}}<a href="{{LINK script="panel" section="gallery/edit"}}">{{/if}}Edit Galleries{{if $MODE != 'edit'}}</a>{{/if}} | 
+{{if $MODE != 'edit'}}<a href="{{LINK script="panel" section="gallery/edit" argument="?tab=gallery&amp;mode=edit"}}">{{/if}}{{$LANG.edit_galleries}}{{if $MODE != 'edit'}}</a>{{/if}} | 
 {{/if}}
-{{if $MODE != 'create' && !empty($GALLERIES)}}<a href="{{LINK script="panel" section="gallery/create"}}">{{/if}}Create Gallery{{if $MODE != 'create' && !empty($GALLERIES)}}</a>{{/if}}
-{{if !empty($GALLERY_NAME)}} | <a href="{{LINK script="gallery_gallery" section="$GALLERY_NAME"}}">Go to Gallery</a>{{/if}}
+{{if $MODE != 'create' && !empty($GALLERIES)}}<a href="{{LINK script="panel" section="gallery/create" argument="?tab=gallery&amp;mode=create"}}">{{/if}}{{$LANG.create_gallery}}{{if $MODE != 'create' && !empty($GALLERIES)}}</a>{{/if}}
+{{if !empty($GALLERY_NAME)}} | <a href="{{LINK script="gallery_gallery" section="$GALLERY_NAME" argument="?gallery=$GALLERY_NAME"}}">{{$LANG.goto_gallery}}</a>{{/if}}
 
 
 {{elseif $TAB == "videos"}}
 {{if !empty($PLAYLISTS)}}
-{{if $MODE != 'upload'}}<a href="{{LINK script="panel" section="videos/upload"}}">{{/if}}Upload/Edit{{if $MODE != 'upload'}}</a>{{/if}} | 
+{{if $MODE != 'upload'}}<a href="{{LINK script="panel" section="videos/upload" argument="?tab=videos&amp;mode=upload"}}">{{/if}}{{$LANG.upload_edit}}{{if $MODE != 'upload'}}</a>{{/if}} | 
 {{/if}}
-{{if $MODE != 'create'}}<a href="{{LINK script="panel" section="videos/create"}}">{{/if}}Create Playlist{{if $MODE != 'create'}}</a>{{/if}}
-{{if !empty($PLAYLIST)}} | <a href="{{LINK script="playlist" section="$PLAYLIST"}}">Go to Playlist</a>{{/if}}
+{{if $MODE != 'create'}}<a href="{{LINK script="panel" section="videos/create" argument="?tab=videos&amp;mode=create"}}">{{/if}}{{$LANG.create_playlist}}{{if $MODE != 'create'}}</a>{{/if}}
+{{if !empty($PLAYLIST)}} | <a href="{{LINK script="playlist" section="$PLAYLIST"  argument="?playlist=$PLAYLIST"}}">{{$LANG.goto_playlist}}</a>{{/if}}
 
 {{elseif $TAB == "style"}}
-{{if $MODE != 'edit_style'}}<a href="{{LINK script="panel" section="style/edit_style"}}">{{/if}}Edit Style{{if $MODE != 'edit_style'}}</a>{{/if}} | 
-{{if $MODE != 'template'}}<a href="{{LINK script="panel" section="style/template"}}">{{/if}}Edit Templates{{if $MODE != 'template'}}</a>{{/if}}
+{{if $MODE != 'edit_style'}}<a href="{{LINK script="panel" section="style/edit_style" argument="?tab=style&amp;mode=edit_style"}}">{{/if}}{{$LANG.edit_style}}{{if $MODE != 'edit_style'}}</a>{{/if}} | 
+{{if $MODE != 'template'}}<a href="{{LINK script="panel" section="style/template" argument="?tab=style&amp;mode=template"}}">{{/if}}{{$LANG.edit_templates}}{{if $MODE != 'template'}}</a>{{/if}}
+
+{{elseif $TAB == "backup"}}
+{{if !empty($BACKUPS)}}{{if $MODE != 'download'}}<a href="{{LINK script="panel" section="backup/download" argument="?tab=backup&amp;mode=download"}}">{{/if}}{{$LANG.download_backup}}{{if $MODE != 'download'}}</a>{{/if}} | {{/if}}
+{{if $MODE != 'create'}}<a href="{{LINK script="panel" section="backup/create" argument="?tab=backup&amp;mode=create"}}">{{/if}}{{$LANG.create_backup}}{{if $MODE != 'create'}}</a>{{/if}} | 
+{{if $MODE != 'restore'}}<a href="{{LINK script="panel" section="backup/restore" argument="?tab=backup&amp;mode=restore"}}">{{/if}}{{$LANG.restore_backup}}{{if $MODE != 'restore'}}</a>{{/if}}{{if !empty($BACKUPS)}} | 
+{{if $MODE != 'delete'}}<a href="{{LINK script="panel" section="backup/delete" argument="?tab=backup&amp;mode=delete"}}">{{/if}}{{$LANG.delete_backup}}{{if $MODE != 'delete'}}</a>{{/if}} {{/if}}
 
 {{/if}}
 </div>
@@ -153,7 +147,7 @@ else obj.style.display = 'block'
 {{elseif $MODE == 'create_section'}}{{include file="panel_create_section.tpl"}}
 {{elseif $MODE == 'create_category'}}{{include file="panel_create_category.tpl"}}
 {{* Reuse the template "panel_edit_style.tpl" that says "Not implemented yet" *}}
-{{elseif $MODE == 'edit_category'}}{{include file="panel_edit_style.tpl"}}
+{{elseif $MODE == 'edit_category'}}{{include file="panel_edit_category.tpl"}}
 
 {{/if}}
 
@@ -174,12 +168,15 @@ else obj.style.display = 'block'
 {{/if}}
 
 {{elseif $TAB == 'backup'}}
-{{include file="panel_backup.tpl"}}
+{{if $MODE == 'download'}}{{include file="panel_backup_download.tpl"}}
+{{elseif $MODE == 'create'}}{{include file="panel_backup_create.tpl"}}
+{{elseif $MODE == 'restore'}}{{include file="panel_backup_restore.tpl"}}
+{{elseif $MODE == 'delete'}}{{include file="panel_backup_delete.tpl"}}{{/if}}
 {{/if}}
 </div>
 <div class="return_to_index">
-<a href="{{LINK script="panel" section="clear_cache"}}">Clear all Cache/compiled templates</a> | 
-<a href="{{LINK section="home"}}">Return to Index</a>
+<a href="{{LINK script="panel" section="clear_cache"}}">{{$LANG.clear_all_cache}}</a> | 
+<a href="{{LINK section="home"}}">{{$LANG.return_to_index}}</a>
 </div>
 
 </div>

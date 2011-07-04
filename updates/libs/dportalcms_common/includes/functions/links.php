@@ -65,7 +65,7 @@ function redir($script,$section,$http_status = null,$argument = null,$marker = n
 			case "edit"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/edit/section:$section"); break;
 			case "new"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/edit/new_section:$section"); break;
 			case "saved"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/edit/SAVED"); break;
-			case "panel"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/panel/$section$argument"); break;
+			case "panel"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/panel/$section$marker"); break;
 			case "gallery"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/gallery/$section.html$argument"); break;
 			case "gallery_index"	: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/gallery/"); break;
 			case "gallery_ajax"	: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/gallery/".$_GET['gallery']."_ajax"); break;

@@ -4,7 +4,7 @@
 
 <div style="width:400px;margin:auto;padding: 10px">
 <form method="post"
-action="{{LINK script='panel' section="gallery/edit" argument='?EDIT'}}"
+action="{{LINK script='panel' section="gallery/edit" argument='?tab=gallery&mode=edit'}}"
 enctype="multipart/form-data">
   <div>
   <select class="list" name="gallery" style="width:90%" onchange="submit()">

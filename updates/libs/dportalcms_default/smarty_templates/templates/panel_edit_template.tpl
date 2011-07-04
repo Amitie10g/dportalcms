@@ -1,7 +1,7 @@
 <div style="text-align:center;padding:5px 5px 15px 5px">{{$LANG.edit_templates_preface}}<br />
 <strong>{{$LANG.warning|ucfirst}}:</strong> {{$LANG.incorrect_edition_warn|ucfirst}}</div>
 <div style="width:50%;text-align:center;margin:auto;padding: 0 0 10px 0">
-<form id="form7" method="get" action="{{LINK script='panel'}}">
+<form method="post" action="{{LINK script='panel'}}">
   <span>
   <select class="list" name="template_file" onchange="submit();"
   style="width:90%">

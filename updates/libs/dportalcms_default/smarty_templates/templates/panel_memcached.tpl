@@ -1,4 +1,4 @@
-<div style="padding:5px">{{$LANG_enable_memcached_preface}}</div>
+<div style="padding:10px 5px 5px 5px">{{$LANG.enable_memcached_preface}}</div>
 
 <form method="post" action="{{LINK script='panel' section='config:update' argument='?SITE_CONF'}}">
 <div style="text-align:right; margin: 0 auto;width:500px">

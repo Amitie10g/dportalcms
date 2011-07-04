@@ -1,4 +1,3 @@
-<div>
   <div  style="text-align:left;padding:10px">{{$LANG.create_gallery_preface}}</div>
 
 <div style="text-align:right;width:400px;margin:auto">
@@ -23,5 +22,4 @@ action="{{LINK script='panel' section='gallery:create' argument='?CREATE_GALLERY
    
   <input type="submit" value="Create" /> </div>
 </form>
-</div>
 </div>

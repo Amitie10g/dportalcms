@@ -47,10 +47,10 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 
 	}elseif($created == 2){
 		$_SESSION['SECTION_EXISTS'] = true;
-		redir('panel','panel'); die();
+		redir('panel','sections/create_section',null,'?tab=sections&mode=create_section'); die();
 	}else{
 		$_SESSION['CREATED_ERROR'] = true;
-		redir('panel','panel'); die();
+		redir('panel','sections',null,'?tab=sections&mode=create_section'); die();
 	}	
 	
 // Create Category
@@ -72,7 +72,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	$smarty->clear_cache('panel.tpl');
 	$smarty->clear_cache('categories.tpl');
 	
-	redir('panel','sections/create_section'); die();
+	redir('panel','sections/create_category',null,'?tab=sections&mode=create_caegory'); die();
 
 // Wrapper to Editor, to avoid problem with Form
 }elseif(isset($_GET['EDIT'])){
@@ -95,7 +95,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	// Main section (home) can't be delete! Ask before anithing
 	if($filename == 'home'){
 		$_SESSION['DELETE_HOME'] = true;
-		redir('panel','sections'); die();
+		redir('panel','sections',null,'?tab=sections'); die();
 	}
 
 	if(delete_section($filename)){
@@ -109,7 +109,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	$smarty->clear_cache('categories.tpl');
 	$smarty->clear_cache('panel.tpl');
 
-	redir('panel','sections'); die();
+	redir('panel','sections',null,'?tab=sections'); die();
 	
 }elseif(isset($_GET['DELETE_CATEGORY'])){
 
@@ -128,7 +128,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	$smarty->clear_cache('categories.tpl');
 	$smarty->clear_cache('panel.tpl');
 	
-	redir('panel','sections'); die();	
+	redir('panel','sections',null,'?tab=sections'); die();	
 
 // :: Site manage
 
@@ -161,7 +161,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	// If the User and password don't match, redir with Error
 	if($check_user_pass_change === 1){
 		$_SESSION['PASSWORDS_NO_MATCH'] = true;
-		redir('panel','panel'); die();
+		redir('panel','user_pass'); die();
 	}
 	
 	if($check_user_pass_change === 2) $username = sha1($get_username);
@@ -194,7 +194,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	if($saved) $_SESSION['UPDATED'] = true;
 
 	if(!empty($_SERVER['HTTP_REFERER'])) header('location:' . $_SERVER['HTTP_REFERER']);
-	else redir('panel','general');
+	else redir('panel','general',null,'?tab=general');
 	die();
 
 // :: Elements (templates) Update mode
@@ -212,7 +212,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 
 	$smarty->clear_cache('panel.tpl');
 
-	redir('panel',"style/template:$file"); die();
+	redir('panel',"style/template:$file",null,"?tab=style&mode=template&template_file=$file"); die();
 
 
 // Clear Smarty Cache/ Templates and Thumbnails of Videos (optional)
@@ -223,7 +223,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	//clear_thumbs();
 	$_SESSION['CLEANED'] = true;
 	if(!empty($_SERVER['HTTP_REFERER'])) header('location:' . $_SERVER['HTTP_REFERER']);
-	else redir('panel','general');
+	else redir('panel','general',null,"?tab=general");
 	die();
 
  // Backup mode
@@ -238,7 +238,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	$smarty->clear_cache('panel.tpl');
 
 	if(!empty($_SERVER['HTTP_REFERER'])) header('location:' . $_SERVER['HTTP_REFERER']);
-	else redir('panel','general');
+	else redir('panel','general',null,"?tab=general");
 	die();
 
 // Restore Backups
@@ -325,7 +325,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 			$_SESSION['RESTORED'] = true;
 		}else{
 				$_SESSION['RESTORE_ERROR'] = true;
-				redir('panel','panel'); die();
+				redir('panel','general',null,"?tab=general"); die();
 		}
 	}else $_SESSION['RESTORE_ERROR'] = true;
 
@@ -334,7 +334,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	$smarty->clear_cache('panel.tpl');
 
 	if(!empty($_SERVER['HTTP_REFERER'])) header('location:' . $_SERVER['HTTP_REFERER']);
-	else redir('panel','backup');
+	else redir('panel','backup',null,"?tab=backup");
 	die();
 
 // Download Backup mode
@@ -356,7 +356,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	$smarty->clear_cache('panel.tpl');
 
 	if(!empty($_SERVER['HTTP_REFERER'])) header('location:' . $_SERVER['HTTP_REFERER']);
-	else redir('panel','backup');
+	else redir('panel','backup',null,"?tab=backup");
 	die();
 
 
@@ -378,7 +378,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	$smarty->clear_cache(null,'gallery');
 	$smarty->clear_cache('panel.tpl');
 
-	redir('panel','gallery'); die();
+	redir('panel','gallery',null,"?tab=gallery"); die();
 
 
 // Upload images for Gallery mode
@@ -457,7 +457,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	$smarty->clear_cache('gallery_feed.tpl',$gallery); // Gallery page
 	$smarty->clear_cache('panel.tpl');
 
-	redir('panel',"gallery/edit:$gallery"); die();
+	redir('panel',"gallery/edit:$gallery",null,"?tab=gallery&mode=edit&gallery=$gallery"); die();
 
 
 // Delete Image from Gallery
@@ -475,9 +475,8 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	$smarty->clear_cache(null,"gallery_goto|$gallery");
 	$smarty->clear_cache(null,"gallery_gallery|index");
 	$smarty->clear_cache('gallery_feed.tpl',$gallery); // Gallery page	
-	$smarty->clear_cache('panel.tpl');
 
-	redir('panel',"gallery/edit:$gallery");
+	redir('panel',"gallery/edit:$gallery",null,"?tab=gallery&mode=edit&gallery=$gallery");
 
 // Delete Gallery
 }elseif(isset($_GET['DELETE_GALLERY'])){
@@ -487,9 +486,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	if(delete_gallery($gallery)) $_SESSION['GALLERY_DELETED'] = true;
 	else $_SESSION['GALLERY_NOT_DELETED'] = true;
 	
-	$smarty->clear_cache("panel.tpl");
-	
-	redir('panel','panel'); die();
+	redir('panel','gallery',null,"?tab=gallery"); die();
 
 // :: Video features
 
@@ -541,7 +538,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	if($copied) $_SESSION['VIDEO_UPLOADED'] = true;
 	else $_SESSION['VIDEO_NOT_SAVED'] = true;
 
-	redir('panel',"videos/upload:$playlist");
+	redir('panel',"videos/upload:$playlist",null,"?tab=videos&mode=upload&playlist=$playlist");
 	
 	die();
 	
@@ -667,20 +664,28 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 
 }else{
 
-	if(!empty($_GET['template_file'])){
+	if(!empty($_POST['template_file'])){
+	
+		$name = $_POST['template_file'];
 	
 		// Redir to Panel if template does not exist
-		if(!file_exists(SMARTY_TEMPLATES_PATH."templates/".$_GET['template_file']) && $_GET['template_file'] != 'panel.tpl'){
+		if(is_writable(SMARTY_TEMPLATES_PATH."templates/$name") &&
+		is_file(SMARTY_TEMPLATES_PATH."templates/$name") &&
+		$name != 'panel.tpl'){
+			redir('panel',"style/template:$file",null,"?tab=style&mode=template&template_file=$name"); die();
+		}else{
 			$_SESSION['TEMPLATE_NO_EXIST'] = true;
-			redir('panel','panel');
+			redir('panel',"style/template",null,"?tab=style&mode=template"); die();
 		}
-	
-		// Redirs for Fancy URL
-		if(preg_match("/(\?template_file)/",basename($_SERVER['REQUEST_URI'])) && $use_rewrite){ header('location:'.DPORTAL_PATH.'/panel/style/template:'.$_GET['template_file']); die(); }
 	
 		$smarty->register_function('PANEL_MESSAGE','get_panel_message',false);
 	
+	}
+	
+	if(!empty($_GET['template_file'])){
+	
 		$name = $_GET['template_file'];
+
 		$file = SMARTY_TEMPLATES_PATH."templates/$name";
 	
 		$smarty->assign('NAME',$name);
@@ -688,8 +693,9 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	
 	}
 	
-	if(!empty($_POST['gallery'])){
-		redir('panel','gallery/edit:' . $_POST['gallery']);
+	if($_GET['tab'] == 'gallery' && $_GET['mode'] == 'edit' && !empty($_POST['gallery'])){
+		$gallery = $_POST['gallery'];
+		redir('panel',"gallery/edit:$gallery",null,"?tab=gallery&mode=edit&gallery=$gallery"); die();
 	}
 	
 	if(!empty($playlist)){
@@ -700,7 +706,8 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	}
 	
 	if(!empty($_POST['playlist'])){
-		redir('panel','videos/upload:' . $_POST['playlist']);
+		$playlist = $_POST['playlist'];
+		redir('panel',"videos/upload:$playlist",null,"?tab=videos&mode=upload&playlist=$playlist");
 	}
 
 
