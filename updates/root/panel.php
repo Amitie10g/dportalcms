@@ -170,7 +170,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 		$username = sha1($get_username);
 		$password = sha1($get_password);
 	}
-	
+
 	if(!isset($get_sitename)) $get_sitename = $sitename;
 	if(!isset($get_sitedesc)) $get_sitedesc = $sitedesc;
 	if(!isset($get_robotstxt)) $get_robotstxt = file_get_contents(DPORTAL_ABSOLUTE_PATH . '/robots.txt');
@@ -181,9 +181,10 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	if(!isset($get_username)) $get_username = $admin_user;
 	if(!isset($get_password)) $get_password = $admin_password;
 	if(!isset($get_cse_key)) $get_cse_key = $cse_key;
-	if(!isset($get_use_rewrite)) $get_use_rewrite = $use_rewrite;
 	if(!isset($get_memcached_server)) $get_memcached_server = $memcached_server;
 	if(!isset($get_memcached_port)) $get_memcached_port = $memcached_port;
+	
+	if(($get_use_rewrite == "1" || empty($get_use_rewrite)) && !isset($get_sitename)) $get_use_rewrite = $use_rewrite;
 
 	$saved = update_config($get_sitename,$get_sitedesc,$get_admin_email,$get_admin_nick,$get_language,$get_robotstxt,$username,$password,$get_phpbb_dir,$get_cse_key,$get_use_rewrite,$smarty_debugging,$get_memcached_server,$get_memcached_port);
 

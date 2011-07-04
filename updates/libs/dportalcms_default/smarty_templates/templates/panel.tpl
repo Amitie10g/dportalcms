@@ -175,7 +175,7 @@
 {{/if}}
 </div>
 <div class="return_to_index">
-<a href="{{LINK script="panel" section="clear_cache"}}">{{$LANG.clear_all_cache}}</a> | 
+<a href="{{LINK script="panel" section="clear_cache" argument="?CLR_CACHE"}}">{{$LANG.clear_all_cache}}</a> | 
 <a href="{{LINK section="home"}}">{{$LANG.return_to_index}}</a>
 </div>
 
