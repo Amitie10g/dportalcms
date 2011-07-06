@@ -2,7 +2,7 @@
 <div class="menu">
 
 {{* This is an Example Menu with "CSS Dock Menu"; you can customize them. Please see README_MENU for details *}}
-<div class="dock2" id="dock2">
+<div class="dock2" id="dock2"> 
 	<div class="dock-container2">
 		<a class="dock-item2" href="{{LINK section="home"}}"><span>{{$LANG.home|ucfirst}}</span><img src="{{$smarty.const.DPORTAL_PATH}}/images/home.png" alt="{{$LANG.home|ucfirst}}" /></a>
 		<a class="dock-item2" href="{{LINK section="links"}}"><span>{{$LANG.links|ucfirst}}</span><img src="{{$smarty.const.DPORTAL_PATH}}/images/link.png" alt="{{$LANG.links|ucfirst}}" /></a>
