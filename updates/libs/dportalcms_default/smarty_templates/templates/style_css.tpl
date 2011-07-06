@@ -314,6 +314,6 @@ right: 6px !important;
 position:relative !important;
 }
 
-.gsc-imageResult {
+.gsc-imageResult{
 margin:auto !important;
 }
