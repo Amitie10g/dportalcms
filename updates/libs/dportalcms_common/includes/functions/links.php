@@ -87,7 +87,7 @@ function redir($script,$section,$http_status = null,$argument = null,$marker = n
 		if($marker != null) $marker = "#$marker";
 	
 		switch($script){
-			case "edit"			: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/edit.php$argument&section=$section"); break;
+			case "edit"			: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/edit.php?section=$section"); break;
 			case "new"			: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/edit.php?section=$section&NEW"); break;
 			case "saved"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/edit.php?SAVED"); break;
 			case "panel"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/panel.php$argument$marker"); break;
@@ -171,6 +171,7 @@ function link_url($params,&$smarty){
 	if($use_rewrite){
 	
 		switch($script){
+			case 'stylesheet'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/style.css"; break;
 			case 'login'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/LOGIN"; break;
 			case 'logout'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/LOGOUT"; break;
 			case 'panel'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/panel/$section$page$marker"; break;
@@ -213,6 +214,7 @@ function link_url($params,&$smarty){
 	}else{
 	
 			switch($script){
+			case 'stylesheet'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/style.php"; break;
 			case 'login'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/index.php?LOGIN"; break;
 			case 'logout'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/index.php?LOGOUT"; break;
 			case 'panel'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/panel.php$argument".$marker; break;

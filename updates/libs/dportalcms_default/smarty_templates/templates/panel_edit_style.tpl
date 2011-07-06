@@ -6,7 +6,7 @@
   	{{foreach item='value' from=$STYLE_LIST key='key' name='style_list'}}
 	<div style="clear_both">
       <div style="text-align:right;"><strong>{{$LANG.$key}}:</strong>&nbsp;
-        <input type="text" name="{{$key}}" value="{{$value}}" /></div>
+        <input type="text" name="style[{{$key}}]" value="{{$value.value}}" /></div>
 	  <div style="clear_both">&nbsp;</div>
 	</div>
 	{{/foreach}}

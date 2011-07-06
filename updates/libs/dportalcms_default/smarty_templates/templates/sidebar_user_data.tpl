@@ -13,7 +13,7 @@
 
 {{* Gallery mode *}}
 {{if $IS_GALLERY}}
-<div class="sidebar_link"><a href="{{LINK script='panel' section="gallery/edit:$GALLERY_NAME" argument="?NEW"}}" rel="external">{{$LANG.edit_upload}}</a></div>
+<div class="sidebar_link"><a href="{{LINK script='panel' section="gallery/edit:$GALLERY_NAME" argument="?tab=gallery&mode=edit&amp;gallery=$GALLERY_NAME"}}" rel="external">{{$LANG.edit_upload}}</a></div>
 {{/if}}
 
 {{* Blog mode *}}
@@ -24,7 +24,7 @@
 {{* Media player mode *}}
 {{if $IS_MEDIA_PLAYER}}
 {{if !empty($PLAYLIST_GET)}}
-<div class="sidebar_link"><a href="{{LINK script='panel' page="videos/upload:$PLAYLIST_GET" argument="?NEW"}}" rel="external">{{$LANG.edit_upload}}</a></div>
+<div class="sidebar_link"><a href="{{LINK script='panel' page="videos/upload:$PLAYLIST_GET" argument="?tab=videos&amp;mode=upload&amp;playlist=$PLAYLIST_GET"}}" rel="external">{{$LANG.edit_upload}}</a></div>
 {{/if}}
 <div class="sidebar_link"><a href="{{LINK script='panel' page="videos/create" argument="?NEW"}}" rel="external">{{$LANG.create_playlist}}</a></div>
 {{/if}}

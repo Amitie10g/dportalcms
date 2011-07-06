@@ -29,6 +29,7 @@ session_start();
 // Include the Configuration files
 require_once('config/config.inc.php');
 require_once('config/constants.php');
+
 /*
 // :: Use THE open_basedir directive with ini_set(), to increment the security (comment if have problems)
 ini_set('open_basedir',DPORTAL_ABSOLUTE_PATH.'/'.PATH_SEPARATOR.CONFIG_PATH.PATH_SEPARATOR.
@@ -59,9 +60,6 @@ define('SITENAME',$sitename);
 define('DESCRIPTION',$sitedesc);
 define('ADMIN_NICK',$admin_nick); // Should be a Nick, different from User!!!
 if(!empty($phpbb_dir)) define('PHPBB_DIR',$phpbb_dir);
-
-// Get the Style list
-$style_list = parse_ini_file(DPORTAL_ABSOLUTE_PATH . 'config/style.ini');
 
 // Set the Default Timezone (only available in PHP 5 >= 5.1.0)
 @date_default_timezone_set ($timezone);

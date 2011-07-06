@@ -5,9 +5,10 @@
 <h1>{{$CATEGORY_TITLE}}</h1>
 
 {{section name=menu loop=$ITEMS}}
+
 <div style="float:center;margin:auto;width:500px;margin-bottom:10px">
 <h3 style="margin:0"><a href="{{LINK section=$ITEMS[menu].name}}"><span>{{$ITEMS[menu].title}}</span></a></h3>
-{{fetch2 file=$ITEMS[menu].filename truncate=300 strip="b"}}
+{{if !$ITEMS[menu].exclusive}}{{fetch2 file=$ITEMS[menu].filename truncate=300 strip="b"}}{{else}}This section is exclusive and will not be previewed here!{{/if}}
 </div>
 {{sectionelse}}
 <div>

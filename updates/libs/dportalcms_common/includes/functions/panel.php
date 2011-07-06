@@ -136,8 +136,8 @@ function template_save($name,$content){
 
 	$filename = SMARTY_TEMPLATES_PATH."templates/$name";
 
-	if(is_readable($filename) && is_file($filename)) $saved = file_put_contents(SMARTY_TEMPLATES_PATH."templates/$name",$content,LOCK_EX);
-	else die('No'); //return false;
+	if(is_readable($filename) && is_file($filename) && strpos($name,'panel_') === false) $saved = file_put_contents(SMARTY_TEMPLATES_PATH."templates/$name",$content,LOCK_EX);
+	else return false;
 	
 	return $saved;
 
@@ -360,7 +360,7 @@ function get_galleries(){
  */
 
 // string get_pannel_message(void)
-function get_panel_message($params = null,&$smarty){
+function get_panel_message(){
 
 	$params = null;
 
@@ -428,6 +428,9 @@ function get_panel_message($params = null,&$smarty){
 
 	}elseif($_SESSION['IMAGES_NOT_UPLOADED']){
 		$message = $LANG['images_not_uploaded'];
+		
+	}elseif($_SESSION['IMAGES_DELETED']){
+		$message = $LANG['images_deleted'];
 
 	}elseif($_SESSION['BACKED_UP']){
 		$message = $LANG['backed_up'];
@@ -452,10 +455,12 @@ function get_panel_message($params = null,&$smarty){
 	
 	}elseif($_SESSION['VIDEO_UPLOADED']){
 		$message = $LANG['video_uploaded'];
-	}
-
-	else $message = $LANG['control_panel_preface'];
-
+		
+	}elseif($_SESSION['VIDEO_DELETED']){
+		$message = $LANG['video_deleted'];
+	
+	}else $mesagge = false;
+	
 	return $message;
 }
 
@@ -471,6 +476,78 @@ function get_lang_files(){
 		$langvars[] = array('key'=>$lang_name,'str'=>$lang_fullname);
 	}
 	return $langvars;
+}
+
+// bool update_style(array style)
+function update_style($style){
+
+	if(!is_array($style) && empty($style)) return false;
+	
+	// Types:
+	// Color: Use Color selector in Style editor
+	// BG: Options for Background (color and URL)
+	// Size: Used for Combobox. Parameters are the numbers, between, or fixed values. Used for font-size, margin and padding
+	// Border: Options for Border. Parameters are borde size (0-5), color and Type (solid, dotted, inset, etc)
+	// Text: Used for fixed values (as width)
+	// Width: Input text for numbers in px
+	// Font family: Options for common Font-family used: parameters may be Arial, Verdana, Monospaced, etc
+	// Float: For float. Values are left and right
+	
+	// HEREDOC syntax!
+	$output = <<<OUTPUT
+\x3C\x3Fphp
+
+\x24style_list['a_hover_color'] = array('value'=>'$style[a_hover_color]','type'=>'color');
+\x24style_list['a_link_color'] = array('value'=>'$style[a_link_color]','type'=>'color');
+\x24style_list['a_visited_color'] = array('value'=>'$style[a_visited_color]','type'=>'color');
+\x24style_list['banner_background'] = array('value'=>'$style[banner_background]','type'=>'bg');
+\x24style_list['banner_border'] = array('value'=>'$style[banner_border]','type'=>'border','parameters'=>'0-5');
+\x24style_list['_banner_border'] = array('value'=>'$style[_banner_border]','type'=>'border','parameters'=>'0-5');
+\x24style_list['_banner_border'] = array('value'=>'$style[_banner_border]','type'=>'size','parameters'=>'0-20');
+\x24style_list['_banner_margin'] = array('value'=>'$style[_banner_margin]','type'=>'size','parameters'=>'0-20');
+\x24style_list['banner_width'] = array('value'=>'$style[banner_width]','type'=>'width');
+\x24style_list['_banner_width'] = array('value'=>'$style[_banner_width]','type'=>'width');
+\x24style_list['body_background'] = array('value'=>'$style[body_background]','type'=>'bg');
+\x24style_list['body_font_color'] = array('value'=>'$style[body_font_color]','type'=>'color');
+\x24style_list['body_font_family'] = array('value'=>'$style[body_font_family]','type'=>'font','parameters'=>'Verdana, Arial, sans-serif');
+\x24style_list['body_font_size'] = array('value'=>'$style[body_font_size]','type'=>'size','parameters'=>'8-14');
+\x24style_list['body_padding'] = array('value'=>'$style[body_padding]','type'=>'size','parameters'=>'0-20');
+\x24style_list['container_bg'] = array('value'=>'$style[container_bg]','type'=>'bg');
+\x24style_list['container_border'] = array('value'=>'$style[container_border]','type'=>'border','parameters'=>'0-5');
+\x24style_list['container_margin'] = array('value'=>'$style[container_margin]','type'=>'size','parameters'=>'0-20');
+\x24style_list['container_padding'] = array('value'=>'$style[container_padding]','type'=>'size','parameters'=>'0-20');
+\x24style_list['container_width'] = array('value'=>'$style[container_width]','type'=>'width');
+\x24style_list['content_background'] = array('value'=>'$style[content_background]','type'=>'bg');
+\x24style_list['content_border'] = array('value'=>'$style[content_border]','type'=>'border','parameters'=>'0-5');
+\x24style_list['content_font_color'] = array('value'=>'$style[content_font_color]','type'=>'color');
+\x24style_list['content_font_size'] = array('value'=>'$style[a_hover_color]','type'=>'size','parameters'=>'8-14');
+\x24style_list['content_margin'] = array('value'=>'$style[content_margin]','type'=>'size','parameters'=>'0-20');
+\x24style_list['content_padding'] = array('value'=>'$style[content_padding]','type'=>'size','parameters'=>'0-20');
+\x24style_list['footer_background'] = array('value'=>'$style[a_hover_color]','type'=>'bg');
+\x24style_list['footer_border'] = array('value'=>'$style[footer_border]','type'=>'border','parameters'=>'0-5');
+\x24style_list['footer_margin'] = array('value'=>'$style[footer_margin]','type'=>'size','parameters'=>'0-20');
+\x24style_list['footer_padding'] = array('value'=>'$style[footer_padding]','type'=>'size','parameters'=>'0-20');
+\x24style_list['h1_font_size'] = array('value'=>'$style[h1_font_size]','type'=>'size','parameters'=>'14-20');
+\x24style_list['h2_font_size'] = array('value'=>'$style[h2_font_size]','type'=>'size','parameters'=>'13-18');
+\x24style_list['h3_font_size'] = array('value'=>'$style[h3_font_size]','type'=>'size','parameters'=>'12-16');
+\x24style_list['h5_titre_bg'] = array('value'=>'$style[h5_titre_bg]','type'=>'bg');
+\x24style_list['h5_titre_font_size'] = array('value'=>'$style[h5_titre_font_size]','type'=>'size','parameters'=>'8-14');
+\x24style_list['h5_titre_font_family'] = array('value'=>'$style[h5_titre_font_family]','type'=>'font','parameters'=>'Verdana, Arial, sans-serif');
+\x24style_list['h5_titre_font_color'] = array('value'=>'$style[h5_titre_font_color]','type'=>'color');
+\x24style_list['search_control_backgorund'] = array('value'=>'$style[search_control_backgorund]','type'=>'bg');
+\x24style_list['search_control_backgorund'] = array('value'=>'$style[search_control_backgorund]','type'=>'bg');
+\x24style_list['sidebar_border'] = array('value'=>'$style[sidebar_border]','type'=>'border','parameters'=>'0-5');
+\x24style_list['sidebar_float'] = array('value'=>'$style[sidebar_float]','type'=>'float');
+\x24style_list['sidebar_font_size'] = array('value'=>'$style[sidebar_font_size]','type'=>'size','parameters'=>'8-14');
+\x24style_list['sidebar_font_size'] = array('value'=>'$style[sidebar_font_size]','type'=>'size','parameters'=>'0-20');
+
+\x3F\x3E
+	
+OUTPUT;
+
+	if(file_put_contents(DPORTAL_ABSOLUTE_PATH . '/config/style_cfg.php',$output,LOCK_EX) !== false) return true;
+	else return false;
+
 }
 
 ?>

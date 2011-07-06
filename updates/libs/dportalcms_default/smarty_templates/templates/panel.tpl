@@ -6,13 +6,23 @@
   <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
   <title>{{$LANG.control_panel|ucfirst}} :: {{$SITENAME}}</title>
   <link rel="stylesheet" type="text/css"
-  href="{{$smarty.const.DPORTAL_PATH}}/default.css" />
+  href="{{LINK script="stylesheet"}}" />
   <script type="text/javascript" src="{{$smarty.const.DPORTAL_PATH}}/external_links.js"></script>
 {{if !empty($smarty.get.template_file)}}
 {{include file="editarea_script.tpl"}}
 {{/if}}
 
   <style type="text/css">
+	  h5.titre{
+		  font-size:13px;
+		  font-family:Verdana,sans-serif;
+		  background:#94D4FC url(images/fond2.gif);
+		  border:#4474BC 1px solid;
+		  margin:0;
+		  color:#4D73AD;
+		  padding:2px;
+		  text-align:center;
+		 }
        .titleItem{
           cursor: pointer;
           font-weight: bold;
@@ -30,9 +40,9 @@
 		  padding: 4px;
 		  margin:0 !important;
 		  font-weight:bold;
-		  border-top: 2px #000 solid;
-		  border-left: 2px #000 solid;
-		  border-right: 2px #000 solid;
+		  border-top: 2px #000 outset;
+		  border-left: 2px #000 outset;
+		  border-right: 2px #000 outset;
 		  border-bottom: 2px #000 solid;
 		  position:relative;
 		  bottom:-1px;
@@ -74,14 +84,10 @@
 <div>
 <h1 style="margin:0 0 10px 0">DPortal CMS {{$LANG.control_panel|ucfirst}}</h1>
 
-<div style="border:2px solid;background:#CCCCCC;width:800px;margin:auto">
-<h5 class="titre">{{$LANG.information|ucfirst}}</h5>
-<p style="margin:5px">{{PANEL_MESSAGE}} </p>
-</div>
   <div style="clear:both;height:10px"></div>
 
 <div style="padding:5px 0 0 0;width:800px;margin:auto;">
-<span class="panel_menu{{if $TAB == "general"}} selected{{/if}} titre">{{if $TAB != "general"}}<a href="{{LINK script="panel" section="general"}}">{{/if}}{{$LANG.general}}{{if $TAB != "general"|ucfirst}}</a>{{/if}}</span>
+<span class="panel_menu{{if $TAB == "general"}} selected{{/if}} titre" style="border-left:2px #000000 solid">{{if $TAB != "general"}}<a href="{{LINK script="panel" section="general"}}">{{/if}}{{$LANG.general}}{{if $TAB != "general"|ucfirst}}</a>{{/if}}</span>
 <span class="panel_menu{{if $TAB == "user_pass"}} selected{{/if}} titre">{{if $TAB != "user_pass"}}<a href="{{LINK script="panel" section="user_pass" argument="?tab=user_pass"}}">{{/if}}{{$LANG.user_and_password|ucfirst}}{{if $TAB != "user_pass"}}</a>{{/if}}</span>
 <span class="panel_menu{{if $TAB == "sections"}} selected{{/if}} titre">{{if $TAB != "sections"}}<a href="{{LINK script="panel" section="sections" argument="?tab=sections"}}">{{/if}}{{$LANG.sections|ucfirst}}{{if $TAB != "sections"}}</a>{{/if}}</span>
 <span class="panel_menu{{if $TAB == "gallery"}} selected{{/if}} titre">{{if $TAB != "gallery"}}<a href="{{LINK script="panel" section="gallery" argument="?tab=gallery"}}">{{/if}}{{$LANG.gallery|ucfirst}}{{if $TAB != "gallery"}}</a>{{/if}}</span>
@@ -97,10 +103,10 @@
 {{if $MODE != 'cse'}}<a href="{{LINK script="panel" section="general/cse" argument="?tab=general&amp;mode=cse"}}">{{/if}}{{$LANG.google_cse_conf}}{{if $MODE != 'cse'}}</a>{{/if}}
 
 {{elseif $TAB == "sections"}}
-{{if $MODE != 'edit_sections'}}<a href="{{LINK script="panel" section="sections/edit_section" argument="?tab=sections&amp;mode=edit_section"}}">{{/if}}{{$LANG.edit_sections}}{{if $MODE != 'edit_sections'}}</a>{{/if}} | 
-{{if $MODE != 'create_section'}}<a href="{{LINK script="panel" section="sections/create_section" argument="?tab=sections&amp;mode=create_section"}}">{{/if}}{{$LANG.create_section}}{{if $MODE != 'create_section'}}</a>{{/if}} |
-{{if $MODE != 'create_category'}}<a href="{{LINK script="panel" section="sections/create_category" argument="?tab=sections&amp;mode=create_category"}}">{{/if}}{{$LANG.create_category}}{{if $MODE != 'create_category'}}</a>{{/if}} | 
-{{if $MODE != 'edit_category'}}<a href="{{LINK script="panel" section="sections/edit_category" argument="?tab=sections&amp;mode=edit_category"}}">{{/if}}{{$LANG.edit_category}}{{if $MODE != 'edit_category'}}</a>{{/if}}
+{{if $MODE != 'edit_sections'}}<a href="{{LINK script="panel" section="sections/edit_section" argument="?tab=sections&amp;mode=edit_section"}}">{{/if}}{{$LANG.edit_sections|ucfirst}}{{if $MODE != 'edit_sections'}}</a>{{/if}} | 
+{{if $MODE != 'create_section'}}<a href="{{LINK script="panel" section="sections/create_section" argument="?tab=sections&amp;mode=create_section"}}">{{/if}}{{$LANG.create_section|ucfirst}}{{if $MODE != 'create_section'}}</a>{{/if}} |
+{{if $MODE != 'create_category'}}<a href="{{LINK script="panel" section="sections/create_category" argument="?tab=sections&amp;mode=create_category"}}">{{/if}}{{$LANG.create_category|ucfirst}}{{if $MODE != 'create_category'}}</a>{{/if}}{{if !empty($CATEGORIES)}} | 
+{{if $MODE != 'edit_category'}}<a href="{{LINK script="panel" section="sections/edit_category" argument="?tab=sections&amp;mode=edit_category"}}">{{/if}}{{$LANG.edit_category|ucfirst}}{{if $MODE != 'edit_category'}}</a>{{/if}}{{/if}}
 
 {{elseif $TAB == "gallery"}}
 {{if !empty($GALLERIES)}}
@@ -119,14 +125,21 @@
 
 {{elseif $TAB == "style"}}
 {{if $MODE != 'edit_style'}}<a href="{{LINK script="panel" section="style/edit_style" argument="?tab=style&amp;mode=edit_style"}}">{{/if}}{{$LANG.edit_style}}{{if $MODE != 'edit_style'}}</a>{{/if}} | 
-{{if $MODE != 'template'}}<a href="{{LINK script="panel" section="style/template" argument="?tab=style&amp;mode=template"}}">{{/if}}{{$LANG.edit_templates}}{{if $MODE != 'template'}}</a>{{/if}}
+{{if $MODE != 'template'}}<a href="{{LINK script="panel" section="style/template" argument="?tab=style&amp;mode=template"}}">{{/if}}{{$LANG.edit_templates|ucfirst}}{{if $MODE != 'template'}}</a>{{/if}}
 
 {{elseif $TAB == "backup"}}
-{{if !empty($BACKUPS)}}{{if $MODE != 'download'}}<a href="{{LINK script="panel" section="backup/download" argument="?tab=backup&amp;mode=download"}}">{{/if}}{{$LANG.download_backup}}{{if $MODE != 'download'}}</a>{{/if}} | {{/if}}
-{{if $MODE != 'create'}}<a href="{{LINK script="panel" section="backup/create" argument="?tab=backup&amp;mode=create"}}">{{/if}}{{$LANG.create_backup}}{{if $MODE != 'create'}}</a>{{/if}} | 
-{{if $MODE != 'restore'}}<a href="{{LINK script="panel" section="backup/restore" argument="?tab=backup&amp;mode=restore"}}">{{/if}}{{$LANG.restore_backup}}{{if $MODE != 'restore'}}</a>{{/if}}{{if !empty($BACKUPS)}} | 
-{{if $MODE != 'delete'}}<a href="{{LINK script="panel" section="backup/delete" argument="?tab=backup&amp;mode=delete"}}">{{/if}}{{$LANG.delete_backup}}{{if $MODE != 'delete'}}</a>{{/if}} {{/if}}
+{{if !empty($BACKUPS)}}{{if $MODE != 'download'}}<a href="{{LINK script="panel" section="backup/download" argument="?tab=backup&amp;mode=download"}}">{{/if}}{{$LANG.download_backup|ucfirst}}{{if $MODE != 'download'}}</a>{{/if}} | {{/if}}
+{{if $MODE != 'create'}}<a href="{{LINK script="panel" section="backup/create" argument="?tab=backup&amp;mode=create"}}">{{/if}}{{$LANG.create_backup|ucfirst}}{{if $MODE != 'create'}}</a>{{/if}} | 
+{{if $MODE != 'restore'}}<a href="{{LINK script="panel" section="backup/restore" argument="?tab=backup&amp;mode=restore"}}">{{/if}}{{$LANG.restore_backup|ucfirst}}{{if $MODE != 'restore'}}</a>{{/if}}{{if !empty($BACKUPS)}} | 
+{{if $MODE != 'delete'}}<a href="{{LINK script="panel" section="backup/delete" argument="?tab=backup&amp;mode=delete"}}">{{/if}}{{$LANG.delete_backup|ucfirst}}{{if $MODE != 'delete'}}</a>{{/if}} {{/if}}
 
+{{/if}}
+
+{{if !empty($PANEL_MESSAGE)}}
+<div style="border:4px outset;width:80%;margin:10px auto 0 auto;">
+	<h5 class="titre">{{$LANG.information|ucfirst}}</h5>
+	<div style="margin:5px;font-size:16px">{{$PANEL_MESSAGE}}</div>
+	</div>
 {{/if}}
 </div>
 
@@ -146,7 +159,6 @@
 {{if $MODE == 'edit_sections'}}{{include file="panel_edit_sections.tpl"}}
 {{elseif $MODE == 'create_section'}}{{include file="panel_create_section.tpl"}}
 {{elseif $MODE == 'create_category'}}{{include file="panel_create_category.tpl"}}
-{{* Reuse the template "panel_edit_style.tpl" that says "Not implemented yet" *}}
 {{elseif $MODE == 'edit_category'}}{{include file="panel_edit_category.tpl"}}
 
 {{/if}}
@@ -175,8 +187,8 @@
 {{/if}}
 </div>
 <div class="return_to_index">
-<a href="{{LINK script="panel" section="clear_cache" argument="?CLR_CACHE"}}">{{$LANG.clear_all_cache}}</a> | 
-<a href="{{LINK section="home"}}">{{$LANG.return_to_index}}</a>
+<a href="{{LINK script="panel" section="clear_cache" argument="?CLR_CACHE"}}">{{$LANG.clear_all_cache|ucfirst}}</a> | 
+<a href="{{LINK section="home"}}">{{$LANG.return_to_index|ucfirst}}</a>
 </div>
 
 </div>

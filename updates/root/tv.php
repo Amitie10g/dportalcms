@@ -82,7 +82,7 @@ if(isset($_GET['file'])){
 	
 		$smarty->assign('PLAYLIST_GET',$section);
 
-		if(strpos($_SERVER['REQUEST_URI'],"/media_player/$section/") === false) redir('playlist',$section);
+		//if(strpos($_SERVER['REQUEST_URI'],"/media_player/$section/") === false) redir('playlist',$section);
 	
 		// XML based Playlist, for some Players and Distribution	
 		if(isset($_GET['XSPF'])){

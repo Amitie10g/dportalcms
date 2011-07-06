@@ -150,7 +150,8 @@ if(isset($_GET['PDF'])){
 $smarty->assign('CATEGORY_NAME',$category_name);
 $smarty->assign('CATEGORY_TITLE',$category_title);
 
-$smarty->assign('TITLE',$title);
+if(($exclusive&&$loged_in)||!$exclusive) $smarty->assign('TITLE',$title);
+else $smarty->assign('TITLE',$LANG['please_login']);
 
 $smarty->assign('ITEMS',$items);
 
@@ -158,10 +159,15 @@ $smarty->assign('IS_CATEGORY',$is_category);
 $smarty->assign('IS_CATEGORIES',$is_categories);
 
 $smarty->display('header.tpl');
-$smarty->caching = 2;$smarty->cache_lifetime = 262800;
-$smarty->display('header_title.tpl',"$category_name|$section");
-$smarty->caching = false;
-
+if(($exclusive&&$loged_in)||!$exclusive){
+	$smarty->caching = 2;
+	$smarty->cache_lifetime = 262800;
+	$smarty->display('header_title.tpl',"$category_name|$section");
+	$smarty->caching = false;
+}else{
+	$smarty->caching = false;
+	$smarty->display('header_title.tpl');
+}
 if(!isset($_GET['PRINT'])) $smarty->display('header_more.tpl');
 $smarty->display('header_close.tpl');
 $smarty->display('body_h.tpl');

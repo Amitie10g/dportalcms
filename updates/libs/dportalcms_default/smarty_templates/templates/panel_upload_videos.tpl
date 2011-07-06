@@ -21,7 +21,7 @@ enctype="multipart/form-data">
 
 
 <div style="width:100%;padding:0 0 10px 0">
-<form method="post" action="{{LINK script="panel" section="video:delete" argument="?VIDEO_DELETE"}}">
+<form method="post" action="{{LINK script="panel" section="video:delete" argument="?DELETE_VIDEO"}}">
 <input type="hidden" name="playlist" value="{{$smarty.get.playlist}}" />
 
 {{section name="list" loop=$GET_PLAYLIST}}

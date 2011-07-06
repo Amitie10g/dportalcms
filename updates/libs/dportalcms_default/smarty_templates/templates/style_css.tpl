@@ -1,44 +1,47 @@
+{{* You can edit this template as a normal CSS file. This contain some dynamic values *}}
+/* This CSS file is generated dinamically, but major contents are static.*/
+
 body{
-      font-size:{{$STYLE_CONF.body_font_size}};
-      padding:{{$STYLE_CONF.body_padding}};
-      background:{{$STYLE_CONF.body_background}};
-      font-family:{{$STYLE_CONF.body_font_family}};
-      color:{{$STYLE_CONF.body_font_color}};
+      font-size:{{$STYLE_CONF.body_font_size.value}};
+      padding:{{$STYLE_CONF.body_padding.value}};
+      background:{{$STYLE_CONF.body_background.value}};
+      font-family:{{$STYLE_CONF.body_font_family.value}};
+      color:{{$STYLE_CONF.body_font_color.value}};
 }
 
 a:link{
       text-decoration:none;
       font-weight:bold;
-      color: {{$STYLE_CONF.a_link_color}};
+      color: {{$STYLE_CONF.a_link_color.value}};
 	  
 }a:visited{
       text-decoration: none;
       font-weight: bold;
-      color: {{$STYLE_CONF.a_visited_color}};
+      color: {{$STYLE_CONF.a_visited_color.value}};
 }a:hover{
       text-decoration:none;
       font-weight:bold;
-      color:{{$STYLE_CONF.a_hover_color}};
+      color:{{$STYLE_CONF.a_hover_color.value}};
       
 }em.desc{
       font-size:11px;
 }#container{
-      width:{{$STYLE_CONF.container_width}};
-      border:{{$STYLE_CONF.container_border}};
-      margin:{{$STYLE_CONF.container_margin}};
-      padding:{{$STYLE_CONF.container_padding}};
-      background: {{$STYLE_CONF.container_bg}};
+      width:{{$STYLE_CONF.container_width.value}};
+      border:{{$STYLE_CONF.container_border.value}};
+      margin:{{$STYLE_CONF.container_margin.value}};
+      padding:{{$STYLE_CONF.container_padding.value}};
+      background: {{$STYLE_CONF.container_bg.value}};
 }#banner{
-      width:{{$STYLE_CONF._banner_width}};
-      margin:{{$STYLE_CONF._banner_margin}};
-      border:{{$STYLE_CONF._banner_border}};
+      width:{{$STYLE_CONF._banner_width.value}};
+      margin:{{$STYLE_CONF._banner_margin.value}};
+      border:{{$STYLE_CONF._banner_border.value}};
 }.banner{
-      width:auto;
-      height:{{$STYLE_CONF.banner_width}};
-      border:{{$STYLE_CONF.banner_border}};
-      text-align:center;
-      margin:{{$STYLE_CONF.banner_margin}};
-      background:{{$STYLE_CONF.banner_background}};
+      width:{{$STYLE_CONF.banner_width.value}};
+      height: 150px;
+      border:{{$STYLE_CONF.banner_border.value}};
+      text-align: center;
+      margin:5px;
+      background:{{$STYLE_CONF.banner_background.value}};
 }#sup_ads{
       width:99%;
       margin:0 auto;
@@ -49,49 +52,40 @@ a:link{
       /*border:1px #000 dashed;*/
       /*margin:5px auto;*/
 }h1{
-      font-size:{{$STYLE_CONF.h1_font_size}};
+      font-size:{{$STYLE_CONF.h1_font_size.value}};
       margin:0;
       text-align:center;
 	  
 }h2{
-	font-size:{{$STYLE_CONF.h2_font-size}};
+	font-size:{{$STYLE_CONF.h2_font-size.value}};
 
 }h3{
-	font-size:{{$STYLE_CONF.h3_font_size}};
+	font-size:{{$STYLE_CONF.h3_font_size.value}};
 
-}h5.titre{
-      font-size:{{$STYLE_CONF.h5_titre_font_size}};
-      font-family:{{$STYLE_CONF.h5_titre_font_family}};
-      background:{{$STYLE_CONF.h5_titre_bg}};
-      border:#{{$STYLE_CONF.h5_titre_border}};
-      margin:0;
-      color:{{$STYLE_CONF.h5_titre_font_color}};
-      padding:2px;
-      text-align:center;
 }.sidebar{
-      width:{{$STYLE_CONF.sidebar_width}};
+      width: 130px;
       min-height:100px;
-      border:{{$STYLE_CONF.sidebar_border}};
-      margin:{{$STYLE_CONF.sidebar_margin}};
-      float:{{$STYLE_CONF.sidebar_float}};
+      border:{{$STYLE_CONF.sidebar_border.value}};
+      margin: 5px 0 5px 3px;
+      float:{{$STYLE_CONF.sidebar_float.value}};
       padding:0px;
-      font-size:{{$STYLE_CONF.sidebar_font_size}};
-      background:{{$STYLE_CONF.sidebar_background}};
+      font-size:{{$STYLE_CONF.sidebar_font_size.value}};
+      background:{{$STYLE_CONF.sidebar_background.value}};
 }.content{
       width:auto;
       min-height:100px;
-      border:{{$STYLE_CONF.content_border}};
-      margin:{{$STYLE_CONF.content_margin}};
-      padding:{{$STYLE_CONF.content_padding}};
-      font-size:{{$STYLE_CONF.content_font_size}};
-      background:{{$STYLE_CONF.content_background}};
-      color:{{$STYLE_CONF.content_font_color}};
+      border:{{$STYLE_CONF.content_border.value}};
+      margin:{{$STYLE_CONF.content_margin.value}};
+      padding:{{$STYLE_CONF.content_padding.value}};
+      font-size:{{$STYLE_CONF.content_font_size.value}};
+      background:{{$STYLE_CONF.content_background.value}};
+      color:{{$STYLE_CONF.content_font_color.value}};
 }.footer{
       width:auto;
-      border:{{$STYLE_CONF.footer_border}};
-      margin:{{$STYLE_CONF.footer_margin}};
-      padding:{{$STYLE_CONF.footer_padding}};
-      background:{{$STYLE_CONF.footer_background}};
+      border:{{$STYLE_CONF.footer_border.value}};
+      margin:{{$STYLE_CONF.footer_margin.value}};
+      padding:{{$STYLE_CONF.footer_padding.value}};
+      background:{{$STYLE_CONF.footer_background.value}};
 }ul.list{
       list-style-type:none;
       margin:0;
@@ -138,7 +132,7 @@ a:link{
 }
 
 .blog_entry {
-    border-bottom: {{$STYLE_CONF.blog_entry_border_bottom}};
+    border-bottom: #000000 1px dotted;;
     margin-bottom: 20px; 
 }
 
@@ -196,7 +190,7 @@ select.list{
 
 @media print{.no_print{
 	display:none;
-}}
+}
 
 
 
@@ -212,7 +206,7 @@ font-weight:bold;
 .searchcontrol{
 position:relative !important;
 height: 40px !important;
-background: {{$STYLE_CONF.search_control_backgorund}};
+background: {{$STYLE_CONF.search_control_backgorund.value}};
 z-index:1 !important;
 padding: 5px !important;
 }

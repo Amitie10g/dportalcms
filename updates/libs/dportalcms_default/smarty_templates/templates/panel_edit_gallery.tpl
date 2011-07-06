@@ -12,8 +12,7 @@ enctype="multipart/form-data">
     value="">{{$LANG.select_gallery_to_upload}}</option>
 	{{section name="galleries" loop=$GALLERIES}}
     <option
-    value="{{$GALLERIES[galleries].file}}"{{if !empty($GALLERY_NAME)}} selected="selected"{{/if}}}>{{$GALLERIES[galleries].file}} -
-    {{$GALLERIES[galleries].title}}</option>{{/section}}
+    value="{{$GALLERIES[galleries].file}}"{{if !empty($GALLERY_NAME)}} selected="selected"{{/if}}}>{{$GALLERIES[galleries].file}} - {{$GALLERIES[galleries].title}}</option>{{/section}}
   </select>
    </div>
    </form>
@@ -21,13 +20,6 @@ enctype="multipart/form-data">
   {{if !empty($GALLERY_NAME)}}
   <h2 style="margin:0;text-align:center">Editing {{$GALLERY_TITLE}}</h2>
   
-  <div style=";margin:auto;padding:2px;text-align:center">
-{{if $smarty.session.IMAGES_DELETED}}<div class="message_ok">{{$LANG.images_deleted}}</div>
-{{elseif $smarty.session.IMAGES_NON_DELETED}}<div class="message_error">{{$LANG.images_non_deleted}}</div>
-{{elseif $smarty.session.IMAGES_UPLOADED}}<div class="message_ok">{{$LANG.images_uploaded}}</div>
-{{elseif $smarty.session.IMAGES_NON_UPLOADES}}<div class="message_error">{{$LANG.images_non_uploaded}}</div>
-{{/if}}
-
 <div style="margin:0;text-align:center;">
 {{if !empty($IMAGELIST)}}<form method="post" action="{{LINK script="panel" section="gallery:delete_image" argument="?DELETE_IMAGE"}}">
 <div><input type="hidden" name="gallery" value="{{$smarty.get.gallery}}" /></div>{{/if}}
@@ -43,9 +35,8 @@ enctype="multipart/form-data">
 {{sectionelse}}<div style="margin:10px"><span style="font-style:italic">{{$LANG.no_images|ucfirst}}</span></div>{{/section}}
 {{if $IMAGELIST}}<div style="text-align:center"><input type="submit" value="  {{$LANG.delete_images}}Delete images  " onclick="confirm('Are you sure to delete these images?');"/></div>
 </form>{{/if}}
-<hr />
 </div>
-<div style="clear:left"></div>
+<hr />
 <div style="text-align:center">
 <h3>{{$LANG.upload_images|ucfirst}}</h3>
 <form id="form5" method="post" action="{{LINK script='panel' section='gallery:upload' argument='?UPLOAD_GALLERY'}}" enctype="multipart/form-data">
@@ -68,6 +59,8 @@ enctype="multipart/form-data">
 
   </form>
   </div>
+  {{* Rename and delete gallery currently not implemented yet *}}
+  {{*
   <hr />
 
   <div style="text-align:center">
@@ -76,19 +69,21 @@ enctype="multipart/form-data">
   <form method="post" action="{{LINK script="panel" section="gallery/EDIT"}}">
   <div style="padding:5px"><strong>New title:</strong> <input type="text" name="new_title" value="{{$GALLERY_TITLE}}" /></div>
   <div style="padding: 10px"><input type="submit" value="   {{$LANG.send}}   " /></div>
-  </div>
   </form>
   <form method="post" action="{{LINK script="panel" section="gallery/DELETE"}}">
   <div style="text-align:center">
   <input type="hidden" name="gallery" value="{{$GALLERY_NAME}}" />
   <div style="padding: 10px"><input type="submit" value="   Delete Gallery   " onclick="return confirm('Are you sure to delete &quot;{{$GALLERY_TITLE}}&quot; (&quot;{{$GALLERY_NAME}}&quot;) gallery?\nUnless you have a backup, This cannot be undo!')" />
   </div>
-
   </form>
-    </div>
+    
+	*}}
+{{else}}
+</div>
 {{/if}}
+
+
 {{else}}
 <div style="text-align:center">No Galleries created yet!</div>
 {{/if}}
 
-</div>

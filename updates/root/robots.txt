@@ -1,2 +1,15 @@
 User-agent: *
 allow: /
+disallow: *.php
+disallow: *.flv
+disallow: /lipsum.html
+disallow: /highslide/
+disallow: /player/
+disallow: /forum/faq.php
+disallow: /gallery.php?AJAX&page=1
+disallow: /media_player/undefined?789
+disallow: /media_player/Array/.flv
+disallow: /media_player//.flv
+disallow: /gallery/.html
+
+disallow *.php

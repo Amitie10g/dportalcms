@@ -8,7 +8,7 @@
    <li><h3><a href="{{LINK script="category" section=$key}}">{{$key|get_category_title}}</a></h3></li>
    <ul>
    {{foreach key="section_key" item="section" from=$category}}
-       <li><a href="{{LINK section=$section.name}}">{{$section.title}}</a></li>
+       {{if !$section.exclusive}}<li><a href="{{LINK section=$section.name}}">{{$section.title}}</a></li>{{/if}}
    {{/foreach}}
    </ul>
 {{/foreach}}

@@ -6,9 +6,10 @@
   <select class="list" name="template_file" onchange="submit();"
   style="width:90%">
     <option class="list" selected="selected"
-    disabled="disabled">{{$LANG.select_template_to_edit|ucfirst}}</option>{{section name="templates" loop=$TEMPLATES}}
-    <option
-    value="{{$TEMPLATES[templates].name}}"{{if $TEMPLATES[templates].name == $smarty.get.template_file}} selected="selected"{{/if}}>{{$TEMPLATES[templates].name}}</option>{{/section}}
+    disabled="disabled">{{$LANG.select_template_to_edit|ucfirst}}</option>
+	{{section name="templates" loop=$TEMPLATES}}
+    {{if strpos($TEMPLATES[templates].name,'panel_') === false}}<option value="{{$TEMPLATES[templates].name}}"{{if $TEMPLATES[templates].name == $smarty.get.template_file}} selected="selected"{{/if}}>{{$TEMPLATES[templates].name}}</option>{{/if}}
+	{{/section}}
   </select>
    </span>
 </form>
