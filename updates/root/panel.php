@@ -262,6 +262,9 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	$zip = new ZipArchive;
 	$archive = $zip->open($_FILES['filename']['tmp_name']);
 
+	/*$delete_destination = $_POST['delete_destination'];
+	if($delete_destination == '1') */$delete_destination = true;
+
 	if($archive){
 		if(!is_dir(DPORTAL_TEMP_PATH)) mkdir(DPORTAL_TEMP_PATH);
 	
@@ -280,6 +283,14 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 			// Content
 			if(is_dir(DPORTAL_TEMP_PATH.'/content/')){
 				if(($dir = opendir(DPORTAL_TEMP_PATH.'/content/')) !== false){
+					// Delete destination files (all contents) before restore.					
+					if($delete_destination === true){
+						$dest_dir = opendir(CONTENT_PATH);
+						while(($dest_file = readdir($dest_dir)) !== false){
+							if($dest_file != '.' && $dest_file != '..' && is_file(CONTENT_PATH . $dest_file)) unlink(CONTENT_PATH . $dest_file);
+						}
+						closedir($dest_dir);
+					}
 					while(($file = readdir($dir)) !== false){
 						if(nofakedir($file)){
 							if(is_file(CONTENT_PATH . $file)) unlink(CONTENT_PATH . $file);
@@ -287,12 +298,21 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 							unlink(DPORTAL_TEMP_PATH.'/content/' . $file);
 						}
 					}
+				closedir($dir);
 				}
 			}
 			
 			// Entries
 			if(is_dir(DPORTAL_TEMP_PATH.'/entries/')){
 				if(($dir = opendir(DPORTAL_TEMP_PATH.'/entries/')) !== false){
+					// Delete destination files (all contents) before restore.					
+					if($delete_destination === true){
+						$dest_dir = opendir(ENTRIES_PATH);
+						while(($dest_file = readdir($dest_dir)) !== false){
+							if($dest_file != '.' && $dest_file != '..' && is_file(ENTRIES_PATH . $dest_file)) unlink(ENTRIES_PATH . $dest_file);
+						}
+						closedir($dest_dir);
+					}
 					while(($file = readdir($dir)) !== false){
 						if(nofakedir($file)){
 							if(is_file(ENTRIES_PATH . $file)) unlink(ENTRIES_PATH . $file);
@@ -300,12 +320,21 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 							unlink(DPORTAL_TEMP_PATH.'/entries/' . $file);
 						}
 					}
+				closedir($dir);
 				}
 			}
 			
 			// Comments
 			if(is_dir(DPORTAL_TEMP_PATH.'/comments/')){
 				if(($dir = opendir(DPORTAL_TEMP_PATH.'/comments/')) !== false){
+					// Delete destination files (all contents) before restore.					
+					if($delete_destination === true){
+						$dest_dir = opendir(COMMENTS_PATH);
+						while(($dest_file = readdir($dest_dir)) !== false){
+							if($dest_file != '.' && $dest_file != '..' && is_file(COMMENTS_PATH . $dest_file)) unlink(COMMENTS_PATH . $dest_file);
+						}
+						closedir($dest_dir);
+					}
 					while(($file = readdir($dir)) !== false){
 						if(nofakedir($file)){
 							if(is_file(COMMENTS_PATH . $file)) unlink(COMMENTS_PATH . $file);
@@ -314,11 +343,20 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 						}
 					}
 				}
+				closedir($dir);
 			}
 			
 			// Templates
 			if(is_dir(DPORTAL_TEMP_PATH.'/templates/')){
 				if(($dir = opendir(DPORTAL_TEMP_PATH.'/templates/')) !== false){
+					// Delete destination files (all contents) before restore.					
+					if($delete_destination === true){
+						$dest_dir = opendir(SMARTY_TEMPLATES_PATH);
+						while(($dest_file = readdir($dest_dir)) !== false){
+							if($dest_file != '.' && $dest_file != '..' && is_file(SMARTY_TEMPLATES_PATH . $dest_file)) unlink(SMARTY_TEMPLATES_PATH . $dest_file);
+						}
+						closedir($dest_dir);
+					}
 					while(($file = readdir($dir)) !== false){
 						if(nofakedir($file)){
 							if(is_file(SMARTY_TEMPLATES_PATH . "templates/$file")) unlink(SMARTY_TEMPLATES_PATH . "templates/$file");
@@ -326,6 +364,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 							unlink(DPORTAL_TEMP_PATH.'/templates/' . $file);
 						}
 					}
+				closedir($dir);
 				}
 			}
 
@@ -437,6 +476,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 
 			$num_images_uploaded = 0;
 			foreach ($_FILES['images']['error'] as $key => $error){
+
 
 				if($error == UPLOAD_ERR_OK) {
 					$tmp_name = $_FILES['images']['tmp_name'][$key];

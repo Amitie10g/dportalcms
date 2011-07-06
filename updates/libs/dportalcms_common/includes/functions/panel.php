@@ -459,6 +459,12 @@ function get_panel_message(){
 	}elseif($_SESSION['VIDEO_DELETED']){
 		$message = $LANG['video_deleted'];
 	
+	}elseif($_SESSION['STYLE_UPDATED']){
+		$message = $LANG['style_updated'];
+
+	}elseif($_SESSION['STYLE_NOT_UPDATED']){
+		$message = $LANG['style_not_updated'];
+
 	}else $mesagge = false;
 	
 	return $message;
