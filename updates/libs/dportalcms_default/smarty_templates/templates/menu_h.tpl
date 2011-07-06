@@ -5,7 +5,6 @@
 <div class="dock2" id="dock2">
 	<div class="dock-container2">
 		<a class="dock-item2" href="{{LINK section="home"}}"><span>{{$LANG.home|ucfirst}}</span><img src="{{$smarty.const.DPORTAL_PATH}}/images/home.png" alt="{{$LANG.home|ucfirst}}" /></a>
-		<a class="dock-item2" href="{{$smarty.const.DPORTAL_PATH}}/feedback.php" onclick="window.open('feedback.php','Feedback','width=500,height=350');return false;"><span>{{$LANG.contact|ucfirst}}</span><img src="{{$smarty.const.DPORTAL_PATH}}/images/message.png" alt="{{$LANG.contact|ucfirst}}" /></a>
 		<a class="dock-item2" href="http://code.google.com/p/dportalcms/downloads"><span>{{$LANG.download|ucfirst}}</span><img src="{{$smarty.const.DPORTAL_PATH}}/images/download.png" alt="{{$LANG.download|ucfirst}}" /></a>
 		<a class="dock-item2" href="{{LINK section="links"}}"><span>{{$LANG.links|ucfirst}}</span><img src="{{$smarty.const.DPORTAL_PATH}}/images/link.png" alt="{{$LANG.links|ucfirst}}" /></a>
 		<a class="dock-item2" href="{{LINK script="blog"}}"><span>{{$LANG.blog|ucfirst}}</span><img src="{{$smarty.const.DPORTAL_PATH}}/images/blog.png" alt="{{$LANG.blog|ucfirst}}" /></a>
