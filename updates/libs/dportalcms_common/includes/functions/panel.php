@@ -213,7 +213,7 @@ function backup(array $mode = null){
 
 		// Initialize the ZipArchive Class
 		$zip = new ZipArchive;
-		$archive = $zip->open(BACKUPS_PATH . '/backup_' . date("d-m-Y_H-i",$date) . '.zip' , ZipArchive::CREATE) or die('Error opening or creating file!');
+		$archive = $zip->open(BACKUPS_PATH . '/backup_' . date("m-d-Y_H-i",$date) . '.zip' , ZipArchive::CREATE) or die('Error opening or creating file!');
 
 		if($archive){
 
