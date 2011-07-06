@@ -1,4 +1,3 @@
-{{* You can edit this template as a normal CSS file. This contain some dynamic values *}}
 /* This CSS file is generated dinamically, but major contents are static.*/
 
 body{
@@ -57,7 +56,7 @@ a:link{
       text-align:center;
 	  
 }h2{
-	font-size:{{$STYLE_CONF.h2_font-size.value}};
+	font-size:{{$STYLE_CONF.h2_font_size.value}};
 
 }h3{
 	font-size:{{$STYLE_CONF.h3_font_size.value}};
@@ -190,9 +189,7 @@ select.list{
 
 @media print{.no_print{
 	display:none;
-}
-
-
+}}
 
 /** Searchcontrol */
 
@@ -221,7 +218,7 @@ font-weight:bold;
 .gsc-tabHeader {
 font-weight: bold !important;
 color : #55AA11 !important;
-font-family: "Comic Sans MS", Arial, sans-serif !important;
+font-family: Arial, sans-serif !important;
 }
 
 /* Tabs */
@@ -253,18 +250,18 @@ padding-left: 10px  !important;
 
 .gs-title{
 font-size: 11px !important;
-font-family: "Comic Sans MS", Arial, sans-serif !important;
+font-family: Arial, sans-serif !important;
 color:#338800 !important;
 }
 
 .gsc-results .gsc-webResult {
 font-size: 10px !important;
-font-family: "Comic Sans MS", Arial, sans-serif !important;
+font-family: Arial, sans-serif !important;
 }
 
 .gs-visibleUrl {
 font-size: 11px !important;
-font-family: "Comic Sans MS", Arial, sans-serif !important;
+font-family: Arial, sans-serif !important;
 }
 
 .gsc-tabsArea .gsc-branding-text .gs-snippet {
@@ -308,12 +305,12 @@ height: 20px;
 font-size: 0px;
 border:0;
 color:#338800 !important;
-background: url('{{$smarty.const.DPORTAL_PATH}}/images/20pxsearchtoolsvg.png') no-repeat !important;
+background: url({{$smarty.const.DPORTAL_PATH}}/images/20pxsearchtoolsvg.png) no-repeat !important;
 }
 
 .gsc-clear-button{
-top: 30px !important;
-right: 15px !important;
+top: 10px !important;
+right: 6px !important;
 position:relative !important;
 }
 
