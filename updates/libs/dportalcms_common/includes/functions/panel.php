@@ -553,7 +553,6 @@ OUTPUT;
 
 	if(file_put_contents(DPORTAL_ABSOLUTE_PATH . '/config/style_cfg.php',$output,LOCK_EX) !== false) return true;
 	else return false;
-
 }
 
 ?>
