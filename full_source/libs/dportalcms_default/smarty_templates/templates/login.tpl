@@ -19,8 +19,8 @@
 </td>
 </tr>
 <tr>
-<td><a href="{{$PHPBB_URL_PATH}}ucp.php?mode=register">Register</a></td>
-<td><a href="{{$PHPBB_URL_PATH}}ucp.php?mode=sendpassword">Forgot password?</a></td>
+<td><a href="{{$PHPBB_URL_PATH}}ucp.php?mode=register">{{$LANG.register|ucfirst}}</a></td>
+<td><a href="{{$PHPBB_URL_PATH}}ucp.php?mode=sendpassword">{{$LANG.forgot_password|ucfirst}}</a></td>
 </tr>
 </table>
 </form>

@@ -63,12 +63,13 @@ function get_sections($category = null){
 	while (($data = fgetcsv($secs, 1000, ";")) !== FALSE){
 		$name = $data[1];
 		$title = $data[2];
+		$exclusive = $data[3];
 		if((strpos($name,"_") !== false) && $category != null && $category != "all"){
 			$category_file = explode("_",$name);
 			$category_file = $category_file[0];
 		}
 	
-		if((($category == $category_file && $category != null) || ($category == null && strpos($name,"_") === false)) || $all) $sections[] = array('name'=>$name,'title'=>$title,'filename'=>CONTENT_PATH . $name,'custom_icon_path'=>DPORTAL_ABSOLUTE_PATH.'images/'.$name.'_logo.png','custom_icon'=>basename(DPORTAL_ABSOLUTE_PATH.'images/'.$name.'_logo.png'));
+		if((($category == $category_file && $category != null) || ($category == null && strpos($name,"_") === false)) || $all) $sections[] = array('name'=>$name,'title'=>$title,'filename'=>CONTENT_PATH . $name,'custom_icon_path'=>DPORTAL_ABSOLUTE_PATH.'images/'.$name.'_logo.png','exclusive'=>$exclusive,'custom_icon'=>basename(DPORTAL_ABSOLUTE_PATH.'images/'.$name.'_logo.png'));
 	}
 	fclose($secs);
  

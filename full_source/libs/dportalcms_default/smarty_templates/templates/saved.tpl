@@ -22,8 +22,8 @@
 {{if $UPDATED}}
 <div style="margin:10px 10px 20px 0">{{$LANG.section|ucfirst}} &quot;{{$SECTION}}&quot; {{$LANG.updated_success}} </div>
 <div style="text-align:right;padding:10px">
-<a href="{{LINK script='edit' section=$SECTION  page='section:' argument='?section='}}" style="padding:2px 15px;border:4px #00EEFF inset;background:#00EEFF">Edit</a>
-<a href="{{LINK section=$SECTION}}" style="padding:2px 15px;border:4px #00EEFF inset;background:#00EEFF">Return</a>
+<a href="{{LINK script='edit' section=$SECTION  page='section:' argument='?section='}}" style="padding:2px 15px;border:4px #00EEFF inset;background:#00EEFF">{{$LANG.edit|ucfirst}}</a>
+<a href="{{if $smarty.session.PANEL}}{{LINK script='panel' section='sections' argument="?tab=sections"}}{{else}}{{LINK section=$SECTION}}{{/if}}" style="padding:2px 15px;border:4px #00EEFF inset;background:#00EEFF">{{$LANG.return|ucfirst}}</a>
 </div>
 </div>
 {{elseif $WARNING}}
@@ -36,7 +36,7 @@
 <a href="={{LINK section="home"}}" style="margin:10px 5px;padding:2px 15px;border:4px #00EEFF inset;background:#00EEFF">{{$LANG.no}}</a>
 </div>
 {{else}}
-<p>{{$LANG.error_update_entry}}</p>
+<p>{{$LANG.error_update_entry|ucfirst}}</p>
 <div style="text-align:right;padding:0">
 <div style="margin:10px 10px 20px 0">
 <a href="{{LINK section='home'}}" style="margin:10px 5px;padding:2px 15px;border:4px #00EEFF inset;background:#00EEFF">{{$LANG.return_to_index|ucfirst}}</a></div>

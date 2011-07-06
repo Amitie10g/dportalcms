@@ -1,3 +1,5 @@
+; This is the default and static CSS file to be used as fallback
+
 body{
       font-size:12px;
       padding:2px 25px;
@@ -19,7 +21,10 @@ a:link{
       text-decoration:none;
       font-weight:bold;
       color:#AAAAAA;
-      
+
+}.sidebar_link{
+	margin-bottom:3px;
+
 }em.desc{
       font-size:11px;
       /*font-family:"Courier New",Courier,monospace;*/
@@ -83,7 +88,7 @@ a:link{
       width:auto;
       min-height:100px;
       border:#000 1px dashed;
-      margin:5px 142px 5px 2px;
+      margin:5px 138px 5px 2px;
       padding:5px;
       font-size:13px;
       background:#FFFFFF;
@@ -132,6 +137,14 @@ a:link{
 	display:inline-table;
 	padding:5px;
 	margin:5px;
+	vertical-align:middle;
+}
+
+.image_gallery_panel{
+
+	display:inline-table;
+	padding:1px;
+	margin:1px;
 	vertical-align:middle;
 }
 
@@ -221,7 +234,7 @@ padding: 5px !important;
 
 /* "Loading..." text */
 span.loading {
-font-size:120%;
+font-size:160%;
 font-weight:bold;
 }
 
@@ -321,11 +334,15 @@ background: url('http://img171.imageshack.us/img171/4210/20pxsearchtoolsvg.png')
 }
 
 .gsc-clear-button{
-top: 30px !important;
-right: 15px !important;
+top: 10px !important;
+right: 5px !important;
 position:relative !important;
 }
 
 .gsc-imageResult {
 margin:auto !important;
+}
+
+iframe.#I1_1309488516636{
+	width: 50px !important;
 }

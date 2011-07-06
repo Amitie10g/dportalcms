@@ -11,7 +11,7 @@
   //]]></script>
   <noscript><input type="submit" value="{{$LANG.save|ucfirst}}" /></noscript>
   &nbsp;<img src="{{$smarty.const.DPORTAL_PATH}}/editor/themes/advanced/images/separator.gif" style="position:absolute;padding:0 1px" alt="" />&nbsp;
-  {{if !isset($smarty.get.NEW)}}<a href="{{LINK section=$FILENAME argument='?section='}}" onclick="return confirm('{{$LANG.confirm_exit_editor|ucfirst}}');">{{$LANG.cancel|ucfirst}}</a>{{else}}<span title="{{$LANG.cant_cancel_title}}">{{$LANG.cant_cancel}}</span>{{/if}}
+  {{if !isset($smarty.get.NEW)}}<a href="{{if $smarty.session.PANEL}}{{LINK script='panel' section='sections' argument="?tab=sections"}}{{else}}{{LINK section=$SECTION}}{{/if}}" onclick="return confirm('{{$LANG.confirm_exit_editor|ucfirst}}');">{{$LANG.cancel|ucfirst}}</a>{{else}}<span title="{{$LANG.cant_cancel_title}}">{{$LANG.cant_cancel}}</span>{{/if}}
   <noscript>&nbsp;<span style="font-style:italic">Please enable Javascript to see the WYSIWYG editor</span></noscript>
   </p> 
 </div>
@@ -20,6 +20,7 @@
 	</textarea></p>
 <p style="margin:0"><input type="hidden" name="file" value="{{$FILENAME}}" /></p>
 <p style="margin:0"><input type="hidden" name="category" value="{{$CATEGORY}}" /></p>
+{{if $PANEL}}<p style="margin:0"><input type="hidden" name="panel" value="1" /></p>{{/if}}
 </form>
 </body>
 </html>

@@ -29,6 +29,7 @@ session_start();
 // Include the Configuration files
 require_once('config/config.inc.php');
 require_once('config/constants.php');
+
 /*
 // :: Use THE open_basedir directive with ini_set(), to increment the security (comment if have problems)
 ini_set('open_basedir',DPORTAL_ABSOLUTE_PATH.'/'.PATH_SEPARATOR.CONFIG_PATH.PATH_SEPARATOR.
@@ -59,7 +60,6 @@ define('SITENAME',$sitename);
 define('DESCRIPTION',$sitedesc);
 define('ADMIN_NICK',$admin_nick); // Should be a Nick, different from User!!!
 if(!empty($phpbb_dir)) define('PHPBB_DIR',$phpbb_dir);
-
 
 // Set the Default Timezone (only available in PHP 5 >= 5.1.0)
 @date_default_timezone_set ($timezone);
@@ -116,12 +116,14 @@ $smarty->assign('SITE_DESCRIPTION',$sitedesc);
 $smarty->assign('ADMIN_EMAIL',$admin_email);
 $smarty->assign('ADMIN_NICK',$admin_nick);
 $smarty->assign('PHPBB_DIR',$phpbb_dir);
+$smarty->assign('CSE_KEY',$cse_key);
 $smarty->assign('LANG',$LANG);
 $smarty->assign('USE_REWRITE',$use_rewrite);
 $smarty->assign('MEMCACHED_SERVER',$memcached_server);
 $smarty->assign('MEMCACHED_PORT',$memcached_port);
 $smarty->assign('USER_LANG',$language);
 $smarty->assign('USER_LANG_STRING',$LANG['book_lang_'.$language]);
+$smarty->assign('STYLE_LIST',$style_list);
 
 // :: Registering Functions for Smarty
 

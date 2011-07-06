@@ -17,7 +17,7 @@
 	<name>{{$PHPBB_USERNAME|default:"Administrator"}}</name>
        </author>
         <content type="html" xml:lang="en"><![CDATA[
-         {{fetch2 file=$ENTRIES[entries].file truncate=500}}
+         {{fetch2 file=$ENTRIES[entries].file truncate=500 strip='b'}}
        ]]></content>
      </entry>
 {{/section}}

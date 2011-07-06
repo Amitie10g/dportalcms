@@ -65,7 +65,7 @@ function redir($script,$section,$http_status = null,$argument = null,$marker = n
 			case "edit"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/edit/section:$section"); break;
 			case "new"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/edit/new_section:$section"); break;
 			case "saved"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/edit/SAVED"); break;
-			case "panel"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/panel/$argument"); break;
+			case "panel"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/panel/$section$marker"); break;
 			case "gallery"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/gallery/$section.html$argument"); break;
 			case "gallery_index"	: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/gallery/"); break;
 			case "gallery_ajax"	: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/gallery/".$_GET['gallery']."_ajax"); break;
@@ -87,7 +87,7 @@ function redir($script,$section,$http_status = null,$argument = null,$marker = n
 		if($marker != null) $marker = "#$marker";
 	
 		switch($script){
-			case "edit"			: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/edit.php$argument&section=$section"); break;
+			case "edit"			: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/edit.php?section=$section"); break;
 			case "new"			: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/edit.php?section=$section&NEW"); break;
 			case "saved"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/edit.php?SAVED"); break;
 			case "panel"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/panel.php$argument$marker"); break;
@@ -171,9 +171,10 @@ function link_url($params,&$smarty){
 	if($use_rewrite){
 	
 		switch($script){
+			case 'stylesheet'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/style.css"; break;
 			case 'login'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/LOGIN"; break;
 			case 'logout'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/LOGOUT"; break;
-			case 'panel'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/panel/$section$marker"; break;
+			case 'panel'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/panel/$section$page$marker"; break;
 			case 'edit'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/edit/$page$section".$marker; break;
 			case 'blog'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/blog/$page".$marker; break;
 			case 'blog_edit'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/blog/edit:$section"; break;
@@ -205,14 +206,6 @@ function link_url($params,&$smarty){
 			case 'video'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/media_player/".$page.'/'. $section.'.flv'; break;
 			case 'video_hq'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/media_player/".$page.'/'. $section.'_hq.flv'; break;
 			case 'video_download'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/media_player/".$page.'/download:'. $section.'.flv'; break;
-			case 'books'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/book/$page".$marker; break;
-			case 'books_filter_author'	: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/book/author:$section".$marker; break;
-			case 'chapter'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/book/".$page.'/'. $section.'.html'.$marker; break;
-			case 'book_comments_goto'	: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/book/".$argument.'/'. $section.'_'.$page.'.html'.$marker; break;
-			case 'book_comments_goto_ajax'	: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/book/comments:".$argument.'/'. $section.'/page:'.$page; break;
-			case 'chapter_print'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/book/".$page.'/'. $section.'.print.html'.$marker; break;
-			case 'chapter_pdf'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/book/".$page.'/'. $section.'.pdf'; break;
-			case 'edit_chapter'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/book/edit:".$page.'/'. $section; break;
 			case 'category'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/".$section."/sections/"; break;
 			case 'categories'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/categories/"; break;
 			case 'index_pdf'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/". str_replace('_','/',$section).'.pdf'; break;
@@ -221,6 +214,7 @@ function link_url($params,&$smarty){
 	}else{
 	
 			switch($script){
+			case 'stylesheet'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/style.php"; break;
 			case 'login'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/index.php?LOGIN"; break;
 			case 'logout'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/index.php?LOGOUT"; break;
 			case 'panel'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/panel.php$argument".$marker; break;

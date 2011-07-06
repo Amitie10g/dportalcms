@@ -9,10 +9,8 @@ function OnLoad() {
 
 var searchControl = new
 google.search.CustomSearchControl
-{{Put bellow your Google CSE Key}}
 ("{{$CSE_KEY}}");
 
-// Opciones adicionales para los Resultados (global)
 searchControl.setLinkTarget
 (google.search.Search.LINK_TARGET_SELF);
 searchControl.setResultSetSize
