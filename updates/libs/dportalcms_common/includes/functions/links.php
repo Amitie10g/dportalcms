@@ -241,6 +241,11 @@ function link_url($params,&$smarty){
 			case 'video_thumb'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/tv.php?video=". $section.'&amp;THUMB'; break;
 			case 'video'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/tv.php?playlist=".$page.'&amp;file='.$section; break;
 			case 'video_hq'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/tv.php?playlist=".$page.'&amp;file='.$section.'_hq'; break;
+<<<<<<< .mine
+			case 'books'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/book.php$argument".$marker; break;
+			case 'books_filter_author'	: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/book.php?author=$section".$marker; break;
+=======
+>>>>>>> .r129
 			case 'category'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/index.php?category=".$section.$marker; break;
 			case 'categories'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/index.php?CATEGORIES".$marker; break;
 			case 'index_pdf'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/index.php?section=".$section.'&amp;PDF'; break;
