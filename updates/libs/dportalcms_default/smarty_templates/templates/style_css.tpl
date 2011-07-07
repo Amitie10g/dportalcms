@@ -21,7 +21,11 @@ a:link{
       text-decoration:none;
       font-weight:bold;
       color:{{$STYLE_CONF.a_hover_color.value}};
-      
+
+}.sidebar_link{
+	margin-bottom: 5px;
+}
+
 }em.desc{
       font-size:11px;
 }#container{
@@ -314,6 +318,6 @@ right: 6px !important;
 position:relative !important;
 }
 
-.gsc-imageResult{
+.gsc-imageResult {
 margin:auto !important;
 }
