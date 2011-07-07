@@ -1,33 +1,29 @@
-; This is the default and static CSS file to be used as fallback
+/* This is the default and static CSS file to be used as fallback */
 
 body{
       font-size:12px;
       padding:2px 25px;
-      /*background:#FFFFFF url('images/main-bg.gif');*/
-      font-family:Verdana,sans-serif;
+      background:#FFFFFF;
+      font-family:Segoe IU, Verdana, Tahoma, Arial, sans-serif;
       color:#000000;
 }
 
 a:link{
       text-decoration:none;
       font-weight:bold;
-      color:#444444;
+      color: #555555;
 	  
 }a:visited{
       text-decoration: none;
       font-weight: bold;
-      color: #555555;
+      color: #888888;
 }a:hover{
       text-decoration:none;
       font-weight:bold;
       color:#AAAAAA;
-
-}.sidebar_link{
-	margin-bottom:3px;
-
+      
 }em.desc{
       font-size:11px;
-      /*font-family:"Courier New",Courier,monospace;*/
 }#container{
       width:95%;
       border:2px #000 dashed;
@@ -40,11 +36,11 @@ a:link{
       border:2px #000 dashed;
 }.banner{
       width:auto;
-      height:150px;
+      height: 150px;
       border:1px #000 dashed;
-      text-align:center;
+      text-align: center;
       margin:5px;
-      background:url('images/banner.png') center no-repeat;
+      background:url(images/banner.png) center no-repeat;
 }#sup_ads{
       width:99%;
       margin:0 auto;
@@ -56,7 +52,6 @@ a:link{
       /*margin:5px auto;*/
 }h1{
       font-size:18px;
-      font-family:Verdana,sans-serif;
       margin:0;
       text-align:center;
 	  
@@ -66,20 +61,11 @@ a:link{
 }h3{
 	font-size:14px;
 
-}h5.titre{
-      font-size:13px;
-      font-family:Verdana,sans-serif;
-      background:#94D4FC url(images/fond2.gif);
-      border:#4474BC 1px solid;
-      margin:0;
-      color:#4D73AD;
-      padding:2px;
-      text-align:center;
 }.sidebar{
-      width:130px;
+      width: 130px;
       min-height:100px;
       border:#000 1px dashed;
-      margin:5px 2px 5px 3px;
+      margin: 5px 0 5px 3px;
       float:right;
       padding:0px;
       font-size:11px;
@@ -90,7 +76,7 @@ a:link{
       border:#000 1px dashed;
       margin:5px 138px 5px 2px;
       padding:5px;
-      font-size:13px;
+      font-size:12px;
       background:#FFFFFF;
       color:#000000;
 }.footer{
@@ -98,7 +84,7 @@ a:link{
       border:#000 1px dashed;
       margin:2px 2px 0 2px;
       padding:5px;
-      background:#FFFFFF;
+      background:#AAAAAA;
 }ul.list{
       list-style-type:none;
       margin:0;
@@ -125,7 +111,7 @@ a:link{
       padding:0;
       margin:0;
 }.cleaner{
-       clear:both;
+      clear:both;
       padding:0;
       margin:0;
       height:0;
@@ -140,20 +126,12 @@ a:link{
 	vertical-align:middle;
 }
 
-.image_gallery_panel{
-
-	display:inline-table;
-	padding:1px;
-	margin:1px;
-	vertical-align:middle;
-}
-
 .contenidoItem p{
        margin: 3px;
 }
 
 .blog_entry {
-    border-bottom: #000000 1px dotted;
+    border-bottom: #000000 1px dotted;;
     margin-bottom: 20px; 
 }
 
@@ -179,7 +157,7 @@ h3.blog_entry_date{
 
 .code {
   margin: 0 0 20px 50px;
-  font-family:Courier New;
+  font-family:Courier New, monospaced, mono;
   background: #fff;
   max-height:400px;
   overflow:auto;
@@ -213,8 +191,6 @@ select.list{
 	display:none;
 }}
 
-
-
 /** Searchcontrol */
 
 /* Main box */
@@ -234,7 +210,7 @@ padding: 5px !important;
 
 /* "Loading..." text */
 span.loading {
-font-size:160%;
+font-size:120%;
 font-weight:bold;
 }
 
@@ -242,7 +218,7 @@ font-weight:bold;
 .gsc-tabHeader {
 font-weight: bold !important;
 color : #55AA11 !important;
-font-family: "Comic Sans MS", Arial, sans-serif !important;
+font-family: Arial, sans-serif !important;
 }
 
 /* Tabs */
@@ -274,18 +250,18 @@ padding-left: 10px  !important;
 
 .gs-title{
 font-size: 11px !important;
-font-family: "Comic Sans MS", Arial, sans-serif !important;
+font-family: Arial, sans-serif !important;
 color:#338800 !important;
 }
 
 .gsc-results .gsc-webResult {
 font-size: 10px !important;
-font-family: "Comic Sans MS", Arial, sans-serif !important;
+font-family: Arial, sans-serif !important;
 }
 
 .gs-visibleUrl {
 font-size: 11px !important;
-font-family: "Comic Sans MS", Arial, sans-serif !important;
+font-family: Arial, sans-serif !important;
 }
 
 .gsc-tabsArea .gsc-branding-text .gs-snippet {
@@ -307,7 +283,6 @@ height: 0 !important;
 
 .gsc-cursor-box {
 font-size: 12px !important;
-font-family: "Comic Sans MS", Arial, sans-serif !important;
 }
 
 .gsc-cursor-page {
@@ -330,19 +305,15 @@ height: 20px;
 font-size: 0px;
 border:0;
 color:#338800 !important;
-background: url('http://img171.imageshack.us/img171/4210/20pxsearchtoolsvg.png') no-repeat !important;
+background: url(/images/20pxsearchtoolsvg.png) no-repeat !important;
 }
 
 .gsc-clear-button{
 top: 10px !important;
-right: 5px !important;
+right: 6px !important;
 position:relative !important;
 }
 
 .gsc-imageResult {
 margin:auto !important;
-}
-
-iframe.#I1_1309488516636{
-	width: 50px !important;
 }
