@@ -74,7 +74,6 @@ a:link{
       padding:0px;
       font-size:{{$STYLE_CONF.sidebar_font_size.value}};
       background:{{$STYLE_CONF.sidebar_background.value}};
-
 /*
 .sidebar_link{
 	margin-bottom:5px
