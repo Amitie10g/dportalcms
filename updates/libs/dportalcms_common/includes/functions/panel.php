@@ -213,7 +213,7 @@ function backup(array $mode = null){
 
 		// Initialize the ZipArchive Class
 		$zip = new ZipArchive;
-		$archive = $zip->open(BACKUPS_PATH . '/backup_' . date("m-d-Y_H-i",$date) . '.zip' , ZipArchive::CREATE) or die('Error opening or creating file!');
+		$archive = $zip->open(BACKUPS_PATH . '/backup_' . date("d-m-Y_H-i",$date) . '.zip' , ZipArchive::CREATE) or die('Error opening or creating file!');
 
 		if($archive){
 
@@ -526,10 +526,10 @@ function update_style($style){
 \x24style_list['content_background'] = array('value'=>'$style[content_background]','type'=>'bg');
 \x24style_list['content_border'] = array('value'=>'$style[content_border]','type'=>'border','parameters'=>'0-5');
 \x24style_list['content_font_color'] = array('value'=>'$style[content_font_color]','type'=>'color');
-\x24style_list['content_font_size'] = array('value'=>'$style[a_hover_color]','type'=>'size','parameters'=>'8-14');
+\x24style_list['content_font_size'] = array('value'=>'$style[content_font_size]','type'=>'size','parameters'=>'8-14');
 \x24style_list['content_margin'] = array('value'=>'$style[content_margin]','type'=>'size','parameters'=>'0-20');
 \x24style_list['content_padding'] = array('value'=>'$style[content_padding]','type'=>'size','parameters'=>'0-20');
-\x24style_list['footer_background'] = array('value'=>'$style[a_hover_color]','type'=>'bg');
+\x24style_list['footer_background'] = array('value'=>'$style[footer_background]','type'=>'bg');
 \x24style_list['footer_border'] = array('value'=>'$style[footer_border]','type'=>'border','parameters'=>'0-5');
 \x24style_list['footer_margin'] = array('value'=>'$style[footer_margin]','type'=>'size','parameters'=>'0-20');
 \x24style_list['footer_padding'] = array('value'=>'$style[footer_padding]','type'=>'size','parameters'=>'0-20');
@@ -541,8 +541,8 @@ function update_style($style){
 \x24style_list['h5_titre_font_family'] = array('value'=>'$style[h5_titre_font_family]','type'=>'font','parameters'=>'Verdana, Arial, sans-serif');
 \x24style_list['h5_titre_font_color'] = array('value'=>'$style[h5_titre_font_color]','type'=>'color');
 \x24style_list['search_control_backgorund'] = array('value'=>'$style[search_control_backgorund]','type'=>'bg');
-\x24style_list['search_control_backgorund'] = array('value'=>'$style[search_control_backgorund]','type'=>'bg');
 \x24style_list['sidebar_border'] = array('value'=>'$style[sidebar_border]','type'=>'border','parameters'=>'0-5');
+\x24style_list['sidebar_backgorund'] = array('value'=>'$style[sidebar_backgorund]','type'=>'bg');
 \x24style_list['sidebar_float'] = array('value'=>'$style[sidebar_float]','type'=>'float');
 \x24style_list['sidebar_font_size'] = array('value'=>'$style[sidebar_font_size]','type'=>'size','parameters'=>'8-14');
 \x24style_list['sidebar_font_size'] = array('value'=>'$style[sidebar_font_size]','type'=>'size','parameters'=>'0-20');
@@ -553,6 +553,7 @@ OUTPUT;
 
 	if(file_put_contents(DPORTAL_ABSOLUTE_PATH . '/config/style_cfg.php',$output,LOCK_EX) !== false) return true;
 	else return false;
+
 }
 
 ?>
