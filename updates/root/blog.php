@@ -22,7 +22,18 @@ require_once('config/config.php');
 $entry_name = $_GET['entry'];
 
 $page = $_GET['page'];
+
+if(empty($page) && empty($entry_name)){
+	if(substr($_SERVER['REQUEST_URI'],-1) != '/' && $use_rewrite){
+		header('HTTP/1.1 301 Moved Permanently');
+		header('location: ' . $_SERVER['REQUEST_URI'] . '/');
+	}
+}
+
 if(!is_numeric($page) && $page < 1) $page = 1;
+
+$year = $_GET['year'];
+$month = $_GET['month'];
 
 // Create new entry
 if(isset($_GET['NEW'])){
@@ -38,7 +49,29 @@ if(isset($_GET['NEW'])){
 	}else{
 		header('HTTP/1.1 404 Not found');
 		$smarty->assign('TITLE',$LANG['not_found']);
+		
+		$smarty->display('header.tpl');
+	
+		$smarty->display('header_title.tpl');
+	
+		$smarty->display('header_more.tpl');
+		$smarty->display('header_close.tpl');
+		$smarty->display('body_h.tpl');
+		$smarty->display('container.tpl');
+		$smarty->display('menu_h.tpl');
+
+		$smarty->display('menu_f.tpl');
+		$smarty->display('header_f.tpl');
+
+		$smarty->display('sidebar_h.tpl');
+
+		$smarty->display('sidebar_user_data.tpl');
+
+		$smarty->display('sidebar_c.tpl');
+		$smarty->display('sidebar_f.tpl');
 		$smarty->display('blog_entry_not_found.tpl');
+		$smarty->display('footer_page.tpl');
+		$smarty->display('footer.tpl');
 	}
 
 // Edit mode
@@ -406,7 +439,7 @@ if(isset($_GET['NEW'])){
 	
 	if(isset($_GET['FEED'])) $limit = $entries_per_page;
 	
-	$entries = get_blog_entries($limit);
+	$entries = get_blog_entries($limit,$year,$month);
 	$total = count($entries);
 
 	$start = (($page - 1) * $entries_per_page);
@@ -418,6 +451,8 @@ if(isset($_GET['NEW'])){
 		redir('blog','blog'); die();
 	}
 
+	$smarty->assign('YEAR',$year_checked);
+	$smarty->assign('MONTH',$month_checked);
 
 	$smarty->assign('ENTRIES',$entries);
 	$smarty->assign('IS_BLOG', true);
@@ -458,7 +493,9 @@ if(isset($_GET['NEW'])){
 		$smarty->display('sidebar_c.tpl');
 		$smarty->display('sidebar_f.tpl');
 		$smarty->display('content_h.tpl');
-		$smarty->display('blog_index.tpl');
+		$smarty->caching = 2; $smarty->cache_lifetime = 1296000;
+		$smarty->display('blog_index.tpl',"blog_index|$page|$year_checked|$month_checked");
+		$smarty->caching = false;
 		$smarty->display('content_f.tpl');
 		$smarty->display('footer_page.tpl');
 		$smarty->display('footer.tpl');

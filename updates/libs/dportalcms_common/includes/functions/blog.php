@@ -32,15 +32,24 @@
 */
 
 // array get_blog_entries([int limit])
-function get_blog_entries($limit = 0){
+function get_blog_entries($limit = 0,$year=null,$month=null){
 
 	if(!is_integer($limit)) $limit = 0;
+
+	// In case than the Year is empty, but the Month is a valid number, year will be the current.
+	if(empty($year) && !empty($month)) $year = date('Y');
+
+	// Check the year and the month
+	if(!@checkdate(01,01,$year)) $year = null;
+	if(!@checkdate($month,01,$year)) $month = null;
+
 
 	$num = 0;
 	$handle = fopen(ENTRIES_PATH.'.entries', "rb") or die('Missing or inaccessible entries file');
 	while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
-		if(!empty($data[0]) && file_exists(ENTRIES_PATH . $data[0]))
-			$entries[] = array('id'=>$num,'file' =>ENTRIES_PATH.$data[0],'name'=>$data[1],'title'=>$data[2],'tags'=>$data[3],'user'=>$data[4],'created'=>$data[5],'updated'=>filemtime(ENTRIES_PATH.$data[0]),'atom_id'=>sha1($ents[0]));
+		if(!empty($data[0]) && file_exists(ENTRIES_PATH . $data[0])){
+			if((!empty($year) && !empty($month) && $year == date('Y',$data[5]) && $month == date('m',$data[5])) || (empty($month) && !empty($year) && $year == date('Y',$data[5]) ) || (empty($month) && empty($year))) $entries[] = array('id'=>$num,'file' =>ENTRIES_PATH.$data[0],'name'=>$data[1],'title'=>$data[2],'tags'=>$data[3],'user'=>$data[4],'created'=>$data[5],'updated'=>filemtime(ENTRIES_PATH.$data[0]),'atom_id'=>sha1($ents[0]));
+		}
 		$num++;
 	}	
 	fclose($handle);
@@ -50,6 +59,16 @@ function get_blog_entries($limit = 0){
 	
 	// Eliminates the elements of the Array from the Offset limit.
 	if($limit > 0) array_splice($entries,$limit);
+	
+	if(!empty($year)){
+		global $year_checked;
+		$year_checked = $year;
+	}
+	
+	if(!empty($month)){
+		global $month_checked;
+		$month_checked = $month;
+	}
 
 	if($entries != null) return $entries;
 	else return null;
@@ -126,7 +145,7 @@ function title2name($title){
 	}
 	fclose($chkentries);
 
-	return $name;
+	return strftime('%Y/%m/') . $name;
 
 }
 

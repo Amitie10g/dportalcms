@@ -490,4 +490,25 @@ function get_paragraphs($content,$count = true,$num = 50,$page = 1){
 	}else return $num_paragraphs;
 }
 
+// string month_number_to_locale_string(mixed month)
+function month_number_to_locale_string($month){
+	
+	switch($month){
+		case "01" : $stringmonth = "January"; break;
+		case "02" : $stringmonth = "February"; break;
+    	case "03" : $stringmonth = "March"; break;
+    	case "04" : $stringmonth = "April"; break;
+    	case "05" : $stringmonth = "May"; break;
+    	case "06" : $stringmonth = "June"; break;
+   		case "07" : $stringmonth = "July"; break;
+   		case "08" : $stringmonth = "August"; break;
+    	case "09" : $stringmonth = "September"; break;
+    	case "10" : $stringmonth = "October"; break;
+    	case "11" : $stringmonth = "November"; break;
+    	case "12" : $stringmonth = "December"; break;
+		default : $stringmonth = false; break;
+	}
+	return $stringmonth;
+}
+
 ?>
