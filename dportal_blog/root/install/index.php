@@ -87,7 +87,7 @@ if(!is_readable(dirname(dirname(__FILE__)) . '/config/config.inc.php') && is_wri
 				$validate_nick     = preg_match("/^([\w\W\s]){3,20}$/",$nick);
 				
 				if($validate_sitename == 1 && $validate_sitedesc == 1 && $validate_email == 1 && $validate_username == 1 &&
-				   $validate_password == 1 && $validate_nick == 1) && ($use_rewrite == "1" || empty($use_rewrite))){
+				   $validate_password == 1 && $validate_nick == 1 && ($use_rewrite == "1" || empty($use_rewrite))){
 				   
 					$_SESSION['sitename'] = $sitename;
 					$_SESSION['site_desc'] = $site_desc;
