@@ -32,7 +32,7 @@ function install($sitename,$site_desc,$admin_email,$user,$password,$nick,$phpbb_
 \x24admin_user	= "$user";
 \x24admin_password	= "$password";
 \x24language	= "$language";
-\x24use_rewrite	= $use_rewrite;
+\x24use_rewrite	= "$use_rewrite";
 \x24smarty_debugging= "0";
 \x24site_id = "$site_id";
 \x24memcached_server = "$memcached_server";
