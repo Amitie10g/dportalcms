@@ -1,0 +1,35 @@
+If you want to upload Videos or create Playlists
+manually, see the following instructions:
+
+1.- To create Playlist:
+
+ * Crate a directory under the directory videos.
+   The name should have only one word lowercase,
+   without any space or special characters.
+
+ * Inside the directory, create a file called
+   ".name". Edit this file with the Title of
+   the Playlist, eg "My Playlist".
+
+2.- To upload videos:
+
+ * Upload ONLY Videoflash files. If file type
+   is different than any Video Flash formats,
+   Script will reject the upload. Title of
+   the Video is the Filename, that can have
+   any characters; be sure than Encoding of
+   fileanme is UTF-8 (or special characters
+   will be displayed incorrectly.
+
+These features are the same than Gallery and
+Image Upload, and currently I'm working on
+them, and ind a next release these features
+will be available, in panel and Playlist.
+
+And, be sure than the Video File isn't greater
+than the maximum File Upload in your Server.
+generally, in free hostings is, for example,
+between 5 KiB and 2 MiB. paid Hostings may
+have restrictions for Upload (20 MiB for
+example), but in Disk have not restrictions
+çif file is uploaded throught FTP or CPANEL.
