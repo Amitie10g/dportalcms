@@ -24,7 +24,6 @@ a:link{
 
 }.sidebar_link{
 	margin-bottom: 5px;
-}
 
 }em.desc{
       font-size:11px;

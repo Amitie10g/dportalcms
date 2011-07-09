@@ -15,8 +15,6 @@
 		#                                              #
 		################################################
 		
-if($_SERVER['REMOTE_ADDR'] == "186.78.227.211") error_reporting(E_ALL);
-
 if(file_exists('install')) header('location: install');
 
 if(!defined('DPORTAL')) die();
