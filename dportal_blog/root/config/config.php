@@ -173,7 +173,6 @@ if($cache_handler == 'memcached' && !empty($memcached_server)){
 
 }elseif($cache_handler == 'none'){
 	$smarty->cache_handler_func = 'cache_handler_none';
-}
 
 // Use gzip as fallback
 }else{
