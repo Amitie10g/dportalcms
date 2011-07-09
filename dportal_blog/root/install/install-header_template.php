@@ -46,6 +46,16 @@
 	   tr.incorrect{
 	   	padding:10px 0 !important;
 	   }
+	   h5.titre{
+		  font-size:13px;
+		  font-family:Verdana,sans-serif;
+		  background:#94D4FC url(images/fond2.gif);
+		  border:#4474BC 1px solid;
+		  margin:0;
+		  color:#4D73AD;
+		  padding:2px;
+		  text-align:center;
+	   }
 	</style>
 
 </head>
