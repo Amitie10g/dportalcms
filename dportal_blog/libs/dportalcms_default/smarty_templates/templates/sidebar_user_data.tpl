@@ -1,3 +1,4 @@
+
 <div style="text-align:center;padding: 5px">
 
 {{* If user is loged in *}}

@@ -1,3 +1,4 @@
+
 <div class="content">
 <a name="content" title="{{$LANG.content|ucfirst}}"></a>
 <h5 class="invisible">{{$LANG.content|ucfirst}}</h5>

@@ -1,3 +1,4 @@
+
 {{include file="blog_comments_goto.tpl"}}
 
 {{if $IS_ADMIN && $COMMENTS !== false}}<form method="post" action="{{LINK script="blog_delete_comments"}}">

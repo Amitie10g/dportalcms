@@ -28,21 +28,22 @@ if(isset($_GET['START_OVER'])){
 if(!is_readable(dirname(dirname(__FILE__)) . '/config/config.inc.php') && is_writable(dirname(dirname(__FILE__)) . '/config/')){
 	if(isset($_GET['INSTALL'])){
 	
-		$sitename			= $_SESSION['sitename'];
-		$site_desc			= $_SESSION['site_desc'];
+		$sitename				= $_SESSION['sitename'];
+		$site_desc				= $_SESSION['site_desc'];
 		$admin_email			= $_SESSION['email'];
 		$use_rewrite			= $_SESSION['use_rewrite'];
-		$user				= $_SESSION['user'];
-		$password			= $_SESSION['password'];
-		$nick				= $_SESSION['nick'];
-		$site_id			= $_SESSION['site_id'];
-		$dportal_absolute_path		= dirname(dirname(__FILE__));	
+		$user					= $_SESSION['user'];
+		$password				= $_SESSION['password'];
+		$nick					= $_SESSION['nick'];
+		$site_id				= $_SESSION['site_id'];
+		$cse_key				= $_SESSION['cse_key'];
+		$dportal_absolute_path	= dirname(dirname(__FILE__));	
 		$document_root			= $_SESSION['document_root'];
-		$libs_dir			= $_SESSION['libs_dir'];
+		$libs_dir				= $_SESSION['libs_dir'];
 		$memcached_server		= $_SESSION['memcached_server'];
 		$memcached_port			= $_SESSION['memcached_port'];
 	
-		$install = install($sitename,$site_desc,$admin_email,$user,$password,$nick,$site_id,$dportal_absolute_path,$document_root,$libs_dir,$use_rewrite,$lang,$memcached_server,$memcached_port);
+		$install = install($sitename,$site_desc,$admin_email,$user,$password,$nick,$site_id,$dportal_absolute_path,$document_root,$libs_dir,cse_key,$use_rewrite,$lang,$memcached_server,$memcached_port);
 	
 		if($install === true){
 			$_SESSION['install_success'] = true;
@@ -68,15 +69,16 @@ if(!is_readable(dirname(dirname(__FILE__)) . '/config/config.inc.php') && is_wri
 	
 			if($_SESSION['siteconf_ok'] != true){
 	
-				$sitename = htmlentities($_POST['sitename'],NULL,'UTF-8');
-				$site_desc = htmlentities($_POST['sitedesc'],NULL,'UTF-8');
-				$admin_email = $_POST['email'];
-				$use_rewrite = $_POST['use_rewrite'];
-				$user = $_POST['user'];
-				$password = $_POST['password'];
-				$nick = $_POST['nick'];
-				$memcached_server = $_POST['memcached_server'];
-				$memcached_port = $_POST['memcached_port'];
+				$sitename			= htmlentities($_POST['sitename'],NULL,'UTF-8');
+				$site_desc			= htmlentities($_POST['sitedesc'],NULL,'UTF-8');
+				$admin_email		= $_POST['email'];
+				$use_rewrite		= $_POST['use_rewrite'];
+				$user				= $_POST['user'];
+				$password			= $_POST['password'];
+				$nick				= $_POST['nick'];
+				$memcached_server	= $_POST['memcached_server'];
+				$memcached_port		= $_POST['memcached_port'];
+				$cse_key			= $_POST['cse_key'];				
 				
 				// Validate data
 				$validate_sitename = preg_match("/^([\w\s&;]){3,25}$/",$sitename);
@@ -97,6 +99,7 @@ if(!is_readable(dirname(dirname(__FILE__)) . '/config/config.inc.php') && is_wri
 					$_SESSION['nick'] = $nick;
 					$_SESSION['memcached_server'] = $memcached_server;
 					$_SESSION['memcached_port'] = $memcached_port;
+					$_SESSION['cse_key'] = $cse_key;
 					if(!empty($use_rewrite)) $_SESSION['use_rewrite'] = true;
 					
 					unset($_SESSION['error_sitename']);
@@ -146,19 +149,21 @@ if(!is_readable(dirname(dirname(__FILE__)) . '/config/config.inc.php') && is_wri
 		
 			if($_SESSION['siteconf_ok']){
 	
-				$sitename = $_SESSION['sitename'];
-				$site_desc = $_SESSION['site_desc'];
-				$admin_email = $_SESSION['email'];
-				$use_rewrite = $_SESSION['use_rewrite'];
-				$user = $_SESSION['user'];
-				$password = $_SESSION['password'];
-				$nick = $_SESSION['nick'];
-				$memcached_server = $_SESSION['memcached_server'];
-				$memcached_port = $_SESSION['memcached_port'];
-	
-				$site_id_default = $_POST['site_id_default'];
+				$sitename			= $_SESSION['sitename'];
+				$site_desc			= $_SESSION['site_desc'];
+				$admin_email		= $_SESSION['email'];
+				$use_rewrite		= $_SESSION['use_rewrite'];
+				$user				= $_SESSION['user'];
+				$password			= $_SESSION['password'];
+				$nick				= $_SESSION['nick'];
+				$memcached_server	= $_SESSION['memcached_server'];
+				$memcached_port		= $_SESSION['memcached_port'];
+				$cse_key			= $_SESSION['cse_key'];
+
+				$site_id_default	= $_POST['site_id_default'];
 				if($site_id_default == "1") $site_id = "default";
 				else $site_id = $_POST['site_id'];
+				
 				$document_root = $_POST['document_root'];
 				$libs_dir = $_POST['libs_dir'];
 		

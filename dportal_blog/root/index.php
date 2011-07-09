@@ -77,9 +77,6 @@ if(isset($_GET['NEW'])){
 		$smarty->display('header_close.tpl');
 		$smarty->display('body_h.tpl');
 		$smarty->display('container.tpl');
-		$smarty->display('menu_h.tpl');
-
-		$smarty->display('menu_f.tpl');
 		$smarty->display('header_f.tpl');
 
 		$smarty->display('sidebar_h.tpl');
@@ -420,9 +417,6 @@ if(isset($_GET['NEW'])){
 	$smarty->display('body_h.tpl');
 	if(!isset($_GET['PRINT'])){
 		$smarty->display('container.tpl');
-		$smarty->display('menu_h.tpl');
-
-		$smarty->display('menu_f.tpl');
 		$smarty->display('header_f.tpl');
 
 		$smarty->display('sidebar_h.tpl');
@@ -524,9 +518,6 @@ if(isset($_GET['NEW'])){
 		$smarty->display('header_close.tpl');
 		$smarty->display('body_h.tpl');
 		$smarty->display('container.tpl');
-		$smarty->display('menu_h.tpl');
-
-		$smarty->display('menu_f.tpl');
 		$smarty->display('header_f.tpl');
 
 		$smarty->display('sidebar_h.tpl');

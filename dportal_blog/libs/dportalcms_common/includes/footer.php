@@ -32,10 +32,6 @@ $timeb = microtime(true);
 
 $total_time = $timeb - $timea;
 
-// Store the page load in CSV file for benchmark purposes
-$output = '"' . microtime(true) .'";"' . $_SERVER['REMOTE_ADDR'] . '";"' . $_SERVER['REQUEST_URI'] . '";"' . $total_time . '"' . "\n";
-file_put_contents(CONTENT_PATH . '/register.csv',$output,FILE_APPEND);
-
 // End Script safetly here
 die();
 

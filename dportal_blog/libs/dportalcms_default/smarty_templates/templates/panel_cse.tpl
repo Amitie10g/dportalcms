@@ -1,3 +1,4 @@
+
 <div style="padding:5px">{{$LANG.cse_warn}}</div>
 
 <form method="post" action="{{LINK script='panel' section='config:update' argument='?SITE_CONF'}}">

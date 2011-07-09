@@ -1,3 +1,4 @@
+
 <div style="width:600px;margin:auto;padding:10px 0">
   <form id="form1" method="post"
 action="{{LINK script='panel' section='config:update' argument='?SITE_CONF'}}">

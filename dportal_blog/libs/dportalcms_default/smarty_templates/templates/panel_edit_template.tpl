@@ -1,3 +1,4 @@
+
 <div style="text-align:center;padding:5px 5px 15px 5px">{{$LANG.edit_templates_preface}}<br />
 <strong>{{$LANG.warning|ucfirst}}:</strong> {{$LANG.incorrect_edition_warn|ucfirst}}</div>
 <div style="width:50%;text-align:center;margin:auto;padding: 0 0 10px 0">

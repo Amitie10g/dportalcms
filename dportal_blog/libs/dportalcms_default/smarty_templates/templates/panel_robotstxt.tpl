@@ -1,3 +1,4 @@
+
 <div style="padding:0 5px">
 <div style="padding-top: 10px">{{$LANG.robotstxt_preface}}</div>
 <form method="post"

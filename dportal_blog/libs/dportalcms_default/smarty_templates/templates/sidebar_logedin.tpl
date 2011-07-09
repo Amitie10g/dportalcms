@@ -1,3 +1,4 @@
+
 {{if $smarty.session.loged_ok}}
 <div class="message_ok">{{$LANG.loged_in_success}}</div>
 {{elseif $smarty.session.not_loged_in}}

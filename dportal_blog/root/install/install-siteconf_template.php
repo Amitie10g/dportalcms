@@ -103,7 +103,7 @@ Webserver, Smarty Caching will be disabled!</p>
 <table style="width:500px;margin:0;float:center;margin:auto;"  cellspacing="0">
   <tr>
     <td style="text-align:right">Google CSE key : </td>
-    <td><input type="text" name="phpbb_dir" value="<?php echo $_SESSION['cse_key']; ?>" style="width:100%" /></td>
+    <td><input type="text" name="cse_key" value="<?php echo $_SESSION['cse_key']; ?>" style="width:100%" /></td>
   </tr>
 </table>
 </div>

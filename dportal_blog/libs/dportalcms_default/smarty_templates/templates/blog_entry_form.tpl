@@ -1,3 +1,4 @@
+
 		<div id="comment">
 		
 		{{if $ALLOW_PUBLISH}}

@@ -1,3 +1,4 @@
+
 <div style="width:99%;margin:auto">
 <form name="template_editor_form" method="post" action="{{LINK script='panel' section='template:save' argument='?TEMPLATE_SAVE'}}">
   <noscript><input type="submit" value="{{$LANG.save|ucfirst}}" /></noscript>

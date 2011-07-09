@@ -1,3 +1,4 @@
+
 <div style="padding:0 5px 10px 5px">{{$LANG.change_pass_warn}} </div>
 <form id="form1" method="post"
 action="{{LINK script='panel' section='config:update' argument='?SITE_CONF'}}">

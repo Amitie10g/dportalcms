@@ -1,3 +1,4 @@
+
 		</div>
 		<div style="margin:10px 0">
 		<a href="#comment">{{$LANG.publish_comment|ucfirst}} </a> | 

@@ -1,3 +1,4 @@
+
 <div style="padding:0 2px">
 <h3 style="text-align:center;font-weight:bold;margin:0;padding:0">{{$LANG.entries|ucfirst}}</h3>
 

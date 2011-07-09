@@ -14,7 +14,7 @@
 		#                                              #
 		################################################
 
-function install($sitename,$site_desc,$admin_email,$user,$password,$nick,$phpbb_dir,$site_id,$dportal_absolute_path,$document_root,$libs_dir,$use_rewrite = "0",$lang = "en", $memcached_server = null, $memcached_port = null){
+function install($sitename,$site_desc,$admin_email,$user,$password,$nick,$site_id,$dportal_absolute_path,$document_root,$libs_dir,$cse_key = null,$use_rewrite = "0",$lang = "en", $memcached_server = null, $memcached_port = null){
 	
 	$user = sha1($user);
 	$password = sha1($password);
@@ -30,7 +30,7 @@ function install($sitename,$site_desc,$admin_email,$user,$password,$nick,$phpbb_
 \x24admin_nick	= "$nick";
 \x24cse_key		= "$cse_key";
 \x24admin_user	= "$user";
-\x24admin_password	= "$password";
+\x24admin_password= "$password";
 \x24language	= "$language";
 \x24use_rewrite	= "$use_rewrite";
 \x24smarty_debugging= "0";
