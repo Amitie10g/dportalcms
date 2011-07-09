@@ -9,7 +9,7 @@
 				<li style="padding:0 0 5px 8px"><a href="{{LINK script="blog" page="$YEAR/$MONTH" argument="?year=$YEAR&month=$MONTH"}}" style="margin-left:-5px">{{$MONTH|month_number_to_locale_string}}</a>
 					<ul class="maketree">
 {{foreach from=$ENTRY item="ENTRY" key="ITEM"}}
-						<li style="padding:0 0 5px 8px"><a href="{{LINK script="blog_entry" section=$ENTRY.name}}" style="margin-left:-5px" title="{{$ENTRY.title}}">{{$ENTRY.title|truncate:11:null:true}}</a></li>
+						<li style="padding:0 0 5px 8px"><a href="{{LINK script="blog_entry" section=$ENTRY.name}}" title="{{$ENTRY.title}}">{{$ENTRY.title|truncate:11:null:true}}</a></li>
 					
 {{/foreach}}
 					</ul>
