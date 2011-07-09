@@ -1,11 +1,11 @@
 <form method="post" action="<?= $_SERVER['PHP_SELF'] ?>?step=path_conf">
 <div style="border:2px solid;background:#CCCCCC;padding:2px;margin:0 0 20px 0">
 <a name="site_conf"></a>
-<h5 class="titre">Website configuration</h5>
+<h5 class="titre">Blog  configuration</h5>
 <div style="padding:5px">
-<a href="#top" onClick="items(1)" title="Show/hide information"><strong>Please indicate a Sitename and description</strong></a>
+<a href="#top" onClick="items(1)" title="Show/hide information"><strong>Please indicate a Blog nameand description</strong></a>
 <div id="item_1" class="content">
-<p>The <strong>Sitename</strong> is the Name that is displayed in Title and Search engines, and must be short. The Site description is a Description of your Website, and must be clear. That appears in META Description tag.</p>
+<p>The <strong>Blog name</strong>  is the Name that is displayed in Title and Search engines, and must be short. The Site description is a Description of your Website, and must be clear. That appears in META Description tag.</p>
 
 <p>If your server supports <strong>mod_rewrite</strong>, you can enable Canonical URLs by enable the Checkbox.</p>
 <p>Sitename must have between 5 to 20 characters, and can have spaces. Special characters (tildes, etc) will be converted to HTML Entities (6 characters instead 1).</p>
@@ -74,9 +74,7 @@ Webserver, Smarty Caching will be disabled!</p>
 <div style="padding:5px">
 <a href="#top" onclick="items(2)" title="Show/hide information"><strong>The User and Password for access</strong></a>
 <div id="item_2" class="content">
-<p>Please indicate an <strong>Username and password</strong>. This is obligatory, but if you use phpBB3, the Administrator account of <strong>phpBB3</strong> will be used for Login instead of the integrated account.</p>
-<p>Username must  have between 3 to 15 characters. Only alphanumeric, spaces and '-' and '_' are allowed.</p>
-<p>Password can have any characters, between 5 to 20.</p>
+<p>Please indicate an <strong>Username and password</strong>. Username must  have between 3 to 15 characters. Only alphanumeric, spaces and '-' and '_' are allowed. Password can have any characters, between 5 to 20.</p>
 </div>
 <table style="width:500px;margin:0;float:center;margin:auto;">
   <tr>
@@ -96,19 +94,16 @@ Webserver, Smarty Caching will be disabled!</p>
 </div>
 
 <div style="border:2px solid;background:#CCCCCC;padding:2px;margin:0 0 20px 0">
-<h5 class="titre">phpBB3 integration </h5>
+<h5 class="titre">Google CSE </h5>
 <div style="padding:5px">
-<a href="#top" onClick="items(3)" title="Show/hide information"><strong>phpBB path</strong></a>
+<a href="#top" onClick="items(3)" title="Show/hide information"><strong>Google Custom Search options</strong></a>
 <div id="item_3" class="content">
-<p>If you use <strong>phpBB3</strong>, you must fill the following with the full path to your Forum, relative to the DocumentRoot of your Website (ex /forum/).</p>
-<p>The path must have slashes in extremes of the string (ex '/<em>forum</em>/' or '/site/forum/'. If you din't want to use phpBB3, you can leave empty. </p>
+<p>You can use the <strong>Google Custom Search</strong> Element integrated in DPortal Blog. In order to use them, you must provide your Google CSE Key; you can create one in <a href="http://google.com/cse">http://google.com/cse </a></p>
 </div>
 <table style="width:500px;margin:0;float:center;margin:auto;"  cellspacing="0">
   <tr>
-    <td style="text-align:right">Path to phpBB: </td>
-    <td><input <?php if($_SESSION['error_phpbbdir']) echo 'class="incorrect"'; ?>type="text" name="phpbb_dir" value="<?php echo $_SESSION['phpbbdir']; ?>" style="width:100%" />
-      <br />
-        <?php if($error_data != null &&  !$error_data['check_phpbb_dir']) echo 'Please fill with the correct data.'; ?></td>
+    <td style="text-align:right">Google CSE key : </td>
+    <td><input type="text" name="phpbb_dir" value="<?php echo $_SESSION['cse_key']; ?>" style="width:100%" /></td>
   </tr>
 </table>
 </div>

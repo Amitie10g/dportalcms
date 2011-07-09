@@ -27,7 +27,7 @@ function redir($script,$section,$http_status = null,$argument = null,$marker = n
 		if($marker != null)$marker = "#$marker";
 	
 		switch($script){
-			default			: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH); break;
+			default				: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH); break;
 			case "blog_entry"	: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/$section.html$marker"); break;
 			case "panel"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/$section$marker"); break;
 		}
@@ -61,7 +61,7 @@ function link_url($params,&$smarty){
 	if($use_rewrite){
 	
 		switch($script){
-			default				: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/".$section.$page.$marker; break;
+			default					: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/".$section.$page.$marker; break;
 			case 'stylesheet'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/style.css"; break;
 			case 'login'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/LOGIN"; break;
 			case 'logout'			: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/LOGOUT"; break;

@@ -14,7 +14,6 @@
 		#                                              #
 		################################################
 
-
 function cache_handler_memcached($action, &$smarty, &$cache_content, $tpl_file=null, $cache_id=null, $compile_id=null, $exp_time=null){
 
 	global $memcached;

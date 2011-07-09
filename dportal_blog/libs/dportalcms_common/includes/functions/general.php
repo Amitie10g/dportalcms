@@ -15,6 +15,87 @@
 		#                                              #
 		################################################
 
+
+/* Smarty {fetch2} plugin, a modified version of {fetch} plugin.
+ *
+ *   Features:
+ *
+ * * Support for zlib uncompress. File, if is compressed with zlib/gzip, them will be
+ *   uncompressed to Output correctly. If file is not uncompressed with zlib,
+ *   file will be output as well.
+ *
+ * * Truncate option in the Function. This option allow to the Template designer to
+ *   Truncate the contents and strip HTML tags, for summary pages (ideal for Newsletters).
+ *
+ * * Limit the number of paragraphs and pages using get_paragraphs()
+ *
+ * Please see function_fetch.php in Smarty plugins directory for more information
+ * 
+ */
+
+// smarty_function fetch2(array params(file,truncate = false,page = null,num = null), class $smarty)
+function fetch2($params, &$smarty)
+{
+    if (empty($params['file'])) {
+        $smarty->_trigger_fatal_error("[plugin] parameter 'file' cannot be empty");
+        return;
+    }
+
+    $content = '';
+    
+    if(!empty($params['strip'])){
+	
+		if($params['strip'] === true){
+			$strip = null;
+		}else{
+			foreach(explode(',',$params['strip']) as $item){
+				$strip[] = '<'.$item.'>';
+			}
+			$strip = implode(',',$strip);
+	    }
+    }
+       
+    if(!empty($params['truncate'])) $truncate = $params['truncate'];
+	
+	if(!isset($params['truncate_chars'])) $truncate_chars = substr_replace($params['truncate_chars'],'',10);
+	else $truncate_chars = " (...)";
+    
+    if(!empty($params['page'])) $page = $params['page'];
+    if(!empty($params['num'])) $num = $params['num'];
+    
+    if(!empty($params['wrap'])) $wrap = $params['wrap'];
+    else $wrap = 80; // Wrap by default (<pre> may be broken; avoid use them in content!
+    
+
+    // Fetch files ONLY in DPORTAL_ABSOLUTE_PATH, for non-fancy security.
+    if($zd = gzopen($params['file'],'rb')) {
+    	while (!gzeof($zd)) {
+	   $content .= gzgets($zd, 8192);
+	   }
+	gzclose($zd);
+	
+	// Use get_paragraphs() to limit the number of paragraphs.
+	if(is_int($page) && $is_int($num)) $content = get_paragraphs($content,false,$page,$num);
+
+	// Use strip_tags()
+	if(isset($strip)) $content = strip_tags(str_ireplace(array('<h1>','</h1>','<h2>','</h2>'),array('<b>','</b>','<b>','</b>'),$content),$tags);
+
+	// Use truncate() to limit the lengh of content
+	if(is_int($truncate) && $truncate >= 10) $content = truncate($content,$truncate,$truncate_chars);
+
+	// Use wordwrap() to wrap the contents
+	if((is_int($wrap) && $wrap >= 10)) $content = wordwrap($content,$wrap);
+
+	return $content;
+
+    } else {
+	$smarty->_trigger_fatal_error('[plugin] fetch cannot read file \'' . $params['file'] .'\'');
+	return false;
+    }
+}
+
+
+
 /* Perform a raw download of a given file
  *
  * raw_download() performs a RAW Download from Server, in binary format.
@@ -494,18 +575,18 @@ function get_paragraphs($content,$count = true,$num = 50,$page = 1){
 function month_number_to_locale_string($month){
 	
 	switch($month){
-		case "01" : $stringmonth = "January"; break;
-		case "02" : $stringmonth = "February"; break;
-    	case "03" : $stringmonth = "March"; break;
-    	case "04" : $stringmonth = "April"; break;
-    	case "05" : $stringmonth = "May"; break;
-    	case "06" : $stringmonth = "June"; break;
-   		case "07" : $stringmonth = "July"; break;
-   		case "08" : $stringmonth = "August"; break;
-    	case "09" : $stringmonth = "September"; break;
-    	case "10" : $stringmonth = "October"; break;
-    	case "11" : $stringmonth = "November"; break;
-    	case "12" : $stringmonth = "December"; break;
+		case "01" : $stringmonth = $LANG['month_01']; break;
+		case "02" : $stringmonth = $LANG['month_02']; break;
+    	case "03" : $stringmonth = $LANG['month_03']; break;
+    	case "04" : $stringmonth = $LANG['month_04']; break;
+    	case "05" : $stringmonth = $LANG['month_05']; break;
+    	case "06" : $stringmonth = $LANG['month_06']; break;
+   		case "07" : $stringmonth = $LANG['month_07']; break;
+   		case "08" : $stringmonth = $LANG['month_08']; break;
+    	case "09" : $stringmonth = $LANG['month_09']; break;
+    	case "10" : $stringmonth = $LANG['month_10']; break;
+    	case "11" : $stringmonth = $LANG['month_11']; break;
+    	case "12" : $stringmonth = $LANG['month_12']; break;
 		default : $stringmonth = false; break;
 	}
 	return $stringmonth;

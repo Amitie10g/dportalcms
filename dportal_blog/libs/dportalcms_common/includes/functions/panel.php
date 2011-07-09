@@ -69,20 +69,19 @@ function update_config($sitename,$site_desc,$email,$nick,$language,$robotstxt,$u
 if(!defined('DPORTAL')) die();
 
 //Site config file generated automatically. DO NOT EDIT!	
-\x24sitename	= "$sitename";
-\x24sitedesc	= "$site_desc";
-\x24admin_email	= "$email";
-\x24admin_nick	= "$nick";
-\x24phpbb_dir	= "$phpbb_dir";
-\x24admin_user	= "$user";
+\x24sitename		= "$sitename";
+\x24sitedesc		= "$site_desc";
+\x24admin_email		= "$email";
+\x24admin_nick		= "$nick";
+\x24cse_key			= "$cse_key";
+\x24admin_user		= "$user";
 \x24admin_password	= "$password";
-\x24language	= "$language";
-\x24use_rewrite	= "$use_rewrite";
+\x24language		= "$language";
+\x24use_rewrite		= "$use_rewrite";
 \x24smarty_debugging= "0";
-\x24site_id = "$site_id";
-\x24cse_key = "$cse_key";
-\x24memcached_server = "$memcached_server";
-\x24memcached_port = "$memcached_port";
+\x24site_id 		= "$site_id";
+\x24memcached_server= "$memcached_server";
+\x24memcached_port	= "$memcached_port";
 
 define("DPORTAL_ABSOLUTE_PATH","$dportal_absolute_path"); // public_instalation (absolute!)
 define("DPORTAL_PATH",preg_replace("/^\/\x24/","",dirname(\x24_SERVER["PHP_SELF"]))); // public access (relative)
@@ -276,22 +275,6 @@ function backup(array $mode = null){
 	}else die('ZIP extension does not exist. Please install zip via PECL.');
 }
 
-/* WHY NOT USE scandir() ?
- *
- * Because I have a Function to avoid the Fake Dirs,
- * nofakedir(), I can't use scandir(). Instead, I must be use
- * the traditional Directory listing with fopen() and foreach.
- * I will be create a Function that supress these, and
- * will reduce the code.
- * 
- */
- 
-/* Get the backups file list
- *
- * This function gets the list of Backups archives in /backup/ directory
- * 
- */
- 
 // array get_backup(void)
 function get_backup(){
 
@@ -308,13 +291,6 @@ function get_backup(){
 	return $list;
 }
 
-/* ABOUT THIS FUNCTION
- *
- * This function allow to Delete all backups, and optionally,
- * excluding the Last backup.
- * 
- */
-
 // void delete_backups([bool no_last_file])
 function delete_backups($no_last = false){
 
@@ -326,39 +302,6 @@ function delete_backups($no_last = false){
 	}
 }
 
-/* ABOUT THIS FUNCTION
- *
- * This function gets the list of directories of Galleries.
- * 
- */
-
-// array get_galleries(void)
-function get_galleries(){
-
-	$path = "images/gallery";
-	$dh = opendir($path);
-	if ($dh) {
-		while (($file = readdir($dh)) !== false) {
-			if(nofakedir($file)){
-				$config = explode('|',file_get_contents(GALLERY_PATH."$file/.name"));
-				$list[] = array('file'=>$file,'title'=>$config[0]);
-			}	
-		}
-	}
-	closedir($dh);
-	
-	return $list;
-}
-
-
-/* ABOUT THIS FUNCTION
- *
- * This function sets the Panel message. This is the message in the
- * top of the page, that indicates if a operation is completed successfull or not.
- * This is passed by Session variables; not a nice way, but works.
- * 
- */
-
 // string get_pannel_message(void)
 function get_panel_message(){
 
@@ -368,30 +311,6 @@ function get_panel_message(){
 
 	if($_SESSION['UPDATED']){
 		$message = $LANG['configuration_updated_success'];
-
-	}elseif($_SESSION['CREATED']){
-		$section = $_SESSION['SECTION_CREATED'];
-		$message = $LANG['section']." \"$section\" ".$LANG['created_success']."!";
-		$message.= "<a href=\"$path/edit.php?file=$section\">".$LANG['edit']."</a>";
-		
-	}elseif($_SESSION['SECTION_EXISTS']){
-		$section = $_SESSION['SECTION_CREATED'];
-		$message = $LANG['section'] . ' ' . $LANG['already_exists']."!";
-		
-	}elseif($_SESSION['DELETED']){
-		$section = $_SESSION['SECTION_DELETED'];
-		$message = $LANG['section']." \"$section\" ".$LANG['deleted_success']."!";
-
-	}elseif($_SESSION['DELETED_SECTION']){
-		$section = $_SESSION['SECTION_DELETED'];
-		$message = $LANG['section']." \"$section\" ".$LANG['deleted_success']."!";
-
-	}elseif($_SESSION['SECTION_NOT_DELETED']){
-		$section = $_SESSION['SECTION_DELETED'];
-		$message = $LANG['section']." \"$section\" ".$LANG['deleted_fail']."!";
-
-	}elseif($_SESSION['DELETE_HOME']){
-		$message = $LANG['home_cant_delete'];
 
 	}elseif($_SESSION['UPDATED']){
 		$message = $LANG['configuration_updated_success']."!";
@@ -414,24 +333,6 @@ function get_panel_message(){
 	}elseif($_SESSION['PASSWORDS_NO_MATCH']){
 		$message = $LANG['passwords_no_match'];
 
-	}elseif($_SESSION['SECTION_NOT_EXIST']){
-		$message = $LANG['section_no_exist'];
-
-	}elseif($_SESSION['GALLERY_CREATED']){
-		$message = $LANG['gallery_created'];
-
-	}elseif($_SESSION['GALLERY_CREATE_ERROR']){
-		$message = $LANG['gallery_create_error'];
-
-	}elseif($_SESSION['IMAGES_UPLOADED']){
-		$message = $LANG['images_uploaded'];
-
-	}elseif($_SESSION['IMAGES_NOT_UPLOADED']){
-		$message = $LANG['images_not_uploaded'];
-		
-	}elseif($_SESSION['IMAGES_DELETED']){
-		$message = $LANG['images_deleted'];
-
 	}elseif($_SESSION['BACKED_UP']){
 		$message = $LANG['backed_up'];
 
@@ -449,15 +350,6 @@ function get_panel_message(){
 	
 	}elseif($_SESSION['TEMPLATE_NOT_EXIST']){
 		$message = $LANG['template_not_exist'];
-	
-	}elseif($_SESSION['CATEGORY_CREATED']){
-		$message = $LANG['category_created'];
-	
-	}elseif($_SESSION['VIDEO_UPLOADED']){
-		$message = $LANG['video_uploaded'];
-		
-	}elseif($_SESSION['VIDEO_DELETED']){
-		$message = $LANG['video_deleted'];
 	
 	}elseif($_SESSION['STYLE_UPDATED']){
 		$message = $LANG['style_updated'];

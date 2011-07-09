@@ -1,4 +1,4 @@
-= "DPortal CMS", CMS for personal Web pages, without Database engine. =
+= "DPortal Blog", Blñog without DBMS. =
 
 PLEASE READ CAREFULLY THE ENTRY TEXT IN THIS FILE
 AND THE OTHERS README FILES BEFORE INSTALL!
@@ -51,6 +51,12 @@ Content, and CSV files for configuration and information for the content.
 This program use the 'Smarty Template engine', for easily template design and customization.
 
 
+=== About DPortal Blog ===
+
+DPortal Blog is the Blog module published as separate package. DPortal Blog has the same
+code than their parent, but with minor changes (see README_DPORTAL_BLOG for details).
+
+
 === Features ===
 
  * No Database engine required (really nice!)
@@ -66,19 +72,15 @@ This program use the 'Smarty Template engine', for easily template design and cu
 
 === This program include ===
 
- * 'Main Portal' module, that you can create, edit and delete
-   <<Sections>> (or pages) of your Web site, as well as a Wiki.
-
- * 'Control Panel', when you can manage your Website easy and cleanly.
-
  * 'Blog', where you can post your daily live, edit and delete your post,
    and users can leave comments.
    It also include Feeds Atom of the 5 last entries (summary),
    and Feed of each entry (summary).
 
- * 'Gallery', where you can create a gallery and uploading images easily.
+ * 'Control Panel', when you can manage your Website easy and cleanly.
 
- * 'Media Player', where you can publish Videos as well as Image Gallery.
+The other modules were removed. If you want to one or more but not all features
+of DPortal CMS, please read README_DPORTAL_CMS_BLOG.
 
 
 === State of project ===
@@ -115,16 +117,14 @@ This program need the following software on the server:
 Modules and Libraries required/optionals:
 
  * mod_rewrite (recommended, for URL rewrite)
- * GD Library (for the Gallery)
  * zlib library enabled (*)
+ * Also, you can enable bzip2 to improve compression (*)
  * Zip Library (for Backups) (**)
- * Memcached libraries and PECL extension installed and enabled (*3)
- * MING Library (optional) (*4)
- * FFMPEG and PHP module (optional, to generate thumbnails of videos) (*5)
+ * Memcached libraries and PECL extension installed and enabled (***)
 
-	(*) zlib ins included in PHP, but, generally, is not enabled by default.
-	Please ask to your Webhosting administrator if zlib is enabled. Otherwise
-	you should modify parts of the code to disable zlib functions calling.
+	(*) zlib and bzip2 are included in PHP, but, generally, is not enabled by default.
+	Please ask to your Webhosting administrator if zlib/bzip2 is enabled. Otherwise
+	you should modify parts of the code to disable zlib/bzip2 functions calling.
 
 	(**) Please see the PHP Documentation about ZIP in
 	http://www.php.net/book.zip.html
@@ -135,24 +135,8 @@ Modules and Libraries required/optionals:
 	Alternatively, if Zip is not available,
 	this program use ZLib (available soon).
 	
-	(*3) In order to enable Memcached support, Memcached libraries and the
+	(***) In order to enable Memcached support, Memcached libraries and the
 	PECL extension Memcache(d) should be installed
-
-	(*4) MING Library is the Library to manage SWF and FLV files.
-	Specifically, this program uses the SWFVideoStream class to
-	generate a Streamming Video.
-
-	Unfortunadely, currently this class is undocumented and
-	will not be used in current versions.
-
-	Don't worry, the Videos are downloaded by raw_download() function.
-
-	These Library is not a requisite.
-
-	(*5) Waining: The Thumbnail generation of a video(s) can "eat"
-	huge processor resources in Server, but for once; the image are
-	cached and in future visiting, and the image cached is displayed
-	instead of calling FFMPEG again.
 
 
 Also, this program need the following PHP libraries and clases:
@@ -183,21 +167,6 @@ Smarty is distributed under the GNU Lesser General Public License
 
 Website: http://www.smarty.net
 
-
-=== phpBB3 (optional) ===
-
-This program is integrated in phpBB3, the leading Open Source Forum.
-You can manage the Website with the Administrator account of phpBB3
-instead of the Built-in function.
-
-phpBB3 is not included in this package. You should download
-them from the oficial Website (or from cPanel if available) and
-configure properly BEFORE install DPortal CMS.
-
-The '/config/config.inc.php' file contains the phpBBB path, that
-the Administrator configure.
-
-Website: http://www.phpbb.com
 
 === FPDF (recommended, optional) ===
 
@@ -231,26 +200,13 @@ TinyMCE is also available as part of Debian distribution
 
 Website: http://tinymce.moxiecode.com
 
-=== Highslide JS ===
-
-Highslide JS is a fully featured Javascript library for Image galleries and more.
-
-This program is no included, and you should download from the oficial Website.
-
-These program are distributed under a
-Creative Commons lincense [by-nc], and can be installed
-in any Personal or Non for profit Website without permission.
-For Comercial Websites, you need a paid License. 
-
-Oviously, you can use your favorite Gallery Script.
-If you want to use a Flash gallery, please read README_GALLERY.
 
 == Download, Contact and information ==
 
  * Wesite with demo: http://dportalcms.org
 
  * Download from Google Code: http://code.google.com/p/dportalcs/downloads
- * Update via SVN: svn checkout http://dportalcms.googlecode.com/svn code
+ * Update via SVN: svn checkout http://dportalcms.googlecode.com/svn dportal_blog
 
 For any questions or suggestions, please send your email to <davidkingnt@gmail.com> or to the Group
 

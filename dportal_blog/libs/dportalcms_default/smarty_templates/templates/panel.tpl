@@ -89,39 +89,14 @@
 <div style="padding:5px 0 0 0;width:800px;margin:auto;">
 <span class="panel_menu{{if $TAB == "general"}} selected{{/if}} titre" style="border-left:2px #000000 solid">{{if $TAB != "general"}}<a href="{{LINK script="panel" section="general"}}">{{/if}}{{$LANG.general}}{{if $TAB != "general"|ucfirst}}</a>{{/if}}</span>
 <span class="panel_menu{{if $TAB == "user_pass"}} selected{{/if}} titre">{{if $TAB != "user_pass"}}<a href="{{LINK script="panel" section="user_pass" argument="?tab=user_pass"}}">{{/if}}{{$LANG.user_and_password|ucfirst}}{{if $TAB != "user_pass"}}</a>{{/if}}</span>
-<span class="panel_menu{{if $TAB == "sections"}} selected{{/if}} titre">{{if $TAB != "sections"}}<a href="{{LINK script="panel" section="sections" argument="?tab=sections"}}">{{/if}}{{$LANG.sections|ucfirst}}{{if $TAB != "sections"}}</a>{{/if}}</span>
-<span class="panel_menu{{if $TAB == "gallery"}} selected{{/if}} titre">{{if $TAB != "gallery"}}<a href="{{LINK script="panel" section="gallery" argument="?tab=gallery"}}">{{/if}}{{$LANG.gallery|ucfirst}}{{if $TAB != "gallery"}}</a>{{/if}}</span>
-<span class="panel_menu{{if $TAB == "videos"}} selected{{/if}} titre">{{if $TAB != "videos"}}<a href="{{LINK script="panel" section="videos" argument="?tab=videos"}}">{{/if}}{{$LANG.videos|ucfirst}}{{if $TAB != "videos"}}</a>{{/if}}</span>
 <span class="panel_menu{{if $TAB == "style"}} selected{{/if}} titre">{{if $TAB != "style"}}<a href="{{LINK script="panel" section="style" argument="?tab=style"}}">{{/if}}{{$LANG.style|ucfirst}}{{if $TAB != "style"}}</a>{{/if}}</span>
 <span class="panel_menu{{if $TAB == "backup"}} selected{{/if}} titre">{{if $TAB != "backup"}}<a href="{{LINK script="panel" section="backup" argument="?tab=backup"}}">{{/if}}{{$LANG.backup|ucfirst}}{{if $TAB != "backup"}}</a>{{/if}}</span>
 <div class="panel_submenu">
 {{if $TAB == "general"}}
 {{if $MODE != 'site_conf'}}<a href="{{LINK script="panel" section="general/site_conf" argument="?tab=general&amp;mode=site_conf"}}">{{/if}}{{$LANG.site_conf}}{{if $MODE != 'site_conf'}}</a>{{/if}} | 
 {{if $MODE != 'robotstxt'}}<a href="{{LINK script="panel" section="general/robotstxt" argument="?tab=general&amp;mode=robotstxt"}}">{{/if}}robots.txt{{if $MODE != 'robotstxt'}}</a>{{/if}} | 
-{{if $MODE != 'phpbb'}}<a href="{{LINK script="panel" section="general/phpbb" argument="?tab=general&amp;mode=phpbb"}}">{{/if}}{{$LANG.phpbb_integration}}{{if $MODE != 'phpbb'}}</a>{{/if}} | 
 {{if $MODE != 'memcached'}}<a href="{{LINK script="panel" section="general/memcached" argument="?tab=general&amp;mode=memcached"}}">{{/if}}{{$LANG.memcached_conf}}{{if $MODE != 'memcached'}}</a>{{/if}} | 
 {{if $MODE != 'cse'}}<a href="{{LINK script="panel" section="general/cse" argument="?tab=general&amp;mode=cse"}}">{{/if}}{{$LANG.google_cse_conf}}{{if $MODE != 'cse'}}</a>{{/if}}
-
-{{elseif $TAB == "sections"}}
-{{if $MODE != 'edit_sections'}}<a href="{{LINK script="panel" section="sections/edit_section" argument="?tab=sections&amp;mode=edit_section"}}">{{/if}}{{$LANG.edit_sections|ucfirst}}{{if $MODE != 'edit_sections'}}</a>{{/if}} | 
-{{if $MODE != 'create_section'}}<a href="{{LINK script="panel" section="sections/create_section" argument="?tab=sections&amp;mode=create_section"}}">{{/if}}{{$LANG.create_section|ucfirst}}{{if $MODE != 'create_section'}}</a>{{/if}} |
-{{if $MODE != 'create_category'}}<a href="{{LINK script="panel" section="sections/create_category" argument="?tab=sections&amp;mode=create_category"}}">{{/if}}{{$LANG.create_category|ucfirst}}{{if $MODE != 'create_category'}}</a>{{/if}}{{if !empty($CATEGORIES)}} | 
-{{if $MODE != 'edit_category'}}<a href="{{LINK script="panel" section="sections/edit_category" argument="?tab=sections&amp;mode=edit_category"}}">{{/if}}{{$LANG.edit_category|ucfirst}}{{if $MODE != 'edit_category'}}</a>{{/if}}{{/if}}
-
-{{elseif $TAB == "gallery"}}
-{{if !empty($GALLERIES)}}
-{{if $MODE != 'edit'}}<a href="{{LINK script="panel" section="gallery/edit" argument="?tab=gallery&amp;mode=edit"}}">{{/if}}{{$LANG.edit_galleries}}{{if $MODE != 'edit'}}</a>{{/if}} | 
-{{/if}}
-{{if $MODE != 'create' && !empty($GALLERIES)}}<a href="{{LINK script="panel" section="gallery/create" argument="?tab=gallery&amp;mode=create"}}">{{/if}}{{$LANG.create_gallery}}{{if $MODE != 'create' && !empty($GALLERIES)}}</a>{{/if}}
-{{if !empty($GALLERY_NAME)}} | <a href="{{LINK script="gallery_gallery" section="$GALLERY_NAME" argument="?gallery=$GALLERY_NAME"}}">{{$LANG.goto_gallery}}</a>{{/if}}
-
-
-{{elseif $TAB == "videos"}}
-{{if !empty($PLAYLISTS)}}
-{{if $MODE != 'upload'}}<a href="{{LINK script="panel" section="videos/upload" argument="?tab=videos&amp;mode=upload"}}">{{/if}}{{$LANG.upload_edit}}{{if $MODE != 'upload'}}</a>{{/if}} | 
-{{/if}}
-{{if $MODE != 'create'}}<a href="{{LINK script="panel" section="videos/create" argument="?tab=videos&amp;mode=create"}}">{{/if}}{{$LANG.create_playlist}}{{if $MODE != 'create'}}</a>{{/if}}
-{{if !empty($PLAYLIST)}} | <a href="{{LINK script="playlist" section="$PLAYLIST"  argument="?playlist=$PLAYLIST"}}">{{$LANG.goto_playlist}}</a>{{/if}}
 
 {{elseif $TAB == "style"}}
 {{if $MODE != 'edit_style'}}<a href="{{LINK script="panel" section="style/edit_style" argument="?tab=style&amp;mode=edit_style"}}">{{/if}}{{$LANG.edit_style}}{{if $MODE != 'edit_style'}}</a>{{/if}} | 
@@ -147,32 +122,12 @@
 {{if $TAB == 'general'}}
 {{if $MODE == 'site_conf'}}{{include file="panel_siteconf.tpl"}}
 {{elseif $MODE == 'robotstxt'}}{{include file="panel_robotstxt.tpl"}}
-{{elseif $MODE == 'phpbb'}}{{include file="panel_phpbb.tpl"}}
 {{elseif $MODE == 'memcached'}}{{include file="panel_memcached.tpl"}}
 {{elseif $MODE == 'cse'}}{{include file="panel_cse.tpl"}}
 {{/if}}
 
 {{elseif $TAB == 'user_pass'}}
 {{include file="panel_user_pass.tpl"}}
-
-{{elseif $TAB == 'sections'}}
-{{if $MODE == 'edit_sections'}}{{include file="panel_edit_sections.tpl"}}
-{{elseif $MODE == 'create_section'}}{{include file="panel_create_section.tpl"}}
-{{elseif $MODE == 'create_category'}}{{include file="panel_create_category.tpl"}}
-{{elseif $MODE == 'edit_category'}}{{include file="panel_edit_category.tpl"}}
-
-{{/if}}
-
-{{elseif $TAB == 'gallery'}}
-{{if $MODE == 'edit'}}{{include file="panel_edit_gallery.tpl"}}
-{{elseif $MODE == 'create'}}{{include file="panel_create_gallery.tpl"}}
-{{/if}}
-
-{{elseif $TAB == 'videos'}}
-{{if $MODE == 'edit'}}{{include file="panel_edit_style.tpl"}}
-{{elseif $MODE == 'upload'}}{{include file="panel_upload_videos.tpl"}}
-{{elseif $MODE == 'create'}}{{include file="panel_create_playlist.tpl"}}
-{{/if}}
 
 {{elseif $TAB == 'style'}}
 {{if $MODE == 'template'}}{{include file="panel_edit_template.tpl"}}

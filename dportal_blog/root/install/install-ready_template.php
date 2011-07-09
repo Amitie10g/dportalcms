@@ -33,8 +33,8 @@
       <td style="text-align:left"><?php echo $nick; ?></td>
 	</tr>
     <tr>
-      <th style="text-align:right">phpBB directory:&nbsp;</th>
-      <td style="text-align:left"><?php echo $phpbb_dir; ?></td>
+      <th style="text-align:right">Google CSE key:&nbsp;</th>
+      <td style="text-align:left"><?php if(!empty($phpbb_dir)){ echo $phpbb_dir; }else{ echo "<em>Not pressent</em>"; } ?></td>
 	</tr>
     <tr>
       <th style="text-align:right">Site ID:&nbsp;</th>
@@ -57,8 +57,6 @@
       <td style="text-align:left"><?php if(!empty($memcached_server)){ echo "Enabled"; }else{ echo "Disabled"; } ?></td>
 	</tr>
 	<?php if(!empty($memcached_server)){ ?>
-
-
 	<tr>
       <th style="text-align:right">Memcached server:&nbsp;</th>
       <td style="text-align:left"><?php echo $memcached_server; ?></td>
@@ -75,9 +73,7 @@
 <div style="float:center;margin:20px;text-align:center;font-size: 15px">
   <a href="<?= $_SERVER['PHP_SELF'] ?>?INSTALL">Install</a> | <a href="<?= $_SERVER['PHP_SELF'] ?>?START_OVER">Start over</a>
 </div>
-
 </div>
-
 </div>
 </body>
 </html>

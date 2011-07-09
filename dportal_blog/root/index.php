@@ -3,12 +3,12 @@
 		#                                              #
 		#    DPortal CMS, CMS without Database engine  #
 		#                                              #
-		#  DBlog, Blog (blog.php)                      #
+		#  DBlog, Blog (blog.php/index.php)            #
 		#                                              #
 		#  Copyright (c) Davod.                        #
 		#                                              #
 		#  This program is published under the         #
-		#  GNU general Public License                  #
+		#  GNU General Public License                  #
 		#                                              #
 		#  Please see README and LICENSE for details   #
 		#                                              #

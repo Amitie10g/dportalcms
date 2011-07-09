@@ -18,22 +18,21 @@
 define('DPORTAL',true);
 require_once('config/config.php');
 
-// Gets the Entry name
+// Gets some GET variables
 $entry_name = $_GET['entry'];
-
 $page = $_GET['page'];
+$year = $_GET['year'];
+$month = $_GET['month'];
 
 if(empty($page) && empty($entry_name) && !isset($_GET['FEED']) && !isset($_GET['NEW']) && !isset($_GET['DELETE']) && !isset($_GET['POST_COMMENT']) && !isset($_GET['DELETE_COMMENTS']) && !isset($_GET['EDIT'])){
 	if(substr($_SERVER['REQUEST_URI'],-1) != '/' && $use_rewrite){
-		header('HTTP/1.1 301 Moved Permanently');
+		// Uncomment this once you have the Blog in production, to avoid the permanet redirection!
+		//header('HTTP/1.1 301 Moved Permanently');
 		header('location: ' . $_SERVER['REQUEST_URI'] . '/');
 	}
 }
 
 if(!is_numeric($page) && $page < 1) $page = 1;
-
-$year = $_GET['year'];
-$month = $_GET['month'];
 
 $smarty->assign('IS_BLOG', true);
 
@@ -279,6 +278,7 @@ if(isset($_GET['NEW'])){
 		unset_global_var('comment');
 	
 		$_SESSION['COMMENT_PUBLISHED'] = true;
+		$smarty->clear_cache('blog_entry_comments_c.tpl',$id);
 		redir('blog_entry',$name,null,null,'comments');
 	}else{
 		$_SESSION['COMMENT_NOT_PUBLISHED'] = true;
@@ -447,7 +447,7 @@ if(isset($_GET['NEW'])){
 		if(!isset($_GET['PRINT'])){
 			$smarty->display('blog_entry_comments_h.tpl');
 			$smarty->caching = 2; $smarty->cache_lifetime = 1296000;
-			$smarty->display('blog_entry_comments_c.tpl');
+			$smarty->display('blog_entry_comments_c.tpl',$id);
 			$smarty->caching = false;
 			$smarty->display('blog_entry_comments_f.tpl');
 			$smarty->display('blog_entry_form.tpl');

@@ -4,8 +4,8 @@
 		#                                              #
 		#    DPortal CMS, CMS without Database engine  #
 		#                                              #
-		#  Smarty Cache handler Functions              #
-		#  (smarty_cache_custom_functions.php)         #
+		#  Smarty Cache handler Functions, compressed  #
+		#  (cache_handler_compressed.php)			   #
 		#                                              #
 		#  Copyright (c) Davod.                        #
 		#                                              #

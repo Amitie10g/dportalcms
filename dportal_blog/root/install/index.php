@@ -15,9 +15,6 @@
 		################################################
 
 session_start();
-//session_destroy();
-
-//error_reporting('E_ALL & ^E_STRICT');
 
 require_once('install_functions.php');
 
@@ -38,7 +35,6 @@ if(!is_readable(dirname(dirname(__FILE__)) . '/config/config.inc.php') && is_wri
 		$user				= $_SESSION['user'];
 		$password			= $_SESSION['password'];
 		$nick				= $_SESSION['nick'];
-		$phpbb_dir			= $_SESSION['phpbbdir'];
 		$site_id			= $_SESSION['site_id'];
 		$dportal_absolute_path		= dirname(dirname(__FILE__));	
 		$document_root			= $_SESSION['document_root'];
@@ -46,7 +42,7 @@ if(!is_readable(dirname(dirname(__FILE__)) . '/config/config.inc.php') && is_wri
 		$memcached_server		= $_SESSION['memcached_server'];
 		$memcached_port			= $_SESSION['memcached_port'];
 	
-		$install = install($sitename,$site_desc,$admin_email,$user,$password,$nick,$phpbb_dir,$site_id,$dportal_absolute_path,$document_root,$libs_dir,$use_rewrite,$lang,$memcached_server,$memcached_port);
+		$install = install($sitename,$site_desc,$admin_email,$user,$password,$nick,$site_id,$dportal_absolute_path,$document_root,$libs_dir,$use_rewrite,$lang,$memcached_server,$memcached_port);
 	
 		if($install === true){
 			$_SESSION['install_success'] = true;
@@ -79,7 +75,6 @@ if(!is_readable(dirname(dirname(__FILE__)) . '/config/config.inc.php') && is_wri
 				$user = $_POST['user'];
 				$password = $_POST['password'];
 				$nick = $_POST['nick'];
-				$phpbb_dir = $_POST['phpbb_dir'];
 				$memcached_server = $_POST['memcached_server'];
 				$memcached_port = $_POST['memcached_port'];
 				
@@ -90,11 +85,9 @@ if(!is_readable(dirname(dirname(__FILE__)) . '/config/config.inc.php') && is_wri
 				$validate_username = preg_match("/^([\w\s]){3,15}$/",$user);
 				$validate_password = preg_match("/^([\w\W\s]){3,25}$/",$password);
 				$validate_nick     = preg_match("/^([\w\W\s]){3,20}$/",$nick);
-				$validate_phpbbdir = preg_match("/^([a-z0-9-_\/])+$/",$phpbb_dir);
 				
 				if($validate_sitename == 1 && $validate_sitedesc == 1 && $validate_email == 1 && $validate_username == 1 &&
-				   $validate_password == 1 && $validate_nick == 1 && ($validate_phpbbdir == 1 || empty($validate_phpbbdir)) &&
-				   ($use_rewrite == "1" || empty($use_rewrite))){
+				   $validate_password == 1 && $validate_nick == 1) && ($use_rewrite == "1" || empty($use_rewrite))){
 				   
 					$_SESSION['sitename'] = $sitename;
 					$_SESSION['site_desc'] = $site_desc;
@@ -102,7 +95,6 @@ if(!is_readable(dirname(dirname(__FILE__)) . '/config/config.inc.php') && is_wri
 					$_SESSION['user'] = $user;
 					$_SESSION['password'] = $password;
 					$_SESSION['nick'] = $nick;
-					$_SESSION['phpbbdir'] = $phpbb_dir;
 					$_SESSION['memcached_server'] = $memcached_server;
 					$_SESSION['memcached_port'] = $memcached_port;
 					if(!empty($use_rewrite)) $_SESSION['use_rewrite'] = true;
@@ -113,7 +105,6 @@ if(!is_readable(dirname(dirname(__FILE__)) . '/config/config.inc.php') && is_wri
 					unset($_SESSION['error_user']);
 					unset($_SESSION['error_password']);
 					unset($_SESSION['error_nick']);
-					unset($_SESSION['error_phpbbdir']);
 					unset($_SESSION['data_error']);
 		
 					$_SESSION['siteconf_ok'] = true;
@@ -140,9 +131,6 @@ if(!is_readable(dirname(dirname(__FILE__)) . '/config/config.inc.php') && is_wri
 					if($validate_nick == 1){ $_SESSION['nick'] = $nick; unset($_SESSION['error_nick']); }
 					else $_SESSION['error_nick'] = true;
 					
-					if($validate_phpbbdir == 1 || empty($validate_phpbbdir)){ $_SESSION['phpbbdir'] = $phpbb_dir; unset($_SESSION['error_phpbbdir']); }
-					else $_SESSION['error_phpbbdir'] = true;
-		
 					header('location: http://' . $_SERVER['SERVER_NAME'] . $_SERVER['PHP_SELF'] . '?step=site_conf');
 					die();
 				}
@@ -165,7 +153,6 @@ if(!is_readable(dirname(dirname(__FILE__)) . '/config/config.inc.php') && is_wri
 				$user = $_SESSION['user'];
 				$password = $_SESSION['password'];
 				$nick = $_SESSION['nick'];
-				$phpbb_dir = $_SESSION['phpbbdir'];
 				$memcached_server = $_SESSION['memcached_server'];
 				$memcached_port = $_SESSION['memcached_port'];
 	

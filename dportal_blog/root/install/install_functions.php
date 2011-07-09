@@ -28,7 +28,7 @@ function install($sitename,$site_desc,$admin_email,$user,$password,$nick,$phpbb_
 \x24sitedesc	= "$site_desc";
 \x24admin_email	= "$admin_email";
 \x24admin_nick	= "$nick";
-\x24phpbb_dir	= "$phpbb_dir";
+\x24cse_key		= "$cse_key";
 \x24admin_user	= "$user";
 \x24admin_password	= "$password";
 \x24language	= "$language";

@@ -9,16 +9,8 @@ document.write("<style type='text/css'>.dock-container2{ position:absolute !impo
 //]]>
 </script>
 
-{{if $IS_GALLERY && !empty($GALLERY)}}<link rel="alternate" type="application/atom+xml" title="{{$SITENAME}} - {{$TITLE}}" href="{{LINK section=$smarty.get.gallery script='gallery_feed'}}" />{{/if}}
 {{if $IS_ENTRY}}<link rel="alternate" type="application/atom+xml" title="{{$SITENAME}} - {{$TITLE}} (Atom)" href="{{LINK section=$smarty.get.entry script='blog_entry_feed'}}" />{{/if}}
 {{if ($ENTRIES != null) || ($BLOG_ENTRY != null)}}<link rel="alternate" type="application/atom+xml" title="{{$SITENAME}} - {{$LANG.last|ucfirst}} 5 {{$LANG.entries}} (Atom)" href="{{LINK script='blog_feed'}}" />{{/if}}
-
-{{include file="script_player.tpl"}}
-
-{{if $IS_GALLERY}}{{include file="gallery_h.tpl"}}{{/if}}
-
-<script type="text/javascript" src="{{$smarty.const.DPORTAL_PATH}}/css-dock-menu/js/jquery.js"></script>
-<script type="text/javascript" src="{{$smarty.const.DPORTAL_PATH}}/css-dock-menu/js/interface.js"></script>
 
 {{include file="google_search.tpl"}}
 
@@ -45,4 +37,3 @@ window.onunload = function () {
 {{/if}}
 
 {{* Place your own code here *}}
-
