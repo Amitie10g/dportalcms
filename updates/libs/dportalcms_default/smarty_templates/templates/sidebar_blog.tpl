@@ -1,23 +1,23 @@
 <div style="padding:0 2px">
 <h3 style="text-align:center;font-weight:bold;margin:0;padding:0">{{$LANG.entries|ucfirst}}</h3>
+
 {{foreach from=$ENTRIES_SIDEBAR item="MONTH" key="YEAR"}}
-<ul style="padding:0 0 0 18px">
-<li style="padding:0 0 3px 0;margin:0"><a href="{{LINK script="blog" page="$YEAR/" argument="?year=$YEAR"}}" style="margin-left: -8px">{{$YEAR}}</a></li>
+	<ul{{* id="ye_{{$YEAR}}"*}} class="maketree">
+		<li style="padding:0 0 5px 5px"><a href="{{LINK script="blog" page="$YEAR/" argument="?year=$YEAR"}}" style="margin-left: -5px">{{$YEAR}}</a>
 {{foreach from=$MONTH item="ENTRY" key="MONTH"}}
-<ul style="padding:0 0 0 8px">
-<li style="padding:0 0 3px 0;margin:0"><a href="{{LINK script="blog" page="$YEAR/$MONTH" argument="?year=$YEAR&month=$MONTH"}}" style="margin-left:-8px">{{$MONTH|month_number_to_locale_string}}</a></li>
-
-
+			<ul id="mo_{{$YEAR}}_{{$MONTH}}" class="maketree">
+				<li style="padding:0 0 5px 8px"><a href="{{LINK script="blog" page="$YEAR/$MONTH" argument="?year=$YEAR&month=$MONTH"}}" style="margin-left:-5px">{{$MONTH|month_number_to_locale_string}}</a>
+					<ul class="maketree">
 {{foreach from=$ENTRY item="ENTRY" key="ITEM"}}
-<ul style="padding:0 0 0 8px">
-<li style="padding:0 0 5px 0;margin:0"><a href="{{LINK script="blog_entry" section=$ENTRY.name}}" style="margin-left:-8px" title="{{$ENTRY.title}}">{{$ENTRY.title|truncate:12:null:true}}</a></li>
-</ul>
+						<li style="padding:0 0 5px 8px"><a href="{{LINK script="blog_entry" section=$ENTRY.name}}" style="margin-left:-5px" title="{{$ENTRY.title}}">{{$ENTRY.title|truncate:11:null:true}}</a></li>
+					
 {{/foreach}}
-
-
-</ul>
+					</ul>
+				</li>
+			</ul>
 {{/foreach}}
-</ul>
+		</li>
+	</ul>
 {{/foreach}}
 </div>
 <hr />

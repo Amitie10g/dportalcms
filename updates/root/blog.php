@@ -131,6 +131,8 @@ if(isset($_GET['NEW'])){
 
 	if(delete_entry($id)) $_SESSION['blog_entry_deleted'] = true;
 
+	$smarty->clear_cache(null,'blog_index');
+
 	redir('blog','blog'); die();
 	
 // Moderate comments mode
@@ -191,6 +193,9 @@ if(isset($_GET['NEW'])){
 	// Check if be done successfully
 	if($posting) $_SESSION['blog_entry_saved'] = true;
 	else $_SESSION['blog_entry_error'] = true;
+	
+	$smarty->clear_cache(null,'blog_index');
+	$smarty->clear_cache('blog_entry_content.tpl',$id);
 
 	// Redir to the Entry
 	redir('blog_entry',$name); die();

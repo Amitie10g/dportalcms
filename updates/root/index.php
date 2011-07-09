@@ -28,7 +28,7 @@ if(strpos($url,'_') && $use_rewrite){
 	die();
 }
 
-if($_GET['section'] == null && $_GET['section'] != 'home' && !isset($_GET['CATEGORIES']) && !isset($_GET['category'])){
+if(($_GET['section'] == 'index') || ($_GET['section'] == null && $_GET['section'] != 'home' && !isset($_GET['CATEGORIES']) && !isset($_GET['category']))){
 	header('HTTP/1.1 301 Redirection',true,301);
 	redir('index','home');
 	die();
