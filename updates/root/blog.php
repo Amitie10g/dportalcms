@@ -23,7 +23,7 @@ $entry_name = $_GET['entry'];
 
 $page = $_GET['page'];
 
-if(empty($page) && empty($entry_name) && !isset($_GET['FEED'])){
+if(empty($page) && empty($entry_name) && !isset($_GET['FEED']) && !isset($_GET['NEW']) && !isset($_GET['DELETE']) && !isset($_GET['POST_COMMENT']) && !isset($_GET['DELETE_COMMENTS']) && !isset($_GET['EDIT'])){
 	if(substr($_SERVER['REQUEST_URI'],-1) != '/' && $use_rewrite){
 		header('HTTP/1.1 301 Moved Permanently');
 		header('location: ' . $_SERVER['REQUEST_URI'] . '/');
@@ -40,15 +40,17 @@ $smarty->assign('IS_BLOG', true);
 // Get the entries for the Sidebar, and order by Year and date
 $smarty->caching = true;
 if(!$smarty->is_cached('sidebar_blog.tpl')){
-	$entries = get_blog_entries();
 	
-	foreach($entries as $item){
-		$year = date('Y',$item['created']);
-		$month = date('m',$item['created']);
-		$entries_sidebar[$year][$month][] = $item;
+	if(($entries = get_blog_entries()) != null){
+	
+		foreach($entries as $item){
+			$year = date('Y',$item['created']);
+			$month = date('m',$item['created']);
+			$entries_sidebar[$year][$month][] = $item;
+		}
+		
+		$smarty->assign('ENTRIES_SIDEBAR',$entries_sidebar);
 	}
-	
-	$smarty->assign('ENTRIES_SIDEBAR',$entries_sidebar);
 }
 $smarty->caching = false;
 

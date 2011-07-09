@@ -156,22 +156,23 @@ $smarty->register_function('fetch2','fetch2');
 // bzdecompress
 $smarty->register_function('bzdecompress','bzdecompress');
 
-// Cache handler set (null will use the default cache handler function.
-$cache_handler = 'gzip';
+// Cache handler set (null will disable the cache handler function).
+$cache_handler = 'memcached';
 
 // Memcached support
 if($cache_handler == 'memcached' && !empty($memcached_server)){
 	if(class_exists('Memcached')){
 		$memcached = new Memcached('dpcms_ '. $site_id);
 		if($memcached->addServer($memcached_server, $memcached_port)) $smarty->cache_handler_func = 'cache_handler_memcached';
+		else $smarty->cache_handler_func = 'cache_handler_gzip'; // Use gzip as fallback
 	}
 
 // bzip2, better compression than gzip. This uses the bzip2 class built in PHP
 }elseif($cache_handler == 'bzip2' && is_callable('bzopen')){
 	$smarty->cache_handler_func = 'cache_handler_bzip2';
 	
-// Use gzip as fallback if bzip2 is not available
-}elseif(($cache_handler == 'gzip') || ($cache_handler == 'bzip2') && !is_callable('bzopen')){
+// Use gzip as fallback
+}else{
 	$smarty->cache_handler_func = 'cache_handler_gzip';
 }
 

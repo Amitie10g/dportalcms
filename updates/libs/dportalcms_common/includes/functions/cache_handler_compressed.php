@@ -40,9 +40,10 @@ function cache_handler_gzip($action, &$smarty, &$cache_content, $tpl_file=null, 
 			$_cache_file = $smarty->_get_auto_filename($smarty->cache_dir, $tpl_file, $_auto_id);
 
 			if(is_callable('gzopen')){
-				$fd = gzopen($_cache_file, 'rb');
-				$results = gzread($fd,131072);
-				gzclose($fd);
+				if(($fd = @gzopen($_cache_file, 'rb')) !== false){
+					$results = gzread($fd,131072);
+					gzclose($fd);
+				}
 			}else{
 				$fd = fopen($_cache_file, 'rb');
 				$results = fread($fd,131072);
