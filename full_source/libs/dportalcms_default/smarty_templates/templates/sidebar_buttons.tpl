@@ -25,4 +25,13 @@
   {{elseif $IS_BLOG}}<a href="http://validator.w3.org/feed/check?uri={{LINK script="blog_feed"|escape:"url"}}">{{/if}}
 <img src="{{$smarty.const.DPORTAL_PATH}}/images/valid-atom.png" alt="Valid Atom 1.0" title="Valid Atom 1.0" />
   {{if $IS_GALLERY || $IS_ENTRY || $IS_BLOG}}</a>{{/if}}
-  </p>
+  </p>{{*
+  <hr />
+<div style="text-align:center">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+<input type="hidden" name="cmd" value="_s-xclick">
+<input type="hidden" name="hosted_button_id" value="B2WZ8GHJK3THA">
+<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+<img alt="" border="0" src="https://www.paypalobjects.com/es_XC/i/scr/pixel.gif" width="1" height="1">
+</form>
+</div>*}}

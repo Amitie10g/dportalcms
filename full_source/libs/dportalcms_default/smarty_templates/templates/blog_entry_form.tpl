@@ -25,7 +25,7 @@
 					<span style="font-size:9px">{{$LANG.optional|ucfirst}}</span></td>
 				  </tr>{{/if}}
 				  <tr>
-					<td colspan="2">{{$LANG.your_comments_max}}<br />
+					<td colspan="2">{{$LANG.your_comments_max|replace:"_CHARACTERS_":2000}}<br />
 					<textarea name="comment" style="width:100%;height:200px;{{if $smarty.session.comment_empty}}border:#FF5555 3px inset{{/if}}" rows="10" cols="20"></textarea></td>
 					</tr>
 				  <tr>

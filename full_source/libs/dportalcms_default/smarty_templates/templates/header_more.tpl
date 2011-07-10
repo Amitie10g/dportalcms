@@ -24,5 +24,25 @@ document.write("<style type='text/css'>.dock-container2{ position:absolute !impo
 
 <script type="text/javascript" src="{{$smarty.const.DPORTAL_PATH}}/external_links.js"></script>
 
+{{if $IS_BLOG}}
+<script type="text/javascript" src="{{$smarty.const.DPORTAL_PATH}}/listCollapse.js"></script>
+<script type="text/javascript" src="{{$smarty.const.DPORTAL_PATH}}/cookie.js"></script>
+<script type="text/javascript">
+window.onload = function () {
+{{foreach name="year" from=$ENTRIES_SIDEBAR item="MONTH" key="YEAR"}}
+  compactMenu('ye_{{$YEAR}}',false,'&plusmn; ');
+  stateToFromStr('ye_{{$YEAR}}',retrieveCookie('menuState'));
+{{foreach name='month' from=$MONTH item="ENTRY" key="MONTH"}}
+  compactMenu('mo_{{$YEAR}}_{{$MONTH}}',false,'&plusmn; ');
+  stateToFromStr('mo_{{$YEAR}}_{{$MONTH}}',retrieveCookie('menuState'));
+{{/foreach}}
+{{/foreach}}
+}
+window.onunload = function () {
+  setCookie('menuState',stateToFromStr('someID'));
+}
+</script>
+{{/if}}
+
 {{* Place your own code here *}}
 
