@@ -43,7 +43,7 @@ if(!is_readable(dirname(dirname(__FILE__)) . '/config/config.inc.php') && is_wri
 		$memcached_server		= $_SESSION['memcached_server'];
 		$memcached_port			= $_SESSION['memcached_port'];
 	
-		$install = install($sitename,$site_desc,$admin_email,$user,$password,$nick,$site_id,$dportal_absolute_path,$document_root,$libs_dir,cse_key,$use_rewrite,$lang,$memcached_server,$memcached_port);
+		$install = install($sitename,$site_desc,$admin_email,$user,$password,$nick,$site_id,$dportal_absolute_path,$document_root,$libs_dir,$cse_key,$use_rewrite,$lang,$memcached_server,$memcached_port);
 	
 		if($install === true){
 			$_SESSION['install_success'] = true;
