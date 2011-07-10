@@ -175,7 +175,7 @@ function template_save($name,$content){
  *		+templates=>true/false
  *		+config=>true/false
  *
- *	If no Array is given, this function will perform a Backup with Sections by default.
+ *	If no Array is given, this function will perform a Backup with Entries by default.
  *
  */
 
@@ -187,9 +187,9 @@ function backup(array $mode = null){
 	$date = time();
 
 	if(!empty($mode)){
-		$blog = $mode['blog'];
-		$templates = $mode['templates'];
-		$config = $mode['config'];
+		$comments	= $mode['comments'];
+		$templates	= $mode['templates'];
+		$config		= $mode['config'];
 	}
 	
 	if(class_exists('ZipArchive')){
@@ -201,58 +201,47 @@ function backup(array $mode = null){
 		$zip_comment.= "URL:\t\thttp://" . $_SERVER['SERVER_NAME'] . DPORTAL_PATH . "\n";
 		$zip_comment.= "Created:\t" . date("m/d/Y H:i",$date) . "\n\n";
 		$zip_comment.= "This backup includes:\n\n";
-		$zip_comment.= "\t* Sections (by default).\n";
-		if($blog) $zip_comment.= "\t* Blog (entries and comments).\n";
-		if($book) $zip_comment.= "\t* Book (stories, chapters and comments).\n";
+		$zip_comment.= "\t* Blog entries (by default).\n";
+		if($comments) $zip_comment.= "\t* Comments.\n"; 
 		if($templates) $zip_comment.= "\t* Templates.\n"; 
 		if($config) $zip_comment.= "\t* Configuration file ('site.ini').\n\n";
-		$zip_comment.= "This is a Backup of your Portal. Contain the\nfolders of contents and configuration.\n\n";
-		$zip_comment.= "If you need to Restore this Backup, use the\nControl panel for them, or upload the contents\ndirectly to the root of your Portal.\n\n";
+		$zip_comment.= "This is a Backup of your Blog. Contain the\nfolders of contents and configuration.\n\n";
+		$zip_comment.= "If you need to Restore this Backup, use the\n";
+		$zip_comment.= "Control panel for them, or upload the contents\ndirectly to the root of your Portal.\n\n";
 		$zip_comment.= "Please don't modify the contents unless you know doing.\n";
 
 		// Initialize the ZipArchive Class
 		$zip = new ZipArchive;
-		$archive = $zip->open(BACKUPS_PATH . '/backup_' . date("d-m-Y_H-i",$date) . '.zip' , ZipArchive::CREATE) or die('Error opening or creating file!');
-
-		if($archive){
+		if($archive = $zip->open(BACKUPS_PATH . '/backup_' . date("d-m-Y_H-i",$date) . '.zip' , ZipArchive::CREATE) !== false){
 
 			$zip->setArchiveComment($zip_comment);
 
-			// Default mode: Backup Sections
-			if(is_dir(CONTENT_PATH)){
-				if($dh1 = opendir(CONTENT_PATH)){
+			// Entries (default)
+			if(is_dir(ENTRIES_PATH) && is_readable(ENTRIES_PATH)){
+				if(($dh1 = opendir(ENTRIES_PATH)) !== false){
 					while (($file = readdir($dh1)) !== false) {
-						if(nofakedir($file)) $zip->addFile(CONTENT_PATH . $file, "content/$file");
+						if(nofakedir($file)) $zip->addFile(ENTRIES_PATH . $file, "entries/$file");
 					}
 					closedir($dh1);
-				}	
+				}
 			}
-
-			// Blog mode
-			if(is_dir(ENTRIES_PATH) && is_dir(COMMENTS_PATH) && $blog){
-				if($dh2 = opendir(COMMENTS_PATH)){
+			
+			if(is_dir(COMMENTS_PATH) && is_readable(COMMENTS_PATH) && $comments){
+				if(($dh2 = opendir(COMMENTS_PATH)) !== false){
 					while (($file = readdir($dh2)) !== false) {
 						if(nofakedir($file)) $zip->addFile(COMMENTS_PATH . $file, "comments/$file");
 					}
 					closedir($dh2);
 				}
-			
-				if($dh3 = opendir(ENTRIES_PATH)){
-					while (($file = readdir($dh3)) !== false) {
-						if(nofakedir($file)) $zip->addFile(ENTRIES_PATH . $file, "entries/$file");
-					}
-					closedir($dh3);
-				}
 			}
 
 			// Templates mode
-			if(is_dir(SMARTY_TEMPLATES_PATH.'templates/') && $templates){
-				$dh5 = opendir(SMARTY_TEMPLATES_PATH.'templates/');
-				if($dh5){
-					while (($file = readdir($dh5)) !== false) {
+			if(is_dir(SMARTY_TEMPLATES_PATH.'templates/') && is_readable(SMARTY_TEMPLATES_PATH.'templates/') && $templates){
+				if(($dh3 = opendir(SMARTY_TEMPLATES_PATH.'templates/')) !== false){
+					while (($file = readdir($dh3)) !== false) {
 						if(nofakedir($file) && preg_match("/^[\w]+\.tpl$/",$file)) $zip->addFile(SMARTY_TEMPLATES_PATH."templates/$file", "templates/$file");
 					}
-					closedir($dh5);
+					closedir($dh3);
 				}
 			}
 

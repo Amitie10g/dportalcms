@@ -7,10 +7,10 @@
 action="{{LINK script='panel' section='backup:create' argument='?BACKUP'}}">
 
   <div style="text-align:center;">
-  <label><input type="checkbox" checked="checked" disabled="disabled"/>{{$LANG.sections|ucfirst}}</label>
-  <label><input type="checkbox" name="mode[blog]" value="true" />{{$LANG.blog|ucfirst}}</label>
-  <label><input type="checkbox" name="mode[config]" value="true" />{{$LANG.config|ucfirst}}</label>
+  <label><input type="checkbox" checked="checked" disabled="disabled"/>{{$LANG.entries|ucfirst}}</label>
+  <label><input type="checkbox" name="mode[comments]" value="true" />{{$LANG.comments|ucfirst}}</label>
   <label><input type="checkbox" name="mode[templates]" value="true" />{{$LANG.templates|ucfirst}}</label>
+  <label><input type="checkbox" name="mode[config]" value="true" />{{$LANG.config|ucfirst}}</label>
 
   </div>
 

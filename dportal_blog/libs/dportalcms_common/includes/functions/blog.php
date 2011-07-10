@@ -227,15 +227,12 @@ function blog_update_entry($id,$name,$title,$content,$tags = null){
 // bool blog_post_comment(string entry_id, mixed nick, string comment[, string url[, string url]])
 function blog_post_comment($entry_id,$user,$comment,$email,$url = null){
 
-	global $use_phpbb;
 	global $user_admin;
-	global $loged_in;
 	global $time_left_greace_period;
-	global $use_phpbb;
 	
 	if(is_numeric($user)) $user = +$user; // Convert STRING to INTEGER
 	
-	if($use_phpbb && $loged_in){
+	if($user_admin){
 		// User 53 and later is Norma users. User between 2 and 52 are Bots; 2 is Founder and 1 is Anonymous!
 		if(is_integer($user) && ($user == 2 || $user > 52)) $getusername = get_user_by_id($nick); // Will return FALSE if User does not exist
 	}
@@ -251,8 +248,7 @@ function blog_post_comment($entry_id,$user,$comment,$email,$url = null){
 	// Only Administrator can post messages repetidelly without waiting
 	if($get_left !== true) return false;
 	
-	if($user_admin || ($user == PHPBB_USER_ID && $getusername !== false)) $moderated = 2; // Admin or Same user: 2 means special colour in posts
-	elseif($loged_in && !$user_admin) $moderated = null; // Registered user: Post inmediatelly
+	if($user_admin) $moderated = 2; // Admin or Same user: 2 means special colour in posts
 	else $moderated = 1; // Anonymous user: Moderate comment (Admin will publish them)
 
 	if(preg_match(PREG_URL_STRING,$url) > 0){
