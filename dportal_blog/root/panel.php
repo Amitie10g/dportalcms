@@ -84,8 +84,6 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 
 	$smarty->clear_cache('panel.tpl');
 
-	// If User or Password is changed successfully, Close de session (unless you are using phpBB)
-	if($saved && ($check_user_pass_change === 2 || $check_user_pass_change === 3 || $check_user_pass_change === 4) && !$use_phpbb) session_destroy();
 	if($saved) $_SESSION['UPDATED'] = true;
 
 	$smarty->clear_all_cache();

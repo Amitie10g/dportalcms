@@ -64,6 +64,16 @@ a:link{
 }h3{
 	font-size:{{$STYLE_CONF.h3_font_size.value}};
 
+}h5.titre{
+  font-size:13px;
+  font-family:Verdana,sans-serif;
+  background:#94D4FC url(images/fond2.gif);
+  border:#4474BC 1px solid;
+  margin:0;
+  color:#4D73AD;
+  padding:2px;
+  text-align:center;
+
 }.sidebar{
       width: 130px;
       min-height:100px;

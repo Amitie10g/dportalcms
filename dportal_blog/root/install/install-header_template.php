@@ -3,7 +3,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>DPortal CMS installer</title>
+<title>DPortal Blog installer</title>
 <link rel="stylesheet" type="text/css" href="../default.css" />
 
 <script type="text/javascript" src="{{$smarty.const.DPORTAL_PATH}}/external_links.js"></script>
@@ -64,14 +64,14 @@
 
 <?php if(!$already_installed && !$installed){ ?>
 <div style="width:600px;margin:auto">
-<h1 style="margin:10px">DPortal CMS installer</h1>
+<h1 style="margin:10px">DPortal Blog installer</h1>
 
 <div style="border:2px solid;background:#CCCCCC;padding:2px;margin:0 0 20px 0">
 <h5 class="titre">General information </h5>
 <div style="padding:5px">
 <p><strong>Thanks to test <strong>DPortal Blog</strong>. In few steps you will install your own Blog without DBMS!</strong></p>
-<p>Please read carefully the documentation. Them have important information about the installation and the program.</p>
-<p>And finally, check if the server have write permissions to the content and configuration files BEFORE install.</p>
+<p>Before continue, please read the documentation carefully. Them have importan information about this program.</p>
+<p>Note than this source DOES NOT include Smarty. So, before continue, please download and install Smarty. Elsewhere, check if you have already installed Smarty in the INCLUDE_PATH. </p>
 <? if(empty($_GET['step'])){ ?>
 <p style="text-align:center"><strong><a href="<?php echo $_SERVER['PHP_SELF'] ?>?step=site_conf#site_conf">Next step &gt;&gt;</a></strong></p>
 <? } ?>

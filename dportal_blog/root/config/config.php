@@ -69,8 +69,11 @@ if(!empty($phpbb_dir)) define('PHPBB_DIR',$phpbb_dir);
 
 // Smarty
 
-// Comment if your Webserver has been installed Smarty2 already
-require_once(SMARTY_LIBRARIES_PATH . "Smarty.class.php");
+// Check if Smarty is already included
+if(is_readable(SMARTY_LIBRARIES_PATH . "Smarty.class.php") && !class_exists('Smarty')) require_once(SMARTY_LIBRARIES_PATH . "Smarty.class.php");
+
+// Check if Class Smarty exist ans is usable 
+if(!class_exists('Smarty')) die("Smarty is not installed! Please read the documentation and install Smarty.");
 
 // Declaring an new isntance of Smarty
 $smarty = new Smarty();
@@ -95,8 +98,7 @@ if(is_file(INCLUDES_PATH . "html2fpdf.php")){
 // :: External elements
 
 // Use phpBB3 or the built-in function for administration
-if(is_dir(REAL_DOCUMENT_ROOT . $phpbb_dir) && !empty($phpbb_dir)) require_once(INCLUDES_PATH . "phpbb3.php");
-else require_once(INCLUDES_PATH . 'session_built-in.php');
+require_once(INCLUDES_PATH . 'session_built-in.php');
 
 // :: Other variables
 

@@ -1,5 +1,10 @@
 DPortal CMS - Smarty variable declarations
 
+This source DOES NOT include Smarty! You should download and install them.
+You can install smarty in the directory "libs/smarty_libs".
+"Smarty.class.php" must be found in "libs/smarty_libs/Smarty.class.php" or
+be already installed and included in the INCLUDE_PATH.
+
 = About Smarty 3 =
 
 Smarty 3 is the next version of this Template engine,
