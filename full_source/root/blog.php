@@ -24,6 +24,13 @@ $entry_name = $_GET['entry'];
 $page = $_GET['page'];
 if(!is_numeric($page) && $page < 1) $page = 1;
 
+if(empty($page) && empty($entry_name) && !isset($_GET['FEED']) && !isset($_GET['NEW']) && !isset($_GET['DELETE']) && !isset($_GET['POST_COMMENT']) && !isset($_GET['DELETE_COMMENTS']) && !isset($_GET['EDIT'])){
+	if(substr($_SERVER['REQUEST_URI'],-1) != '/' && $use_rewrite){
+		header('HTTP/1.1 301 Moved Permanently');
+		header('location: ' . $_SERVER['REQUEST_URI'] . '/');
+	}
+}
+
 // Create new entry
 if(isset($_GET['NEW'])){
 
