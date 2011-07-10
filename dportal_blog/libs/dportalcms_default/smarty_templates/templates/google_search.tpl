@@ -1,7 +1,6 @@
 <script src="http://www.google.com/jsapi" type="text/javascript"></script>
 
-<script type="text/javascript">
-//<![CDATA[
+<script type="text/javascript">//<![CDATA[
 
 google.load("search", "1.0");
 
@@ -29,5 +28,4 @@ searchControl.draw(document.getElementById
 }
 google.setOnLoadCallback(OnLoad, true);
 
-//]]>
-</script>
+//]]></script>

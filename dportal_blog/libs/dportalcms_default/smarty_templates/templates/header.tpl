@@ -3,8 +3,5 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="description" content="{{$SITE_DESCRIPTION}}" />
-<meta name="google-site-verification" content="IsydVc5mTJ4ibrM2InR8LyOPw4F22PDnAVsamEWx-X4" />
 <link rel="stylesheet" type="text/css" href="{{LINK script="stylesheet"}}" />
-{{DYNAMIC}}{{if !empty($smarty.get.page)}}<meta name="ROBOTS" content="NOINDEX, FOLLOW" />
-{{/if}}{{/DYNAMIC}}
-
+{{DYNAMIC}}{{if !empty($smarty.get.page)}}<meta name="ROBOTS" content="NOINDEX, FOLLOW" />{{/if}}{{/DYNAMIC}}
