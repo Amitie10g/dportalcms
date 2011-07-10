@@ -1,3 +1,4 @@
+<link rel="shortcut icon" href="{{$smarty.const.DPORTAL_PATH}}/images/favicon.ico" />
 <script type="text/javascript" src="{{$smarty.const.DPORTAL_PATH}}/ajax.js"></script>
 
 {{if $IS_ENTRY}}<link rel="alternate" type="application/atom+xml" title="{{$SITENAME}} - {{$TITLE}} (Atom)" href="{{LINK section=$smarty.get.entry script='blog_entry_feed'}}" />{{/if}}
