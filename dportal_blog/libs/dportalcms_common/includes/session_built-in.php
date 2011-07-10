@@ -68,7 +68,9 @@ if(isset($_GET['LOGIN']) && !$is_admin){
 		$_SESSION['not_loged_in'] = true;
 	}
 
-	header("location:$redir");die();
+	if(!empty($redir)) header("location: $redir");
+	else redir('blog','blog');
+	die();
 
 // LOGOUT mode
 }elseif(isset($_GET['LOGOUT']) && $loged_in){
