@@ -24,6 +24,8 @@ action="{{LINK script='panel' section='config:update' argument='?SITE_CONF'}}">
     </div>
 	
 	<div style="clear:both">&nbsp;</div>
+		{{* Language support currently not available *}}
+		{{*
 	 	<div style="text-align:center">
         <select name="lang" style="width:90px"title="Select language (default, current)">
           <option value="{{$LANGFILES[0].key}}" selected="selected" disabled="disabled">Language</option>
@@ -31,9 +33,9 @@ action="{{LINK script='panel' section='config:update' argument='?SITE_CONF'}}">
 		{{section name="lang" loop=$LANGFILES}}
           <option value="{{$LANGFILES[lang].key}}">{{$LANGFILES[lang].str}}</option>
           {{/section}}
-	
         </select>
-
+		*}}
+		
           <label>
             <input type="checkbox" name="use_rewrite" value="1" {{if $USE_REWRITE}}checked="checked"{{/if}} />
             {{$LANG.use_canonical_url|ucfirst}} <strong></strong> (<strong>mod_rewrite</strong>)</label>
