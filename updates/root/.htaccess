@@ -1,7 +1,4 @@
 RewriteEngine On
-RewriteCond %{HTTP_HOST} ^190.98.197.102$ [NC]
-RewriteRule ^(.*)$ http://dportalcms.org/$1 [R=301,L]
-
 RewriteRule ^style.css$ style.php
 RewriteRule ^sitemap.xml$ sitemap.php?mode=XML
 RewriteRule ^sitemap.html$ sitemap.php
