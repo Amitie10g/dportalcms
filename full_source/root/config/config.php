@@ -71,8 +71,11 @@ if(!empty($phpbb_dir)) define('PHPBB_DIR',$phpbb_dir);
 
 // Smarty
 
-// Include Smarty class (comment if already included in PHP). See README_SMARTY for details
-require_once(SMARTY_LIBRARIES_PATH . "Smarty.class.php");
+// Check if Smarty is already included
+if(is_readable(SMARTY_LIBRARIES_PATH . "Smarty.class.php") && !class_exists('Smarty')) require_once(SMARTY_LIBRARIES_PATH . "Smarty.class.php");
+
+// Check if Class Smarty exist ans is usable 
+if(!class_exists('Smarty')) die("Smarty is not installed! Please read the documentation and install Smarty.");
 
 // Declaring an new isntance of Smarty
 $smarty = new Smarty();

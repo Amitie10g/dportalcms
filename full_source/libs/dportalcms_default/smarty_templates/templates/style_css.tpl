@@ -24,7 +24,6 @@ a:link{
 
 }.sidebar_link{
 	margin-bottom: 5px;
-}
 
 }em.desc{
       font-size:11px;
@@ -74,12 +73,6 @@ a:link{
       padding:0px;
       font-size:{{$STYLE_CONF.sidebar_font_size.value}};
       background:{{$STYLE_CONF.sidebar_background.value}};
-
-/*
-.sidebar_link{
-	margin-bottom:5px
-*/
-
 }.content{
       width:auto;
       min-height:100px;
@@ -326,4 +319,21 @@ position:relative !important;
 
 .gsc-imageResult {
 margin:auto !important;
+}
+
+ul.maketree, ul.maketree ul, ul.maketree li {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+ul.maketree ul { padding-left: 0.3em; }
+ul.maketree li {
+  border-left: 1px dotted #000;
+  padding-left: 13px;
+  background: url(dotted.gif) scroll no-repeat 1px 0.8em;
+}
+ul.maketree li.last {
+  border-left-width: 0px;
+  padding-left: 14px;
+  background: url(dottedangle.gif) scroll no-repeat left top;
 }
