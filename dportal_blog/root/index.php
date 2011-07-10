@@ -205,7 +205,7 @@ if(isset($_GET['NEW'])){
 	$name = $_POST['name'];
 	$comment = stripslashes($_POST['comment']);
 	
-	if(($loged_in && defined(PHPBB_SESSION_ID)) || $user_admin){
+	if(($user_admin) || $user_admin){
 		$user = PHPBB_USER_ID;
 		$email = PHPBB_USER_EMAIL;
 	}else{
