@@ -8,7 +8,7 @@
     <option class="list" selected="selected"
     disabled="disabled">{{$LANG.select_template_to_edit|ucfirst}}</option>
 	{{section name="templates" loop=$TEMPLATES}}
-    {{if strpos($TEMPLATES[templates].name,'panel_') === false && strpos($TEMPLATES[templates].name,'edit') === false}}<option value="{{$TEMPLATES[templates].name}}"{{if $TEMPLATES[templates].name == $smarty.get.template_file}} selected="selected"{{/if}}>{{$TEMPLATES[templates].name}}</option>{{/if}}
+    {{if (strpos($TEMPLATES[templates].name,'panel_') === false) && (strpos($TEMPLATES[templates].name,'edit') === false)}}<option value="{{$TEMPLATES[templates].name}}"{{if $TEMPLATES[templates].name == $smarty.get.template_file}} selected="selected"{{/if}}>{{$TEMPLATES[templates].name}}</option>{{/if}}
 	{{/section}}
   </select>
    </span>
