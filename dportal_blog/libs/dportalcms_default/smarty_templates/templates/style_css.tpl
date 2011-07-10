@@ -40,7 +40,7 @@ a:link{
 }.banner{
       width:{{$STYLE_CONF.banner_width.value}};
       height: 150px;
-      border:{{$STYLE_CONF.banner_border.value}};
+      /*border:{{$STYLE_CONF.banner_border.value}};*/
       text-align: center;
       margin:5px;
       background:{{$STYLE_CONF.banner_background.value}};
@@ -68,11 +68,12 @@ a:link{
       width: 130px;
       min-height:100px;
       border:{{$STYLE_CONF.sidebar_border.value}};
-      margin: 5px 0 5px 3px;
+      margin: 5px 0 -5px 3px;
       float:{{$STYLE_CONF.sidebar_float.value}};
       padding:0px;
       font-size:{{$STYLE_CONF.sidebar_font_size.value}};
       background:{{$STYLE_CONF.sidebar_background.value}};
+	  padding-bottom:10px !important; /* To adjust with .content that has a a div block with a clear statement */ 
 }.content{
       width:auto;
       min-height:100px;
@@ -247,7 +248,9 @@ position:relative !important;
 right:281px !important;
 top:-2px !important;
 background: #FFFFFF !important;
-border:1px #000000 dashed !important;
+border-left:1px #000000 dashed !important;
+border-bottom:1px #000000 dashed !important;
+border-top:1px #000000 dashed !important;
 padding-left: 10px  !important;
 }
 

@@ -1,2 +1,3 @@
-
-{{* You can place your Ads or gadgets here *}}
+{{DYNAMIC}}{{if $IS_ADMIN}}<div style="margin:10px 3px;border:1px #000000 dotted;text-align:center"><a href="{{LINK script="panel" section="style/template:sidebar_c.tpl" argument="?tab=style&amp;mode=template&amp;template_file=sidebar_c.tpl"}}">Click here to edit</a></div>{{/if}}{{/DYNAMIC}}
+{{* You can place your Ads or gadgets bellow. Uncomment the <hr /> bellow to separate sidebar *}}
+{{* <hr /> *}}

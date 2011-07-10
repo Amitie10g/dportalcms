@@ -573,6 +573,8 @@ function get_paragraphs($content,$count = true,$num = 50,$page = 1){
 
 // string month_number_to_locale_string(mixed month)
 function month_number_to_locale_string($month){
+
+	global $LANG;
 	
 	switch($month){
 		case "01" : $stringmonth = $LANG['month_01']; break;

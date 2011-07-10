@@ -23,7 +23,7 @@ $entry_name = $_GET['entry'];
 
 $page = $_GET['page'];
 
-if(empty($page) && empty($entry_name) && !isset($_GET['FEED'])){
+if(empty($page) && empty($entry_name) && !isset($_GET['FEED']) && !isset($_GET['NEW']) && !isset($_GET['POST']) && !isset($_GET['POST_COMMENT']) && !isset($_GET['DELETE'])){
 	if(substr($_SERVER['REQUEST_URI'],-1) != '/' && $use_rewrite){
 		header('HTTP/1.1 301 Moved Permanently');
 		header('location: ' . $_SERVER['REQUEST_URI'] . '/');
@@ -77,7 +77,6 @@ if(isset($_GET['NEW'])){
 		$smarty->display('header_close.tpl');
 		$smarty->display('body_h.tpl');
 		$smarty->display('container.tpl');
-		$smarty->display('header_f.tpl');
 
 		$smarty->display('sidebar_h.tpl');
 
@@ -287,7 +286,7 @@ if(isset($_GET['NEW'])){
 // Entry mode
 }elseif(!empty($entry_name) && !isset($_GET['EDIT'])){
 
-	$ajax_url = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH.'/blog.php?COMMENTS&amp;entry='.$entry_name;
+	$ajax_url = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH.'/index.php?COMMENTS&amp;entry='.$entry_name;
 	$ajax_block = 'getcomments';
 	
 	$smarty->assign('AJAX_URL',$ajax_url);
@@ -314,7 +313,7 @@ if(isset($_GET['NEW'])){
 		$smarty->assign('NAME',$name);	
 		$smarty->assign('FILE',$file);
 		$smarty->assign('TAGS',$tags);
-		$smarty->assign('TITLE',$title);
+		$smarty->assign('TITLE',"$title");
 		$smarty->assign('USER',$user);
 		$smarty->assign('CREATED',$created);
 		$smarty->assign('UPDATED',$updated);
@@ -417,7 +416,6 @@ if(isset($_GET['NEW'])){
 	$smarty->display('body_h.tpl');
 	if(!isset($_GET['PRINT'])){
 		$smarty->display('container.tpl');
-		$smarty->display('header_f.tpl');
 
 		$smarty->display('sidebar_h.tpl');
 
@@ -487,7 +485,10 @@ if(isset($_GET['NEW'])){
 		
 		$smarty->assign('YEAR_CHECKED',$year_checked);
 		$smarty->assign('MONTH_CHECKED',$month_checked);
-	
+		
+		if(!empty($year_checked) && empty($month_checked)) $smarty->assign('TITLE',$LANG['entries_of']." $year_checked");
+		if(!empty($year_checked) && !empty($month_checked))$smarty->assign('TITLE',$LANG['entries_of'].' '.month_number_to_locale_string($month_checked)." $year_checked");
+
 		$smarty->assign('ENTRIES',$entries);
 		$smarty->assign('IS_BLOG', true);
 	
@@ -498,9 +499,8 @@ if(isset($_GET['NEW'])){
 		$smarty->assign('EPP',$entries_per_page);
 	
 		$smarty->assign('SITENAME',$sitename);
-		$smarty->assign('TITLE','Blog');
-	
 	}
+	
 	// :: Output
 	
 	if(isset($_GET['FEED'])){
@@ -511,14 +511,13 @@ if(isset($_GET['NEW'])){
 		$smarty->display('header.tpl');
 		
 		$smarty->caching = 2; $smarty->cache_lifetime = 1296000;
-		$smarty->display('header_title.tpl','blog_index');
+		$smarty->display('header_title.tpl','blog_index|$year|$month');
 		$smarty->caching = false;
 	
 		$smarty->display('header_more.tpl');
 		$smarty->display('header_close.tpl');
 		$smarty->display('body_h.tpl');
 		$smarty->display('container.tpl');
-		$smarty->display('header_f.tpl');
 
 		$smarty->display('sidebar_h.tpl');
 
@@ -532,7 +531,7 @@ if(isset($_GET['NEW'])){
 		$smarty->display('sidebar_f.tpl');
 		$smarty->display('content_h.tpl');
 		$smarty->caching = 2; $smarty->cache_lifetime = 1296000;
-		$smarty->display('blog_index.tpl',"blog_index|$page|$year|$month");
+		$smarty->display('blog_index.tpl',"blog_index|$page$year|$month");
 		$smarty->caching = false;
 		$smarty->display('content_f.tpl');
 		$smarty->display('footer_page.tpl');

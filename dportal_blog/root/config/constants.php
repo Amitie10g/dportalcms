@@ -2,8 +2,8 @@
 
 define("CONFIG_PATH",DPORTAL_ABSOLUTE_PATH."/config/"); // Don"t modify!!!
 define("LANG_PATH",LIBS_PATH."/dportalcms_common/lang/");
-define("SMARTY_LIBRARIES_PATH",LIBS_PATH."/smarty_libs/");
-define("FPDF_PATH",LIBS_PATH."/fpdf/");
+define("SMARTY_LIBRARIES_PATH","/home/dportalc/.libs/smarty_libs/");
+define("FPDF_PATH","/home/dportalc/.libs/fpdf/");
 define("SMARTY_TEMPLATES_PATH",LIBS_PATH."/dportalcms_$site_id/smarty_templates/");
 define("INCLUDES_PATH",LIBS_PATH."/dportalcms_common/includes/");
 define("FUNCTIONS_PATH",LIBS_PATH."/dportalcms_common/includes/functions/");

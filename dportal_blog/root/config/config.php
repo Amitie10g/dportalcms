@@ -102,6 +102,7 @@ else require_once(INCLUDES_PATH . 'session_built-in.php');
 
 // Enable Smarty Debugging only for Administrator 
 if($user_admin) $smarty->debugging = true;
+$smarty->debugging = false;
 
 // Get Language variales (after phpBB!!!)
 if(is_file(LANG_PATH . "$language.ini")) $LANG = parse_ini_file(LANG_PATH . "$language.ini") or die('Fatal error: Missing language file!');

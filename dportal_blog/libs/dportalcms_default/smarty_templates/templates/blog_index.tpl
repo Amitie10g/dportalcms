@@ -1,5 +1,5 @@
 <h5 class="invisible">{{$LANG.content}}</h5>
-<h1>{{$LANG.blog|ucfirst}}{{if $PAGE == 1 && $ENTRIES != null && empty($YEAR_CHECKED)}} - {{$LANG.last|ucfirst}} {{$EPP}} {{$LANG.entries}}{{/if}}{{if !empty($YEAR_CHECKED)}} - {{$LANG.entries_of|ucfirst}} {{if !empty($MONTH_CHECKED)}}{{$MONTH_CHECKED|month_number_to_locale_string}} {{/if}}{{$YEAR_CHECKED}}{{/if}}</h1>
+<h1>{{if $PAGE == 1 && $ENTRIES != null && empty($YEAR_CHECKED)}}{{$LANG.last|ucfirst}} {{$EPP}} {{$LANG.entries}}{{/if}}{{if !empty($YEAR_CHECKED)}}{{$LANG.entries_of|ucfirst}} {{if !empty($MONTH_CHECKED)}}{{$MONTH_CHECKED|month_number_to_locale_string}} {{/if}}{{$YEAR_CHECKED}}{{/if}}</h1>
 {{DYNAMIC}}
 {{if $smarty.session.blog_entry_deleted}}
 <div style="border:1px #000000 dotted; padding:5px; width:350px;background:#AAFFAA;text-align:center;margin:5px auto;font-size:14px">{{$LANG.entry_deleted|ucfirst}}</div>

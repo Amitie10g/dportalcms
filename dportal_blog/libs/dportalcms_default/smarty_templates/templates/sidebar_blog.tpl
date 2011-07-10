@@ -1,6 +1,5 @@
-
 <div style="padding:0 2px">
-<h3 style="text-align:center;font-weight:bold;margin:0;padding:0">{{$LANG.entries|ucfirst}}</h3>
+{{if !empty($ENTRIES_SIDEBAR)}}<h3 style="text-align:center;font-weight:bold;margin:0;padding:0">{{$LANG.entries|ucfirst}}</h3>{{/if}}
 
 {{foreach from=$ENTRIES_SIDEBAR item="MONTH" key="YEAR"}}
 	<ul{{* id="ye_{{$YEAR}}"*}} class="maketree">
@@ -21,4 +20,3 @@
 	</ul>
 {{/foreach}}
 </div>
-<hr />

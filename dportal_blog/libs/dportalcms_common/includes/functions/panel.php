@@ -434,10 +434,9 @@ function update_style($style){
 \x24style_list['h5_titre_font_color'] = array('value'=>'$style[h5_titre_font_color]','type'=>'color');
 \x24style_list['search_control_backgorund'] = array('value'=>'$style[search_control_backgorund]','type'=>'bg');
 \x24style_list['sidebar_border'] = array('value'=>'$style[sidebar_border]','type'=>'border','parameters'=>'0-5');
-\x24style_list['sidebar_backgorund'] = array('value'=>'$style[sidebar_backgorund]','type'=>'bg');
+\x24style_list['sidebar_backround'] = array('value'=>'$style[sidebar_backgorund]','type'=>'bg');
 \x24style_list['sidebar_float'] = array('value'=>'$style[sidebar_float]','type'=>'float');
 \x24style_list['sidebar_font_size'] = array('value'=>'$style[sidebar_font_size]','type'=>'size','parameters'=>'8-14');
-\x24style_list['sidebar_font_size'] = array('value'=>'$style[sidebar_font_size]','type'=>'size','parameters'=>'0-20');
 
 \x3F\x3E
 	

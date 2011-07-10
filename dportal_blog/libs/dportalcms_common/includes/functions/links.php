@@ -29,7 +29,7 @@ function redir($script,$section,$http_status = null,$argument = null,$marker = n
 		switch($script){
 			default				: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH); break;
 			case "blog_entry"	: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/$section.html$marker"); break;
-			case "panel"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/$section$marker"); break;
+			case "panel"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/panel/$section$marker"); break;
 		}
 	
 	}else{

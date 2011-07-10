@@ -1,2 +1,1 @@
-
-<title>{{$TITLE|ucfirst}} :: {{$SITENAME|ucfirst}}</title>
+<title>{{if !empty($TITLE)}}{{$TITLE|ucfirst}} :: {{/if}}{{$SITENAME|ucfirst}}</title>

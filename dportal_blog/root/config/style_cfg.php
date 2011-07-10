@@ -26,7 +26,7 @@ $style_list['content_font_color'] = array('value'=>'#000000','type'=>'color');
 $style_list['content_font_size'] = array('value'=>'12px','type'=>'size','parameters'=>'8-14');
 $style_list['content_margin'] = array('value'=>'5px 138px 5px 2px','type'=>'size','parameters'=>'0-20');
 $style_list['content_padding'] = array('value'=>'5px','type'=>'size','parameters'=>'0-20');
-$style_list['footer_background'] = array('value'=>'#AAAAAA','type'=>'bg');
+$style_list['footer_background'] = array('value'=>'#FFFFFF','type'=>'bg');
 $style_list['footer_border'] = array('value'=>'#000 1px dashed','type'=>'border','parameters'=>'0-5');
 $style_list['footer_margin'] = array('value'=>'2px 2px 0 2px','type'=>'size','parameters'=>'0-20');
 $style_list['footer_padding'] = array('value'=>'5px','type'=>'size','parameters'=>'0-20');
@@ -38,12 +38,10 @@ $style_list['h5_titre_font_size'] = array('value'=>'13px','type'=>'size','parame
 $style_list['h5_titre_font_family'] = array('value'=>'Verdana,sans-serif','type'=>'font','parameters'=>'Verdana, Arial, sans-serif');
 $style_list['h5_titre_font_color'] = array('value'=>'#4D73AD','type'=>'color');
 $style_list['search_control_backgorund'] = array('value'=>'#FFFFFF !important','type'=>'bg');
-$style_list['search_control_backgorund'] = array('value'=>'#FFFFFF !important','type'=>'bg');
 $style_list['sidebar_border'] = array('value'=>'#000 1px dashed','type'=>'border','parameters'=>'0-5');
-$style_list['sidebar_background'] = array('value'=>'#FFFFFF','type'=>'bg');
+$style_list['sidebar_background'] = array('value'=>'none','type'=>'bg');
 $style_list['sidebar_float'] = array('value'=>'right','type'=>'float');
 $style_list['sidebar_font_size'] = array('value'=>'11px','type'=>'size','parameters'=>'8-14');
-$style_list['sidebar_font_size'] = array('value'=>'11px','type'=>'size','parameters'=>'0-20');
 
 ?>
 	

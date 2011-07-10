@@ -144,7 +144,7 @@
 </div>
 <div class="return_to_index">
 <a href="{{LINK script="panel" section="clear_cache" argument="?CLR_CACHE"}}">{{$LANG.clear_all_cache|ucfirst}}</a> | 
-<a href="{{LINK section="home"}}">{{$LANG.return_to_index|ucfirst}}</a>
+<a href="{{LINK}}">{{$LANG.return_to_index|ucfirst}}</a>
 </div>
 
 </div>
