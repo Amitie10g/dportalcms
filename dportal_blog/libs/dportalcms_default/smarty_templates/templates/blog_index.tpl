@@ -25,19 +25,7 @@
  <div style="margin:0 0 10px 0"><a href="{{LINK script='blog_entry' section=$ENTRIES[entries].name marker="comment"}}">{{$LANG.post_comment|ucfirst}}</a></div>
 </div>
 {{if !$IS_ADMIN && ($smarty.section.entries.index == $SHOW_AD_INDEX_PAIR || $smarty.section.entries.index == $SHOW_AD_INDEX_IMPAIR)}}
-<div style="margin:10px 0;padding:{{if $smarty.section.entries.last && $PAGE == 1}}15px{{else}}0{{/if}} 0 {{if $smarty.section.entries.last && $PAGE == 1}}0{{else}}15px{{/if}} 0;{{if !$smarty.section.entries.last || $PAGE > 1}}border-bottom:1px #000000 dotted;{{/if}}{{if $smarty.section.entries.last && $PAGE == 1}}border-top:1px #000000 dotted;{{/if}}text-align:center">
-<script type="text/javascript"><!--
-google_ad_client = "pub-6520136901650033";
-/* 728x90, Blog index */
-google_ad_slot = "3724442520";
-google_ad_width = 728;
-google_ad_height = 90;
-//-->
-</script>
-<script type="text/javascript"
-src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
-</script>
-</div>
+{{* You can add Banners or Ads here. Will be displayed two per page *}}
 {{/if}}
 {{sectionelse}}
 {{DYNAMIC}}<div style="text-align:center;font-style:italic;font-size:15px;margin:10px">{{$LANG.no_entries_published|ucfirst}}.{{if $IS_ADMIN}} {{$LANG.create_entry_now|ucfirst}}.{{/if}}</div>{{/DYNAMIC}}
