@@ -1,18 +1,18 @@
-<h1>Sitemap</h1>
+<h1 style="margin-bottom:10px">Sitemap</h1>
 
-<div style="width:600px;margin:auto">
+<div style="margin-left:50%">
 
-<h2><a href="{{LINK script='blog'}}">Blog</a></h2>
-
+<ul style="margin:0 0 5px 3px;padding:3px">
+<li><h2 style="margin:0;padding:0"><a href="{{LINK}}">{{$LANG.home|ucfirst}}</a></h2>
 {{foreach from=$ENTRIES_SIDEBAR item="MONTH" key="YEAR"}}
-	<ul>
-		<li><a href="{{LINK script="blog" page="$YEAR/" argument="?year=$YEAR"}}">{{$YEAR}}</a>
+	<ul style="margin:0 0 5px 3px;padding:3px">
+		<li><h3 style="margin:0;padding:0"><a href="{{LINK script="blog" page="$YEAR/" argument="?year=$YEAR"}}">{{$LANG.entries_of|ucfirst}} {{$YEAR}}</a></h3>
 {{foreach from=$MONTH item="ENTRY" key="MONTH"}}
-			<ul>
-				<li><a href="{{LINK script="blog" page="$YEAR/$MONTH" argument="?year=$YEAR&month=$MONTH"}}">{{$MONTH|month_number_to_locale_string}}</a>
-					<ul>
+			<ul style="margin:0 0 5px 3px;padding:3px">
+				<li><h4 style="margin:0;padding:0"><a href="{{LINK script="blog" page="$YEAR/$MONTH" argument="?year=$YEAR&month=$MONTH"}}">{{$LANG.entries_of|ucfirst}} {{$MONTH|month_number_to_locale_string}}</a></h4>
+					<ul style="margin:0 0 5px 3px;padding:3px">
 {{foreach from=$ENTRY item="ENTRY" key="ITEM"}}
-						<li><a href="{{LINK script="blog_entry" section=$ENTRY.name}}" title="{{$ENTRY.title}}">{{$ENTRY.title}}</a></li>
+						<li><h5 style="margin:0;padding:0"><a href="{{LINK script="blog_entry" section=$ENTRY.name}}" title="{{$ENTRY.title}}">{{$ENTRY.title}} ({{$ENTRY.created|date_format:"%A, %B %e, %Y"}})</a></h5></li>
 					
 {{/foreach}}
 					</ul>
@@ -22,6 +22,6 @@
 		</li>
 	</ul>
 {{/foreach}}
-</div>
-
+</li>
+</ul>
 </div>

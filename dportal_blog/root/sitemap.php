@@ -25,7 +25,7 @@ if($mode == 'XML' || isset($_GET['XML'])){
 	
 	$smarty->caching = true;
 	
-	$getentries = getentries_sitemap();
+	$getentries = get_blog_entries();
 
 	if(!$smarty->is_cached('sitemap_xml.tpl')){
 		$smarty->assign('ENTRIES',$getentries);
@@ -35,10 +35,24 @@ if($mode == 'XML' || isset($_GET['XML'])){
 	$smarty->display('sitemap_xml.tpl');
 }else{
 
-	if(!$smarty->is_cached('sitemap_html.tpl')){
-		$smarty->assign('TITLE','Sitemap');
-		$smarty->assign('ENTRIES',getentries_sitemap());
+	// Get the entries for the Sidebar, and order by Year and date
+	$smarty->caching = true;
+	if(!$smarty->is_cached('sitemap_html.tpl') && !$smarty->is_cached('sidebar_blog.tpl')){
+		
+		if(($entries = get_blog_entries()) != null){
+		
+			foreach($entries as $item){
+				$year = date('Y',$item['created']);
+				$month = date('m',$item['created']);
+				$entries_sidebar[$year][$month][] = $item;
+			}
+			
+			$smarty->assign('TITLE','Sitemap');
+			
+			$smarty->assign('ENTRIES_SIDEBAR',$entries_sidebar);
+		}
 	}
+	$smarty->caching = false;
 
 	$smarty->display('header.tpl');
 	$smarty->display('header_title.tpl');
@@ -48,16 +62,20 @@ if($mode == 'XML' || isset($_GET['XML'])){
 	$smarty->display('body_h.tpl');
 	if(!isset($_GET['PRINT'])){
 		$smarty->display('container.tpl');
-		$smarty->display('header_f.tpl');
 		$smarty->display('sidebar_h.tpl');
 		$smarty->display('sidebar_user_data.tpl');
+		
+		$smarty->is_cached = 2; $smarty->cache_lifetime = 1296000;
+		$smarty->display('sidebar_blog.tpl');
+		$smarty->caching = false;
+		
 		$smarty->display('sidebar_c.tpl');
 		$smarty->display('sidebar_f.tpl');
 	}
 	
 	if(!isset($_GET['PRINT'])) $smarty->display('content_h.tpl');
 	$smarty->caching = 2;$smarty->cache_lifetime = 262800;
-	$smarty->display('sitemap_html.tpl',$section);
+	$smarty->display('sitemap_html.tpl');
 	$smarty->caching = false;
 	
 	if(!isset($_GET['PRINT'])) $smarty->display('content_f.tpl');
