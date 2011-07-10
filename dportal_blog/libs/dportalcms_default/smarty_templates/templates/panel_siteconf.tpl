@@ -24,9 +24,10 @@ action="{{LINK script='panel' section='config:update' argument='?SITE_CONF'}}">
     </div>
 	
 	<div style="clear:both">&nbsp;</div>
+
+	 	<div style="text-align:center">
 		{{* Language support currently not available *}}
 		{{*
-	 	<div style="text-align:center">
         <select name="lang" style="width:90px"title="Select language (default, current)">
           <option value="{{$LANGFILES[0].key}}" selected="selected" disabled="disabled">Language</option>
           

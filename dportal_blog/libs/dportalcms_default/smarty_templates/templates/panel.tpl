@@ -83,7 +83,7 @@
 
 <body>
 <div>
-<h1 style="margin:0 0 10px 0">DPortal CMS {{$LANG.control_panel|ucfirst}}</h1>
+<h1 style="margin:0 0 10px 0">DPortal Blog {{$LANG.control_panel|ucfirst}}</h1>
 
   <div style="clear:both;height:10px"></div>
 
