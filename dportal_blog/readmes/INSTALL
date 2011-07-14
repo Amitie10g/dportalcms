@@ -2,6 +2,11 @@ DPortal CMS - Installation
 
 DPortal CMS is easy to install. Only follow this instructions.
 
+0.- If you want to use a Banner, please put them in "root/images".
+    The Banner must be PNG and must have 150px of heigh max. Of course,
+	you can bypass these restrictions by editing the Style in order to
+	display the banner and the page correctly.
+
 1.- Upload the directories "root" and "libs"
 
 	* "root" contains the scripts to be executed in the Web Server.

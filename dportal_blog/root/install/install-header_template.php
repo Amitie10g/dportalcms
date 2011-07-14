@@ -71,7 +71,6 @@
 <div style="padding:5px">
 <p><strong>Thanks to test <strong>DPortal Blog</strong>. In few steps you will install your own Blog without DBMS!</strong></p>
 <p>Before continue, please read the documentation carefully. Them have importan information about this program.</p>
-<p>Note than this source DOES NOT include Smarty. So, before continue, please download and install Smarty. Elsewhere, check if you have already installed Smarty in the INCLUDE_PATH. </p>
 <? if(empty($_GET['step'])){ ?>
 <p style="text-align:center"><strong><a href="<?php echo $_SERVER['PHP_SELF'] ?>?step=site_conf#site_conf">Next step &gt;&gt;</a></strong></p>
 <? } ?>
