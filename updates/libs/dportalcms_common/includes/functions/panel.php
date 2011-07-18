@@ -484,9 +484,6 @@ function get_lang_files(){
 
 // bool update_style(array style)
 function update_style($style){
-//echo '<pre>';
-//var_dump($style);
-//echo '</pre>';
 	if(!is_array($style) && empty($style)) return false;
 	
 	global $array_zero_to_five;
@@ -561,11 +558,8 @@ function update_style($style){
 	
 OUTPUT;
 
-//die(highlight_string($output));
-
 	if(file_put_contents(DPORTAL_ABSOLUTE_PATH . '/config/style_cfg.php',$output,LOCK_EX) !== false) return true;
 	else return false;
-
 }
 
 ?>
