@@ -1,7 +1,6 @@
-
-<div style="width:600px;margin:auto;padding:10px 0">
+<div style="width:650px;margin:auto;padding:10px 0">
   <form id="form1" method="post"
-action="{{LINK script='panel' section='config:update' argument='?SITE_CONF'}}">
+action="{{if $smarty.const.DEMO_CPANEL === true}}{{LINK script='panel_demo' section='config:update' argument='?SITE_CONF'}}{{else}}{{LINK script='panel' section='config:update' argument='?SITE_CONF'}}{{/if}}">
       <div style="text-align:right; margin: 0 10px 0 10px;float:left">
         <div> <strong>{{$LANG.sitename|ucfirst}}:</strong>
             <input type="text"
@@ -24,19 +23,16 @@ action="{{LINK script='panel' section='config:update' argument='?SITE_CONF'}}">
     </div>
 	
 	<div style="clear:both">&nbsp;</div>
-
 	 	<div style="text-align:center">
-		{{* Language support currently not available *}}
-		{{*
         <select name="lang" style="width:90px"title="Select language (default, current)">
           <option value="{{$LANGFILES[0].key}}" selected="selected" disabled="disabled">Language</option>
           
 		{{section name="lang" loop=$LANGFILES}}
           <option value="{{$LANGFILES[lang].key}}">{{$LANGFILES[lang].str}}</option>
           {{/section}}
+	
         </select>
-		*}}
-		
+
           <label>
             <input type="checkbox" name="use_rewrite" value="1" {{if $USE_REWRITE}}checked="checked"{{/if}} />
             {{$LANG.use_canonical_url|ucfirst}} <strong></strong> (<strong>mod_rewrite</strong>)</label>

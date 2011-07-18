@@ -594,4 +594,16 @@ function month_number_to_locale_string($month){
 	return $stringmonth;
 }
 
+// array(get_array_number_between(int from, int to))
+function get_array_number_between($from,$to){
+	if(!is_integer($from) || !is_integer($to) || $from > $to) return false;
+	
+	for($num = $from; $num <= $to; $num++){
+		$result[] = $num;
+	}
+	
+	return $result;
+
+}
+
 ?>

@@ -367,8 +367,10 @@ function get_lang_files(){
 
 // bool update_style(array style)
 function update_style($style){
-
 	if(!is_array($style) && empty($style)) return false;
+	
+	global $array_zero_to_five;
+	global $array_zero_to_twenty;
 	
 	// Types:
 	// Color: Use Color selector in Style editor
@@ -384,48 +386,56 @@ function update_style($style){
 	$output = <<<OUTPUT
 \x3C\x3Fphp
 
+\x24style_list['body_background'] = array('value'=>array('color'=>'$style[body_background_color]','url'=>'$style[body_background_url]','params'=>'$style[body_background_params]'),'type'=>'bg');
+\x24style_list['body_font_color'] = array('value'=>'$style[body_font_color]','type'=>'color');
+\x24style_list['body_font_family'] = array('value'=>'$style[body_font_family]','type'=>'font');
+\x24style_list['body_font_size'] = array('value'=>'$style[body_font_size]','type'=>'size','parameters'=>get_array_number_between(8,14));
+\x24style_list['body_padding'] = array('value'=>'$style[body_padding]','type'=>'size','parameters'=>get_array_number_between(0,50),'separator'=>true);
+
+\x24style_list['banner_background'] = array('value'=>array('color'=>'$style[banner_background_color]','url'=>'$style[banner_background_url]','params'=>'$style[banner_background_params]'),'type'=>'bg');
+\x24style_list['banner_border'] = array('value'=>array('color'=>'$style[banner_border_color]','size'=>'$style[banner_border_size]','type'=>'$style[banner_border_type]'),'type'=>'border','parameters'=>get_array_number_between(0,5));
+\x24style_list['_banner_border'] = array('value'=>array('color'=>'$style[_banner_border_color]','size'=>'$style[_banner_border_size]','type'=>'$style[_banner_border_type]'),'type'=>'border','parameters'=>get_array_number_between(0,5));
+\x24style_list['_banner_margin'] = array('value'=>'$style[_banner_margin]','type'=>'size','parameters'=>get_array_number_between(0,20));
+\x24style_list['banner_width'] = array('value'=>array('width'=>'$style[banner_width_width]','mode'=>'$style[banner_width_mode]'),'type'=>'width');
+\x24style_list['_banner_width'] = array('value'=>array('width'=>'$style[_banner_width_width]','mode'=>'$style[_banner_width_mode]'),'type'=>'width','separator'=>true);
+
+\x24style_list['container_background'] = array('value'=>array('color'=>'$style[container_background_color]','url'=>'$style[container_background_url]','params'=>'$style[container_background_params]'),'type'=>'bg');
+\x24style_list['container_border'] = array('value'=>array('color'=>'$style[container_border_color]','size'=>'$style[container_border_size]','type'=>'$style[container_border_type]'),'type'=>'border','parameters'=>get_array_number_between(0,5));
+\x24style_list['container_margin'] = array('value'=>'$style[container_margin]','type'=>'size','parameters'=>get_array_number_between(0,20));
+\x24style_list['container_padding'] = array('value'=>'$style[container_padding]','type'=>'size','parameters'=>get_array_number_between(0,5));
+\x24style_list['container_width'] = array('value'=>array('width'=>'$style[container_width_width]','mode'=>'$style[container_width_mode]'),'type'=>'width','separator'=>true);
+
+\x24style_list['content_background'] = array('value'=>array('color'=>'$style[content_background_url]','url'=>'$style[content_background_url]','params'=>'$style[content_background_params]'),'type'=>'bg');
+\x24style_list['content_border'] = array('value'=>array('color'=>'$style[content_border_color]','size'=>'$style[content_border_size]','type'=>'$style[content_border_type]'),'type'=>'border','parameters'=>get_array_number_between(0,5));
+\x24style_list['content_font_color'] = array('value'=>'$style[content_font_color]','type'=>'color');
+\x24style_list['content_font_size'] = array('value'=>'$style[content_font_size]','type'=>'size','parameters'=>get_array_number_between(8,14));
+\x24style_list['content_margin'] = array('value'=>'$style[content_margin]','type'=>'size','parameters'=>get_array_number_between(0,5));
+\x24style_list['content_padding'] = array('value'=>'$style[content_padding]','type'=>'size','parameters'=>get_array_number_between(0,5),'separator'=>true);
+
+\x24style_list['sidebar_border'] = array('value'=>array('color'=>'$style[sidebar_border_color]','size'=>'$style[sidebar_border_size]','type'=>'$style[sidebar_border_type]'),'type'=>'border','parameters'=>get_array_number_between(0,5));
+\x24style_list['sidebar_width'] = array('value'=>array('width'=>'$style[sidebar_width_width]','mode'=>'$style[sidebar_width_mode]'),'type'=>'width');
+\x24style_list['sidebar_background'] = array('value'=>'$style[sidebar_backgorund]','type'=>'bg');
+\x24style_list['sidebar_float'] = array('value'=>'$style[sidebar_float]','type'=>'float');
+\x24style_list['sidebar_font_size'] = array('value'=>'$style[sidebar_font_size]','type'=>'size','parameters'=>get_array_number_between(8,14));
+\x24style_list['search_control_backgorund'] = array('value'=>'$style[search_control_backgorund]','type'=>'bg','separator'=>true);
+
+\x24style_list['footer_background'] = array('value'=>array('color'=>'$style[footer_background_color]','url'=>'$style[footer_background_url]','params'=>'$style[footer_background_params]'),'type'=>'bg');
+\x24style_list['footer_border'] = array('value'=>array('color'=>'$style[footer_border_color]','size'=>'$style[footer_border_size]','type'=>'$style[footer_border_type]'),'type'=>'border','parameters'=>get_array_number_between(0,5));
+\x24style_list['footer_margin'] = array('value'=>'$style[footer_margin]','type'=>'size','parameters'=>get_array_number_between(0,20));
+\x24style_list['footer_padding'] = array('value'=>'$style[footer_padding]','type'=>'size','parameters'=>get_array_number_between(0,5),'separator'=>true);
+
 \x24style_list['a_hover_color'] = array('value'=>'$style[a_hover_color]','type'=>'color');
 \x24style_list['a_link_color'] = array('value'=>'$style[a_link_color]','type'=>'color');
-\x24style_list['a_visited_color'] = array('value'=>'$style[a_visited_color]','type'=>'color');
-\x24style_list['banner_background'] = array('value'=>'$style[banner_background]','type'=>'bg');
-\x24style_list['banner_border'] = array('value'=>'$style[banner_border]','type'=>'border','parameters'=>'0-5');
-\x24style_list['_banner_border'] = array('value'=>'$style[_banner_border]','type'=>'border','parameters'=>'0-5');
-\x24style_list['_banner_border'] = array('value'=>'$style[_banner_border]','type'=>'size','parameters'=>'0-20');
-\x24style_list['_banner_margin'] = array('value'=>'$style[_banner_margin]','type'=>'size','parameters'=>'0-20');
-\x24style_list['banner_width'] = array('value'=>'$style[banner_width]','type'=>'width');
-\x24style_list['_banner_width'] = array('value'=>'$style[_banner_width]','type'=>'width');
-\x24style_list['body_background'] = array('value'=>'$style[body_background]','type'=>'bg');
-\x24style_list['body_font_color'] = array('value'=>'$style[body_font_color]','type'=>'color');
-\x24style_list['body_font_family'] = array('value'=>'$style[body_font_family]','type'=>'font','parameters'=>'Verdana, Arial, sans-serif');
-\x24style_list['body_font_size'] = array('value'=>'$style[body_font_size]','type'=>'size','parameters'=>'8-14');
-\x24style_list['body_padding'] = array('value'=>'$style[body_padding]','type'=>'size','parameters'=>'0-20');
-\x24style_list['container_bg'] = array('value'=>'$style[container_bg]','type'=>'bg');
-\x24style_list['container_border'] = array('value'=>'$style[container_border]','type'=>'border','parameters'=>'0-5');
-\x24style_list['container_margin'] = array('value'=>'$style[container_margin]','type'=>'size','parameters'=>'0-20');
-\x24style_list['container_padding'] = array('value'=>'$style[container_padding]','type'=>'size','parameters'=>'0-20');
-\x24style_list['container_width'] = array('value'=>'$style[container_width]','type'=>'width');
-\x24style_list['content_background'] = array('value'=>'$style[content_background]','type'=>'bg');
-\x24style_list['content_border'] = array('value'=>'$style[content_border]','type'=>'border','parameters'=>'0-5');
-\x24style_list['content_font_color'] = array('value'=>'$style[content_font_color]','type'=>'color');
-\x24style_list['content_font_size'] = array('value'=>'$style[content_font_size]','type'=>'size','parameters'=>'8-14');
-\x24style_list['content_margin'] = array('value'=>'$style[content_margin]','type'=>'size','parameters'=>'0-20');
-\x24style_list['content_padding'] = array('value'=>'$style[content_padding]','type'=>'size','parameters'=>'0-20');
-\x24style_list['footer_background'] = array('value'=>'$style[footer_background]','type'=>'bg');
-\x24style_list['footer_border'] = array('value'=>'$style[footer_border]','type'=>'border','parameters'=>'0-5');
-\x24style_list['footer_margin'] = array('value'=>'$style[footer_margin]','type'=>'size','parameters'=>'0-20');
-\x24style_list['footer_padding'] = array('value'=>'$style[footer_padding]','type'=>'size','parameters'=>'0-20');
-\x24style_list['h1_font_size'] = array('value'=>'$style[h1_font_size]','type'=>'size','parameters'=>'14-20');
-\x24style_list['h2_font_size'] = array('value'=>'$style[h2_font_size]','type'=>'size','parameters'=>'13-18');
-\x24style_list['h3_font_size'] = array('value'=>'$style[h3_font_size]','type'=>'size','parameters'=>'12-16');
-\x24style_list['h5_titre_bg'] = array('value'=>'$style[h5_titre_bg]','type'=>'bg');
-\x24style_list['h5_titre_font_size'] = array('value'=>'$style[h5_titre_font_size]','type'=>'size','parameters'=>'8-14');
+\x24style_list['a_visited_color'] = array('value'=>'$style[a_visited_color]','type'=>'color','separator'=>true);
+
+\x24style_list['h1_font_size'] = array('value'=>'$style[h1_font_size]','type'=>'size','parameters'=>get_array_number_between(14,20));
+\x24style_list['h2_font_size'] = array('value'=>'$style[h2_font_size]','type'=>'size','parameters'=>get_array_number_between(13,18));
+\x24style_list['h3_font_size'] = array('value'=>'$style[h3_font_size]','type'=>'size','parameters'=>get_array_number_between(12,16),'separator'=>true);
+\x24style_list['h5_titre_background'] = array('value'=>array('color'=>'$style[h5_titre_backgorund_color]','url'=>'$style[h5_titre_backgorund_url]','params'=>'$style[h5_titre_backgorund_params]'),'type'=>'bg');
+\x24style_list['h5_titre_font_size'] = array('value'=>'$style[h5_titre_font_size]','type'=>'size','parameters'=>get_array_number_between(8,14));
 \x24style_list['h5_titre_font_family'] = array('value'=>'$style[h5_titre_font_family]','type'=>'font','parameters'=>'Verdana, Arial, sans-serif');
 \x24style_list['h5_titre_font_color'] = array('value'=>'$style[h5_titre_font_color]','type'=>'color');
-\x24style_list['search_control_backgorund'] = array('value'=>'$style[search_control_backgorund]','type'=>'bg');
-\x24style_list['sidebar_border'] = array('value'=>'$style[sidebar_border]','type'=>'border','parameters'=>'0-5');
-\x24style_list['sidebar_backround'] = array('value'=>'$style[sidebar_backgorund]','type'=>'bg');
-\x24style_list['sidebar_float'] = array('value'=>'$style[sidebar_float]','type'=>'float');
-\x24style_list['sidebar_font_size'] = array('value'=>'$style[sidebar_font_size]','type'=>'size','parameters'=>'8-14');
+
 
 \x3F\x3E
 	

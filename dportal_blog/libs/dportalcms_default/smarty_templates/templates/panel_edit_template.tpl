@@ -1,7 +1,7 @@
 <div style="text-align:center;padding:5px 5px 15px 5px">{{$LANG.edit_templates_preface}}<br />
 <strong>{{$LANG.warning|ucfirst}}:</strong> {{$LANG.incorrect_edition_warn|ucfirst}}</div>
 <div style="width:50%;text-align:center;margin:auto;padding: 0 0 10px 0">
-<form method="post" action="{{LINK script='panel'}}">
+<form method="post" action="{{if $smarty.const.DEMO_CPANEL === true}}{{LINK script='panel_demo' section="style" argument="?tab=style"}}{{else}}{{LINK script='panel' section="style" argument="?tab=style"}}{{/if}}">
   <span>
   <select class="list" name="template_file" onchange="submit();"
   style="width:90%">

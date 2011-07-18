@@ -1,63 +1,63 @@
 /* This CSS file is generated dinamically, but major contents are static.*/
 
 body{
-      font-size:{{$STYLE_CONF.body_font_size.value}};
-      padding:{{$STYLE_CONF.body_padding.value}};
-      background:{{$STYLE_CONF.body_background.value}};
-      font-family:{{$STYLE_CONF.body_font_family.value}};
-      color:{{$STYLE_CONF.body_font_color.value}};
+	font-size:{{$STYLE_CONF.body_font_size.value}};
+	padding:0 {{$STYLE_CONF.body_padding.value}}px;
+	background:{{if !empty($STYLE_CONF.body_background.value.color)}}#{{$STYLE_CONF.body_background.value.color}}{{/if}}{{if !empty($STYLE_CONF.body_background.value.url)}} url({{$STYLE_CONF.body_background.value.url}}){{/if}}{{if !empty($STYLE_CONF.body_background.value.params)}} {{$STYLE_CONF.body_background.value.params}}{{/if}};
+	font-family:{{$STYLE_CONF.body_font_family.value}};
+	color:#{{$STYLE_CONF.body_font_color.value}};
 }
 
 a:link{
-      text-decoration:none;
-      font-weight:bold;
-      color: {{$STYLE_CONF.a_link_color.value}};
-	  
+	text-decoration:none;
+	font-weight:bold;
+	color:#{{$STYLE_CONF.a_link_color.value}};
+	
 }a:visited{
-      text-decoration: none;
-      font-weight: bold;
-      color: {{$STYLE_CONF.a_visited_color.value}};
+	text-decoration: none;
+	font-weight: bold;
+	color:#{{$STYLE_CONF.a_visited_color.value}};
 }a:hover{
-      text-decoration:none;
-      font-weight:bold;
-      color:{{$STYLE_CONF.a_hover_color.value}};
+	text-decoration:none;
+	font-weight:bold;
+	color:#{{$STYLE_CONF.a_hover_color.value}};
 
 }.sidebar_link{
 	margin-bottom: 5px;
 
 }em.desc{
-      font-size:11px;
+	font-size:11px;
 }#container{
-      width:{{$STYLE_CONF.container_width.value}};
-      border:{{$STYLE_CONF.container_border.value}};
-      margin:{{$STYLE_CONF.container_margin.value}};
-      padding:{{$STYLE_CONF.container_padding.value}};
-      background: {{$STYLE_CONF.container_bg.value}};
+	width:{{$STYLE_CONF.container_width.value.width}}{{if $STYLE_CONF.container_width.value.mode == 'px' || $STYLE_CONF.container_width.value.mode == '%'}}{{$STYLE_CONF.container_width.value.mode}}{{/if}};
+	border:{{if !empty($STYLE_CONF.container_border.value.color) && $STYLE_CONF.container_border.value.type != 'none'}}#{{$STYLE_CONF.container_border.value.color}}{{/if}}{{if !empty($STYLE_CONF.container_border.value.size)}} {{$STYLE_CONF.container_border.value.size}}px{{/if}}{{if !empty($STYLE_CONF.container_border.value.type)}} {{$STYLE_CONF.container_border.value.type}}{{/if}};
+	margin:{{$STYLE_CONF.container_margin.value}}px;
+	padding:{{$STYLE_CONF.container_padding.value}}px;
+	background:{{if !empty($STYLE_CONF.container_background.value.color)}}#{{$STYLE_CONF.container_background.value.color}}{{/if}}{{if !empty($STYLE_CONF.container_background.value.url)}} url({{$STYLE_CONF.container_background.value.url}}){{/if}}{{if !empty($STYLE_CONF.container_background.value.params)}} {{$STYLE_CONF.container_background.value.params}}{{/if}};
 }#banner{
-      width:{{$STYLE_CONF._banner_width.value}};
-      margin:{{$STYLE_CONF._banner_margin.value}};
-      border:{{$STYLE_CONF._banner_border.value}};
+	width:{{$STYLE_CONF.banner_width.value.width}}{{if $STYLE_CONF._banner_width.value.mode == 'px' || $STYLE_CONF._banner_width.value.mode == '%'}}{{$STYLE_CONF._banner_width.value.mode}}{{/if}};
+	margin:{{$STYLE_CONF._banner_margin.value}}px;
+	border:{{if !empty($STYLE_CONF._banner_border.value.color) && $STYLE_CONF._banner_border.value.type != none}}#{{$STYLE_CONF._banner_border.value.color}}{{/if}}{{if !empty($STYLE_CONF._banner_border.value.size)}} {{$STYLE_CONF._banner_border.value.size}}px{{/if}}{{if !empty($STYLE_CONF._banner_border.value.type)}} {{$STYLE_CONF._banner_border.value.type}}{{/if}};
 }.banner{
-      width:{{$STYLE_CONF.banner_width.value}};
-      height: 150px;
-      /*border:{{$STYLE_CONF.banner_border.value}};*/
-      text-align: center;
-      margin:5px;
-      background:{{$STYLE_CONF.banner_background.value}};
+	width:{{$STYLE_CONF.banner_width.value.width}}{{if $STYLE_CONF.banner_width.value.mode == 'px' || $STYLE_CONF.banner_width.value.mode == '%'}}{{$STYLE_CONF.banner_width.value.mode}}{{/if}};
+	height: 150px;
+	border:{{if !empty($STYLE_CONF.banner_border.value.color) && $STYLE_CONF.banner_border.value.type != none}}#{{$STYLE_CONF.banner_border.value.color}}{{/if}}{{if !empty($STYLE_CONF.banner_border.value.size)}} {{$STYLE_CONF.banner_border.value.size}}px{{/if}}{{if !empty($STYLE_CONF.banner_border.value.type)}} {{$STYLE_CONF.banner_border.value.type}}{{/if}};
+	text-align: center;
+	margin:5px;
+	background:{{if !empty($STYLE_CONF.banner_background.value.color)}}#{{$STYLE_CONF.banner_background.value.color}}{{/if}}{{if !empty($STYLE_CONF.banner_background.value.url)}} url({{$STYLE_CONF.banner_background.value.url}}){{/if}}{{if !empty($STYLE_CONF.banner_background.value.params)}} {{$STYLE_CONF.banner_background.value.params}}{{/if}};
 }#sup_ads{
-      width:99%;
-      margin:0 auto;
-      border:2px #000 dashed;
+	width:99%;
+	margin:0 auto;
+	border:2px #000 dashed;
 }.sup_ads{
-      width:auto;
-	  text-align:center;
-      /*border:1px #000 dashed;*/
-      /*margin:5px auto;*/
+	width:auto;
+	text-align:center;
+	/*border:1px #000 dashed;*/
+	/*margin:5px auto;*/
 }h1{
-      font-size:{{$STYLE_CONF.h1_font_size.value}};
-      margin:0;
-      text-align:center;
-	  
+	font-size:{{$STYLE_CONF.h1_font_size.value}};
+	margin:0;
+	text-align:center;
+	
 }h2{
 	font-size:{{$STYLE_CONF.h2_font_size.value}};
 
@@ -75,61 +75,64 @@ a:link{
   text-align:center;
 
 }.sidebar{
-      width: 130px;
-      min-height:100px;
-      border:{{$STYLE_CONF.sidebar_border.value}};
-      margin: 5px 0 -5px 3px;
-      float:{{$STYLE_CONF.sidebar_float.value}};
-      padding:0px;
-      font-size:{{$STYLE_CONF.sidebar_font_size.value}};
-      background:{{$STYLE_CONF.sidebar_background.value}};
-	  padding-bottom:10px !important; /* To adjust with .content that has a a div block with a clear statement */ 
+	width: {{$STYLE_CONF.sidebar_width.value.width}}{{$STYLE_CONF.sidebar_width.value.mode}};
+	min-height:100px;
+	border:{{if !empty($STYLE_CONF.sidebar_border.value.color) && $STYLE_CONF.sidebar_border.value.type != none}}#{{$STYLE_CONF.sidebar_border.value.color}}{{/if}}{{if !empty($STYLE_CONF.sidebar_border.value.size)}} {{$STYLE_CONF.sidebar_border.value.size}}px{{/if}}{{if !empty($STYLE_CONF.sidebar_border.value.type)}} {{$STYLE_CONF.sidebar_border.value.type}}{{/if}};
+	margin: 0;
+	margin-bottom: -6px;
+	float:{{$STYLE_CONF.sidebar_float.value}};
+	padding:0px;
+	font-size:{{$STYLE_CONF.sidebar_font_size.value}};
+	background:{{if !empty($STYLE_CONF.sidebar_background.value.color)}}#{{$STYLE_CONF.sidebar_background.value.color}}{{/if}}{{if !empty($STYLE_CONF.sidebar_background.value.url)}} url({{$STYLE_CONF.sidebar_background.value.url}}){{/if}}{{if !empty($STYLE_CONF.sidebar_background.value.params)}} {{$STYLE_CONF.sidebar_background.value.params}}{{/if}};
+	padding-bottom:10px !important; /* To adjust with .content that has a a div block with a clear statement */ 
 }.content{
-      width:auto;
-      min-height:100px;
-      border:{{$STYLE_CONF.content_border.value}};
-      margin:{{$STYLE_CONF.content_margin.value}};
-      padding:{{$STYLE_CONF.content_padding.value}};
-      font-size:{{$STYLE_CONF.content_font_size.value}};
-      background:{{$STYLE_CONF.content_background.value}};
-      color:{{$STYLE_CONF.content_font_color.value}};
+	width:auto;
+	min-height:100px;
+	border:{{if !empty($STYLE_CONF.content_border.value.color) && $STYLE_CONF.content_border.value.type != none}}#{{$STYLE_CONF.content_border.value.color}}{{/if}}{{if !empty($STYLE_CONF.content_border.value.size)}} {{$STYLE_CONF.content_border.value.size}}px{{/if}}{{if !empty($STYLE_CONF.content_border.value.type)}} {{$STYLE_CONF.content_border.value.type}}{{/if}};
+	margin:{{$STYLE_CONF.content_margin.value}};
+	margin-{{$STYLE_CONF.sidebar_float.value}}: {{$STYLE_CONF.sidebar_width.value.width+6}}px;
+	padding:{{$STYLE_CONF.content_padding.value}}px;
+	font-size:{{$STYLE_CONF.content_font_size.value}}px;
+	background:{{if !empty($STYLE_CONF.content_background.value.color)}}#{{$STYLE_CONF.content_background.value.color}}{{/if}}{{if !empty($STYLE_CONF.content_background.value.url)}} url({{$STYLE_CONF.content_background.value.url}}){{/if}}{{if !empty($STYLE_CONF.content_background.value.params)}} {{$STYLE_CONF.content_background.value.params}}{{/if}};
+	color:{{$STYLE_CONF.content_font_color.value}};
 }.footer{
-      width:auto;
-      border:{{$STYLE_CONF.footer_border.value}};
-      margin:{{$STYLE_CONF.footer_margin.value}};
-      padding:{{$STYLE_CONF.footer_padding.value}};
-      background:{{$STYLE_CONF.footer_background.value}};
+	width:auto;
+	border:{{if !empty($STYLE_CONF.footer_border.value.color) && $STYLE_CONF.footer_border.value.type != none}}#{{$STYLE_CONF.footer_border.value.color}}{{/if}}{{if !empty($STYLE_CONF.footer_border.value.size) && $STYLE_CONF.footer_border.value.type != 'none'}} {{$STYLE_CONF.footer_border.value.size}}px{{/if}} {{$STYLE_CONF.footer_border.value.type}};
+	margin:{{$STYLE_CONF.footer_margin.value}};
+	margin-top:5px;
+	padding:{{$STYLE_CONF.footer_padding.value}}px;
+	background:{{if !empty($STYLE_CONF.footer_background.value.color)}}#{{$STYLE_CONF.footer_background.value.color}}{{/if}}{{if !empty($STYLE_CONF.footer_background.value.url)}} url({{$STYLE_CONF.footer_background.value.url}}){{/if}}{{if !empty($STYLE_CONF.footer_background.value.params)}} {{$STYLE_CONF.footer_background.value.params}}{{/if}};
 }ul.list{
-      list-style-type:none;
-      margin:0;
-      padding:0;
+	list-style-type:none;
+	margin:0;
+	padding:0;
 }li.list{
-       padding:2px 0;
+	 padding:2px 0;
 }ul.menu{
-      list-style-type:none;
-      padding:0;
-      margin:0;
-      font-weight:bold;
+	list-style-type:none;
+	padding:0;
+	margin:0;
+	font-weight:bold;
 }li.menu{
-       margin:5px;
+	 margin:5px;
 }.img{
-       border:0;
+	 border:0;
 }.menu{
-	  text-align:center;
-	  margin:0 90px;
+	text-align:center;
+	margin:0 90px;
 
 }.invisible{
-      visibility:hidden;
-      font-size:0;
-      height:0;
-      padding:0;
-      margin:0;
+	visibility:hidden;
+	font-size:0;
+	height:0;
+	padding:0;
+	margin:0;
 }.cleaner{
-      clear:both;
-      padding:0;
-      margin:0;
-      height:0;
-      font-size:0;
+	clear:both;
+	padding:0;
+	margin:0;
+	height:0;
+	font-size:0;
 }
 
 .image_gallery{
@@ -141,7 +144,7 @@ a:link{
 }
 
 .contenidoItem p{
-       margin: 3px;
+	 margin: 3px;
 }
 
 .blog_entry {
