@@ -7,7 +7,7 @@
 
 {{* Edit Sections *}}
 {{if $EDITABLE}}
-<div class="sidebar_link"><a href="{{LINK script='edit' section=$SECTION  page='section:' argument='?section='}}" rel="external">{{$LANG.edit|ucfirst}} {{$LANG.page}}</a></div>
+<div class="sidebar_link"><a href="{{LINK script='edit' section=$SECTION  page='section:' argument='?section='}}">{{$LANG.edit|ucfirst}} {{$LANG.page}}</a></div>
 <div class="sidebar_link"><a href="{{LINK script='panel' section="/sections/create_section"}}" rel="external">{{$LANG.add_section}}</a></div>
 {{/if}}
 

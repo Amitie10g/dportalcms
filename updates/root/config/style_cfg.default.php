@@ -1,5 +1,7 @@
 <?php
 
+// This is the default Style config file, to be used as fallback
+
 $style_list['body_background'] = array('value'=>array('color'=>'FFFFFF','url'=>'','params'=>''),'type'=>'bg');
 $style_list['body_font_color'] = array('value'=>'000000','type'=>'color');
 $style_list['body_font_family'] = array('value'=>'Segoe IU, Verdana, Tahoma, Arial, sans-serif','type'=>'font');

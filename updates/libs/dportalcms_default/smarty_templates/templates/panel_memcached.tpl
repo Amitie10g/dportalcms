@@ -1,6 +1,6 @@
-<div style="padding:10px 5px 5px 5px">{{$LANG.enable_memcached_preface}}</div>
+<div style="padding:10px 5px 5px 5px">{{$LANG.enable_memcached_preface|ucfirst}}</div>
 
-<form method="post" action="{{LINK script='panel' section='config:update' argument='?SITE_CONF'}}">
+<form method="post" action="{{if $smarty.const.DEMO_CPANEL === true}}{{LINK script='panel_demo' section='config:update' argument='?SITE_CONF'}}{{else}}{{LINK script='panel' section='config:update' argument='?SITE_CONF'}}{{/if}}">
 <div style="text-align:right; margin: 0 auto;width:500px">
   <div style="float:left"><strong>{{$LANG.memcached_server|ucfirst}}Memcached server:</strong>
       <input type="text"

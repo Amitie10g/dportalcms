@@ -14,11 +14,14 @@
 		#                                              #
 		################################################
 
+
+
 define('DPORTAL',true);
 require_once('config/config.php');
 
 // If the User IS NOT ADMIN, redir to Home, or use Login...
 if(!$user_admin){
+	header('http/1.1 403 Forbidden');
 	redir('index','home'); die();
 }
 
@@ -29,6 +32,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 
 // Create section
 }elseif(isset($_GET['CREATE'])){
+
 	$filename = strtolower($_POST['filename']);
 	$title = $_POST['title'];
 	$category = $_POST['category'];
@@ -55,6 +59,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	
 // Create Category
 }elseif(isset($_GET['CREATE_CATEGORY'])){
+
 	$name = strtolower($_POST['name']);
 	$title = $_POST['title'];
 
@@ -85,6 +90,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 
 // Delete section
 }elseif(isset($_GET['DELETE'])){
+
 	$filename = $_POST['filename'];
 	
 	if(strpos($filename,"_") === true){
@@ -134,6 +140,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 
 // Update the config file
 }elseif(isset($_GET['SITE_CONF'])){
+
 	$get_sitename = $_POST['sitename'];
 	$get_sitedesc = $_POST['sitedesc'];
 	$get_robotstxt = $_POST['robotstxt'];
@@ -150,7 +157,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	$get_use_rewrite = $_POST['use_rewrite'];
 	$get_memcached_server = $_POST['memcached_server'];
 	$get_memcached_port = $_POST['memcached_port'];
-
+	
 	// By default, User and Password is the same
 	$username = $admin_user;
 	$password = $admin_password;
@@ -170,6 +177,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 		$username = sha1($get_username);
 		$password = sha1($get_password);
 	}
+
 
 	if(!isset($get_sitename)) $get_sitename = $sitename;
 	if(!isset($get_sitedesc)) $get_sitedesc = $sitedesc;
@@ -228,11 +236,13 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 
 	$smarty->clear_cache('panel.tpl');
 
-	redir('panel',"style/template:$file",null,"?tab=style&mode=template&template_file=$file"); die();
+	redir('panel',"style/template:$file",null,"?tab=style&mode=template&template_file=$file");
+	die();
 
 
 // Clear Smarty Cache/ Templates and Thumbnails of Videos (optional)
 }elseif(isset($_GET['CLR_CACHE'])){
+
 	$smarty->clear_all_cache();
 	$smarty->clear_compiled_tpl();
 	// Uncomment only if you want to clear thumbs here
@@ -258,7 +268,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 
 // Restore Backups
 }elseif(isset($_GET['RESTORE'])){
-	
+
 	$zip = new ZipArchive;
 	$archive = $zip->open($_FILES['filename']['tmp_name']);
 
@@ -606,7 +616,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 
 	if($created){
 		$_SESSION['PLAYLIST_CREATED'] = true;
-		redir('panel',"videos/upload:$name"); die();
+		redir('panel',"videos/upload:$name",null,'?tab=videos&mode=upload&playlist=$name'); die();
 	}else{
 		$_SESSION['PLAYLIST_NOT_CREATED'] = true;
 		redir('panel','panel'); die();
@@ -618,7 +628,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 
 	$playlist = $_POST['playlist'];
 	$videos = $_POST['video'];
-
+	
 	$deleted = delete_videos($playlist,$videos);
 	
 	if($deleted) $_SESSION['VIDEO_DELETED'] = true;
@@ -630,7 +640,7 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	$smarty->clear_cache('player.tpl',$playlist);
 	$smarty->clear_cache('player_hq.tpl',$playlist);
 	
-	if($_POST['playlist'] != null) redir('panel',"videos/upload:$playlist",null,"?tab=videos&mode=upload&playlist=$playlist");
+	if(!empty($playlist)) redir('panel',"videos/upload:$playlist",null,"?tab=videos&mode=upload&playlist=$playlist");
 	else redir('panel','videos',null,'?tab=videos');
 	
 	die();
@@ -654,73 +664,11 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	
 	die();
 
-// :: Update
-
-// Updates via SVN the Working copy of files for update.
-// Note: Files in Working directory are hard links to
-// the files in Application directory instead of copy them.
-// This is more practical, but if you use non-UNIX server
-// (as Windows), you should create hard links to these files
-// manually. See README_UPDATES for details.
-}elseif(isset($_GET['SVN_UPDATE'])){
-
-	if(!file_exists(UPDATES_PATH.'/.svn')) $checkout = svn_checkout($conf['updates_url'],UPDATES_DIR);
-	else $update = svn_update(UPDATES_PATH);
-
-	if($checkout || $update) $_SESSION['UPDATED_SVN'] = true;
-	else $_SESSION['UPDATE_ERROR'] = true;
-
-	redir('panel','panel'); die();
-
-}elseif(isset($_GET['SVN_COPY'])){
-
-	if($dir1 = opendir(UPDATES_PATH)) {
-			while (false !== ($file = readdir($dir1))) {
-				if(nofakedir($file) && !is_dir($file)) copy(UPDATES_PATH."/$file",DPORTAL_ABSOLUTE_PATH."/$file");
-			}
-		closedir($dir1);
-	}
-
-	if($dir2 = opendir(UPDATES_PATH."/includes")) {
-			while (false !== ($file = readdir($dir2))) {
-				if(nofakedir($file) && !is_dir($file)) copy(UPDATES_PATH."/includes/$file",DPORTAL_ABSOLUTE_PATH."/includes/$file");
-			}
-		closedir($dir2);
-	}
-
-	if($dir3 = opendir(UPDATES_PATH."/includes/functions")) {
-			while (false !== ($file = readdir($dir3))) {
-				if(nofakedir($file) && !is_dir($file)) copy(UPDATES_PATH."/includes/functions/$file",DPORTAL_ABSOLUTE_PATH."/includes/functions/$file");
-			}
-		closedir($dir3);
-	}
-
-	if($dir4 = opendir(UPDATES_PATH."/smarty/templates")) {
-			while (false !== ($file = readdir($dir4))) {
-				if(nofakedir($file) && !is_dir($file)) copy(UPDATES_PATH."/includes/functions/$file",DPORTAL_ABSOLUTE_PATH."/includes/functions/$file");
-			}
-		closedir($dir4);
-	}
-
-	if($dir5 = opendir(UPDATES_PATH."/lang")) {
-			while (false !== ($file = readdir($dir5))) {
-				if(nofakedir($file) && !is_dir($file)) copy(UPDATES_PATH."/lang/$file",DPORTAL_ABSOLUTE_PATH."/lang/$file");
-			}
-		closedir($dir5);
-	}
-
-	copy(UPDATES_PATH."/config.php",DPORTAL_ABSOLUTE_PATH."/config.php");
-
-	if(!$error) $_SESSION['UPDATERS_COPIED'] = true;
-	else $_SESSION['UPDATE_ERROR'] = true;
-
-	redir('panel','panel');die();
-
 // :: Normal mode
 
 }else{
 
-	if(!empty($_POST['template_file'])){
+	if($_GET['tab'] == 'style' && !empty($_POST['template_file'])){
 	
 		$name = $_POST['template_file'];
 	
@@ -728,10 +676,12 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 		if(is_writable(SMARTY_TEMPLATES_PATH."templates/$name") &&
 		is_file(SMARTY_TEMPLATES_PATH."templates/$name") &&
 		$name != 'panel.tpl'){
-			redir('panel',"style/template:$name",null,"?tab=style&mode=template&template_file=$name"); die();
+			redir('panel',"style/template:$name",null,"?tab=style&mode=template&template_file=$name");
+			die();
 		}else{
 			$_SESSION['TEMPLATE_NO_EXIST'] = true;
-			redir('panel',"style/template",null,"?tab=style&mode=template"); die();
+			redir('panel',"style/template",null,"?tab=style&mode=template");
+			die();
 		}
 	
 		$smarty->assign('PANEL_MESSAGE',get_panel_message());
@@ -751,7 +701,8 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	
 	if($_GET['tab'] == 'gallery' && $_GET['mode'] == 'edit' && !empty($_POST['gallery'])){
 		$gallery = $_POST['gallery'];
-		redir('panel',"gallery/edit:$gallery",null,"?tab=gallery&mode=edit&gallery=$gallery"); die();
+		redir('panel',"gallery/edit:$gallery",null,"?tab=gallery&mode=edit&gallery=$gallery");
+		die();
 	}
 	
 	if(!empty($playlist)){
@@ -764,9 +715,8 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	if(!empty($_POST['playlist'])){
 		$playlist = $_POST['playlist'];
 		redir('panel',"videos/upload:$playlist",null,"?tab=videos&mode=upload&playlist=$playlist");
+		die();
 	}
-
-
 
 	$tab = $_GET['tab'];
 	$mode = $_GET['mode'];
@@ -908,9 +858,6 @@ if(isset($_GET['PHPINFO'])){ die(phpinfo());
 	$smarty->assign('LANGFILES',$langfiles);
 
 	$smarty->assign('PANEL_MESSAGE',get_panel_message());
-
-	// Get list of files to be updated (not implemented)
-	//$files = diff_updated_files();
 
 	// Iteration for select num of Images per page
 	for($num = 10; $num <= 50;$num++)	$max[] = $num;

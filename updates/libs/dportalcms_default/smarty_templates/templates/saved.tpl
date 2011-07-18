@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>{{$LANG.information|ucfirst}} :: {{$SITENAME}} (editor)</title>
-<link rel="stylesheet" type="text/css" href="{{$smarty.const.DPORTAL_PATH}}/default.css" />
+<link rel="stylesheet" type="text/css" href="{{LINK script="stylesheet"}}" />
 </head>
 <body>
 <div style="max-width:400px;margin:100px auto;float:center;text-align:center;border:#4474BC 2px solid;background:#DDDDDD">
