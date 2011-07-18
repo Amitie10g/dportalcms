@@ -28,7 +28,7 @@ if(strpos($url,'_') && $use_rewrite){
 	die();
 }
 
-if($_GET['section'] == null && $_GET['section'] != 'home' && !isset($_GET['CATEGORIES']) && !isset($_GET['category'])){
+if(($_GET['section'] == 'index') || ($_GET['section'] == null && $_GET['section'] != 'home' && !isset($_GET['CATEGORIES']) && !isset($_GET['category']))){
 	header('HTTP/1.1 301 Redirection',true,301);
 	redir('index','home');
 	die();
@@ -118,7 +118,7 @@ if(file_exists(CONTENT_PATH . $get_section) && isset($get_section)){
 // PDF version (NEW!). Available but not used. You can add a link to PDF version using my function
 if(isset($_GET['PDF'])){
 
-	$file = gzopen(CONTENT_PATH . $get_section,'r');
+	$file = @gzopen(CONTENT_PATH . $get_section,'r');
 	
 	$referer = 'http://'.$_SERVER['SERVER_NAME'].str_replace(array('&PDF','.pdf'),array('','.html'),$_SERVER['REQUEST_URI']);
 	

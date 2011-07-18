@@ -1,9 +1,7 @@
 <div style="padding: 10px">{{$LANG.upload_videos_note}}</div>
 <div style="padding:10px;width:500px;margin:auto">
 {{if !empty($PLAYLISTS)}}
-  <form id="form6" method="post"
-action="{{LINK script='panel' section='videos/upload' argument='?PLAYLIST'}}"
-enctype="multipart/form-data">
+  <form id="form6" method="post" action="{{if $smarty.const.DEMO_CPANEL === true}}{{LINK script='panel_demo' section='videos/upload' argument='?PLAYLIST'}}{{else}}{{LINK script='panel' section='videos/upload' argument='?PLAYLIST'}}{{/if}}">
   <div style="padding: 10px">
   <select class="list" name="playlist" style="width:90%" onchange="submit()">
     <option class="list" selected="selected"
@@ -17,11 +15,8 @@ enctype="multipart/form-data">
 
 {{if !empty($PLAYLIST)}} 
 
-
-
-
 <div style="width:100%;padding:0 0 10px 0">
-<form method="post" action="{{LINK script="panel" section="video:delete" argument="?DELETE_VIDEO"}}">
+<form method="post" action="{{if $smarty.const.DEMO_CPANEL === true}}{{LINK script="panel_demo" section="video:delete" argument="?DELETE_VIDEO"}}{{else}}{{LINK script="panel" section="video:delete" argument="?DELETE_VIDEO"}}{{/if}}">
 <input type="hidden" name="playlist" value="{{$smarty.get.playlist}}" />
 
 {{section name="list" loop=$GET_PLAYLIST}}
@@ -46,12 +41,11 @@ enctype="multipart/form-data">
 {{if !empty($GET_PLAYLIST)}}<div style="text-align:center"><input type="submit" value="    {{$LANG.delete|ucfirst}}    " /></div>{{/if}}
 </form>
 </div>
-
+{{if $smarty.const.DEMO_CPANEL !== true}}
 <div style="text-align:center"><h2>Upload videos</h2></div>
 
   <form id="form6" method="post"
-action="{{LINK script='panel' section='video:upload' argument='?UPLOAD_VIDEO'}}"
-enctype="multipart/form-data">
+action="{{LINK script='panel' section='video:upload' argument='?UPLOAD_VIDEO'}}" enctype="multipart/form-data">
 
 
   <div style="text-align:right">{{$LANG.video|ucfirst}}: <input type="file" name="video[]" /></div>
@@ -67,6 +61,7 @@ enctype="multipart/form-data">
   <div><input type="hidden" name="playlist" value="{{$PLAYLIST}}"  /></div>
   <div style="text-align:center;padding: 10px"><input type="submit" value="  {{$LANG.upload|ucfirst}}  " /></div>
 </form>
+{{/if}}
 {{/if}}
 {{else}}
 <div style="text-align:center">No Playlists. Create a playlist now!</div>

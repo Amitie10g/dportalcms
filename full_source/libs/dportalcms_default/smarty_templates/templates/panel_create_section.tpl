@@ -1,7 +1,7 @@
-  <div style="padding:10px">{{$LANG.create_section_warn}}</div>
+  <div style="padding:10px">{{$LANG.create_section_warn|ucfirst}}</div>
   <div style="margin:auto;padding: 0 10px 0 10px;width:400px;margin:auto">
     <form method="post"
-action="{{LINK script='panel' section='section:create' argument='?CREATE'}}">
+action="{{if $smarty.const.DEMO_CPANEL === true}}{{LINK script='panel_demo' section='section:create' argument='?CREATE'}}{{else}}{{LINK script='panel' section='section:create' argument='?CREATE'}}{{/if}}">
       <div style="text-align:center">
         <select class="list" name="category" style="margin:0 0 10px 0;width:250px">
           <option class="list" selected="selected" disabled="disabled"

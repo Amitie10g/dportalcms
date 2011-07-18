@@ -3,7 +3,7 @@
 <div style="margin:auto;width:400px">
 
 <form  method="post"
-action="{{LINK script='panel' section='category:create' argument='?CREATE_CATEGORY'}}">
+action="{{if $smarty.const.DEMO_CPANEL === true}}{{LINK script='panel_demo' section='category:create' argument='?CREATE_CATEGORY'}}{{else}}{{LINK script='panel' section='category:create' argument='?CREATE_CATEGORY'}}{{/if}}">
 
   <div style="text-align:right">
   <div style="text-align:center"></div>

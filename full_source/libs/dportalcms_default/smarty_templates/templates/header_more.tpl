@@ -1,5 +1,4 @@
 <link rel="shortcut icon" href="{{$smarty.const.DPORTAL_PATH}}/images/favicon.ico" />
-
 <script type="text/javascript" src="{{$smarty.const.DPORTAL_PATH}}/ajax.js"></script>
 
 <link rel="stylesheet" type="text/css" href="{{$smarty.const.DPORTAL_PATH}}/highslide/highslide.css" />

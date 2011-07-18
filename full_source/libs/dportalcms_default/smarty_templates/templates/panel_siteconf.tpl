@@ -1,6 +1,6 @@
-<div style="width:600px;margin:auto;padding:10px 0">
+<div style="width:650px;margin:auto;padding:10px 0">
   <form id="form1" method="post"
-action="{{LINK script='panel' section='config:update' argument='?SITE_CONF'}}">
+action="{{if $smarty.const.DEMO_CPANEL === true}}{{LINK script='panel_demo' section='config:update' argument='?SITE_CONF'}}{{else}}{{LINK script='panel' section='config:update' argument='?SITE_CONF'}}{{/if}}">
       <div style="text-align:right; margin: 0 10px 0 10px;float:left">
         <div> <strong>{{$LANG.sitename|ucfirst}}:</strong>
             <input type="text"

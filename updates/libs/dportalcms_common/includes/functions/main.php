@@ -23,7 +23,7 @@
 function getlist($section){
 
 	// Gets the data of the CVS file list
-	$list = fopen(CONTENT_PATH.'.list', "rb") or die('<b>Fatal error:</b> Missing or inaccesible List file! Please be sure that the file exist or have the proper permissions!!!');
+	$list = @fopen(CONTENT_PATH.'.list', "rb") or die('<b>Fatal error:</b> Missing or inaccesible List file! Please be sure that the file exist or have the proper permissions');
 		
 	while (($data = fgetcsv($list, 1000, ";")) !== FALSE) {
 		if($data[1] == $section) $set_list = array('title'=>$data[2],'exclusive'=>$data[3],'timestamp'=>$data[4]);

@@ -3,7 +3,7 @@
 <div style="text-align:right;width:400px;margin:auto">
 
 <form method="post"
-action="{{LINK script='panel' section='video:create' argument='?CREATE_SHOWCASE'}}">
+action="{{if $smarty.const.DEMO_CPANEL === true}}{{LINK script='panel_demo' section='video:create' argument='?CREATE_SHOWCASE'}}{{else}}{{LINK script='panel' section='video:create' argument='?CREATE_SHOWCASE'}}{{/if}}">
 
   <div>
   <strong>{{$LANG.name|ucfirst}}:</strong> <input type="text" name="name"

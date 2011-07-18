@@ -71,11 +71,8 @@ if(!empty($phpbb_dir)) define('PHPBB_DIR',$phpbb_dir);
 
 // Smarty
 
-// Check if Smarty is already included
-if(is_readable(SMARTY_LIBRARIES_PATH . "Smarty.class.php") && !class_exists('Smarty')) require_once(SMARTY_LIBRARIES_PATH . "Smarty.class.php");
-
-// Check if Class Smarty exist ans is usable 
-if(!class_exists('Smarty')) die("Smarty is not installed! Please read the documentation and install Smarty.");
+// Include Smarty class (comment if already included in PHP). See README_SMARTY for details
+require_once(SMARTY_LIBRARIES_PATH . "Smarty.class.php");
 
 // Declaring an new isntance of Smarty
 $smarty = new Smarty();
@@ -161,12 +158,23 @@ $smarty->register_function('fetch2','fetch2');
 // bzdecompress
 $smarty->register_function('bzdecompress','bzdecompress');
 
+// Cache handler set (null will use the default cache handler function.
+$cache_handler = 'gzip';
+
 // Memcached support
-if(!empty($memcached_server)){
+if($cache_handler == 'memcached' && !empty($memcached_server)){
 	if(class_exists('Memcached')){
 		$memcached = new Memcached('dpcms_ '. $site_id);
 		if($memcached->addServer($memcached_server, $memcached_port)) $smarty->cache_handler_func = 'cache_handler_memcached';
 	}
+
+// bzip2, better compression than gzip. This uses the bzip2 class built in PHP
+}elseif($cache_handler == 'bzip2' && is_callable('bzopen')){
+	$smarty->cache_handler_func = 'cache_handler_bzip2';
+	
+// Use gzip as fallback if bzip2 is not available
+}elseif(($cache_handler == 'gzip') || ($cache_handler == 'bzip2') && !is_callable('bzopen') || ($cache_handler == 'memcached') && !class_exists('Memcached')){
+	$smarty->cache_handler_func = 'cache_handler_gzip';
 }
 
 
@@ -189,5 +197,8 @@ $smarty->assign('SAVED_WEBSITE',$saved_website);
 
 // Set the mb_internal_encoding() to UTF-8 for multibyte functions
 mb_internal_encoding('UTF-8');
+
+// :: Variables for Arrays
+$smarty->assign('BORDER_TYPES',array('none','solid','dotted','dashed','inset','outset','double','groove','ridge'));
 
 ?>

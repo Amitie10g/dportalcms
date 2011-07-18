@@ -11,8 +11,9 @@
 <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid=amitie10g"></script>
 <!-- AddThis Button END -->
 <hr />
-{{if !$IS_ADMIN && !$EXCLUSIVE && !$IS_GALLERY && !$IS_MEDIA_PLAYER && $smarty.server.SCRIPT_NAME != '/sitemap.php' && $smarty.get.section != 'lipsum'}}
+{{if !$IS_ADMIN && !$EXCLUSIVE && !$IS_GALLERY && !$IS_MEDIA_PLAYER && $smarty.server.SCRIPT_NAME != '/sitemap.php' && !@in_array($smarty.get.section,$EXCLUDED_SECTIONS_ADS)}}
 <div style="padding:0 5px">
+{{if $IS_BLOG && !$IS_ENTRY}}
 <script type="text/javascript"><!--
 google_ad_client = "pub-6520136901650033";
 /* 120x600, creado 30/06/11 */
@@ -24,6 +25,19 @@ google_ad_height = 600;
 <script type="text/javascript"
 src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
+{{else}}
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-6520136901650033";
+/* Banner vertical */
+google_ad_slot = "9655356345";
+google_ad_width = 120;
+google_ad_height = 240;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+{{/if}}
 </div>
 <br />
 <div style="padding:0 5px">

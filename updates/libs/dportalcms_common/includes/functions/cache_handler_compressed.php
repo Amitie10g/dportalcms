@@ -28,7 +28,8 @@ function cache_handler_none(){
 
 // zlib compressed files cache
 function cache_handler_gzip($action, &$smarty, &$cache_content, $tpl_file=null, $cache_id=null, $compile_id=null, $exp_time=null)
-{ 
+{
+
 	// create unique cache id
 	$CacheID = md5($tpl_file.$cache_id.$compile_id);
 	
@@ -38,12 +39,13 @@ function cache_handler_gzip($action, &$smarty, &$cache_content, $tpl_file=null, 
 			// Perform the Read from File
 			$_auto_id = $smarty->_get_auto_id($cache_id, $compile_id);
 			$_cache_file = $smarty->_get_auto_filename($smarty->cache_dir, $tpl_file, $_auto_id);
-
+			
+			if(!is_readable($_cache_file)) return false;
+			
 			if(is_callable('gzopen')){
-				if(($fd = @gzopen($_cache_file, 'rb')) !== false){
-					$results = gzread($fd,131072);
-					gzclose($fd);
-				}
+				$fd = gzopen($_cache_file, 'rb');
+				$results = gzread($fd,131072);
+				gzclose($fd);
 			}else{
 				$fd = fopen($_cache_file, 'rb');
 				$results = fread($fd,131072);

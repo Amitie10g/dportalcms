@@ -3,13 +3,10 @@
 <div>{{$LANG.upload_gallery_preface|ucfirst}}</div>
 
 <div style="width:400px;margin:auto;padding: 10px">
-<form method="post"
-action="{{LINK script='panel' section="gallery/edit" argument='?tab=gallery&mode=edit'}}"
-enctype="multipart/form-data">
+<form method="post" action="{{if $smarty.const.DEMO_CPANEL === true}}{{LINK script='panel_demo' section="gallery/edit" argument='?tab=gallery&mode=edit'}}{{else}}{{LINK script='panel' section="gallery/edit" argument='?tab=gallery&mode=edit'}}{{/if}}">
   <div>
   <select class="list" name="gallery" style="width:90%" onchange="submit()">
-    <option class="list"{{if empty($GALLERY_NAME)}} selected="selected"{{/if}}disabled="disabled"
-    value="">{{$LANG.select_gallery_to_upload}}</option>
+    <option class="list"{{if empty($GALLERY_NAME)}} selected="selected"{{/if}}disabled="disabled" value="">{{$LANG.select_gallery_to_upload}}</option>
 	{{section name="galleries" loop=$GALLERIES}}
     <option
     value="{{$GALLERIES[galleries].file}}"{{if !empty($GALLERY_NAME)}} selected="selected"{{/if}}}>{{$GALLERIES[galleries].file}} - {{$GALLERIES[galleries].title}}</option>{{/section}}
@@ -21,7 +18,7 @@ enctype="multipart/form-data">
   <h2 style="margin:0;text-align:center">Editing {{$GALLERY_TITLE}}</h2>
   
 <div style="margin:0;text-align:center;">
-{{if !empty($IMAGELIST)}}<form method="post" action="{{LINK script="panel" section="gallery:delete_image" argument="?DELETE_IMAGE"}}">
+{{if !empty($IMAGELIST)}}<form method="post" action="{{if $smarty.const.DEMO_CPANEL === true}}{{LINK script="panel_demo" section="gallery:delete_image" argument="?DELETE_IMAGE"}}{{else}}{{LINK script="panel" section="gallery:delete_image" argument="?DELETE_IMAGE"}}{{/if}}">
 <div><input type="hidden" name="gallery" value="{{$smarty.get.gallery}}" /></div>{{/if}}
 {{section name='image' loop=$IMAGELIST}}
 <div class="image_gallery" style="padding:1px;margin:1px">
@@ -36,6 +33,10 @@ enctype="multipart/form-data">
 {{if $IMAGELIST}}<div style="text-align:center"><input type="submit" value="  {{$LANG.delete_images}}Delete images  " onclick="confirm('Are you sure to delete these images?');"/></div>
 </form>{{/if}}
 </div>
+{{if $smarty.const.DEMO_CPANEL === true}}
+<h2 style="text-align:center;font-style:italic">Upload is disabled in Demo</h2>
+</div>
+{{else}}
 <hr />
 <div style="text-align:center">
 <h3>{{$LANG.upload_images|ucfirst}}</h3>
@@ -59,6 +60,7 @@ enctype="multipart/form-data">
 
   </form>
   </div>
+  {{/if}}
   {{* Rename and delete gallery currently not implemented yet *}}
   {{*
   <hr />
