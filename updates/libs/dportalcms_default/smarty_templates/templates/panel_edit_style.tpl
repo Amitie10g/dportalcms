@@ -1,3 +1,8 @@
+<<<<<<< .mine
+<div style="padding:5px">
+
+</div>
+=======
 <div style="padding: 10px">{{$LANG.edit_style_warn}}</div>
 <div style="padding: 10px;text-align:center">
   <form method="post" action="{{if $smarty.const.DEMO_CPANEL === true}}{{LINK script='panel_demo' section='style/UPDATE_STYLE' argument='?UPDATE_STYLE'}}{{else}}{{LINK script='panel' section='style/UPDATE_STYLE' argument='?UPDATE_STYLE'}}{{/if}}">
@@ -119,3 +124,4 @@
 	<div style="clear_both"><input type="submit" value="   {{$LANG.save|ucfirst}}   " /></div>
 </form>
 </div>
+>>>>>>> .r184
