@@ -32,7 +32,7 @@
 */
 
 // array get_blog_entries([int limit])
-function get_blog_entries($limit = 0,$year=null,$month=null){
+function get_blog_entries($limit = 0,$year=null,$month=null,$tag=null){
 
 	if(!is_integer($limit)) $limit = 0;
 
@@ -42,13 +42,15 @@ function get_blog_entries($limit = 0,$year=null,$month=null){
 	// Check the year and the month
 	if(!@checkdate(01,01,$year)) $year = null;
 	if(!@checkdate($month,01,$year)) $month = null;
-
+	
+	if(preg_match('/[w]*/',$tag) == 0) $tag = null;
 
 	$num = 0;
 	$handle = fopen(ENTRIES_PATH.'.entries', "rb") or die('Missing or inaccessible entries file');
 	while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
 		if(!empty($data[0]) && file_exists(ENTRIES_PATH . $data[0])){
-			if((!empty($year) && !empty($month) && $year == date('Y',$data[5]) && $month == date('m',$data[5])) || (empty($month) && !empty($year) && $year == date('Y',$data[5]) ) || (empty($month) && empty($year))) $entries[] = array('id'=>$num,'file' =>ENTRIES_PATH.$data[0],'name'=>$data[1],'title'=>$data[2],'tags'=>$data[3],'user'=>$data[4],'created'=>$data[5],'updated'=>filemtime(ENTRIES_PATH.$data[0]),'atom_id'=>sha1($ents[0]));
+			if(!empty($data[3])) $tags = explode(',',$data[3]);
+			if((!empty($tags) && !empty($tag) && (@in_array($tag,$tags)) || empty($tag)) && ((!empty($year) && !empty($month) && $year == date('Y',$data[5]) && $month == date('m',$data[5])) || (empty($month) && !empty($year) && $year == date('Y',$data[5]) ) || (empty($month) && empty($year)))) $entries[] = array('id'=>$num,'file' =>ENTRIES_PATH.$data[0],'name'=>$data[1],'title'=>$data[2],'tags'=>$tags,'user'=>$data[4],'created'=>$data[5],'updated'=>filemtime(ENTRIES_PATH.$data[0]),'atom_id'=>sha1($ents[0]));
 		}
 		$num++;
 	}	
@@ -57,7 +59,7 @@ function get_blog_entries($limit = 0,$year=null,$month=null){
 	// Reverse the order of Array
 	if($entries != null) rsort($entries);
 	
-	// Eliminates the elements of the Array from the Offset limit.
+	// Delete the elements of the Array from the Offset limit.
 	if($limit > 0) array_splice($entries,$limit);
 	
 	if(!empty($year)){
@@ -91,7 +93,8 @@ function get_blog_entry($entry_name){
 	$handle = fopen(ENTRIES_PATH.'.entries', "rb") or die('Missing or inaccessible entries file');
 	while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
 		if($entry_name == $data[1]){
-			$entry = array('id'=>$data[0],'file'=>ENTRIES_PATH.$data[0],'name'=>$data[1],'title'=>$data[2],'tags'=>$data[3],'user'=>$data[4],'created'=>$data[5],'updated'=>filemtime(ENTRIES_PATH.$data[0]));
+			$tags = explode(',',$data[3]);
+			$entry = array('id'=>$data[0],'file'=>ENTRIES_PATH.$data[0],'name'=>$data[1],'title'=>$data[2],'tags'=>$tags,'user'=>$data[4],'created'=>$data[5],'updated'=>filemtime(ENTRIES_PATH.$data[0]));
 		}
 	}
 	fclose($handle);
@@ -158,6 +161,8 @@ function blog_new_entry($timestamp,$name,$title,$content, $tags = null){
 	$user = PHPBB_USER_ID;
 
 	if($name == null) return false;
+	
+	if(!empty($tags)) $tags = preg_replace('/[^\w,]*/','',$tags);
 	
 	$id = sha1(uniqid($timestamp,true));
 	if(file_exists(ENTRIES_PATH.$id)) return false;

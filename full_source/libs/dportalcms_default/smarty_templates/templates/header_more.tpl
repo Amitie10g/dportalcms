@@ -31,10 +31,10 @@ document.write("<style type='text/css'>.dock-container2{ position:absolute !impo
 <script type="text/javascript">
 window.onload = function () {
 {{foreach name="year" from=$ENTRIES_SIDEBAR item="MONTH" key="YEAR"}}
-  compactMenu('ye_{{$YEAR}}',false,'&plusmn; ');
+  compactMenu('ye_{{$YEAR}}',false,'± ');
   stateToFromStr('ye_{{$YEAR}}',retrieveCookie('menuState'));
 {{foreach name='month' from=$MONTH item="ENTRY" key="MONTH"}}
-  compactMenu('mo_{{$YEAR}}_{{$MONTH}}',false,'&plusmn; ');
+  compactMenu('mo_{{$YEAR}}_{{$MONTH}}',false,'± ');
   stateToFromStr('mo_{{$YEAR}}_{{$MONTH}}',retrieveCookie('menuState'));
 {{/foreach}}
 {{/foreach}}
@@ -44,6 +44,26 @@ window.onunload = function () {
 }
 </script>
 {{/if}}
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-353598-9']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+<script type="text/javascript">
+window.google_analytics_uacct = "UA-353598-9";
+</script>
+
+<meta name="google-site-verification" content="0nLVjqmsSFrsbEYRPaW8GaO7s8XBSdBRdJM-1Jeb4HQ" />
 
 {{* Place your own code here *}}
 

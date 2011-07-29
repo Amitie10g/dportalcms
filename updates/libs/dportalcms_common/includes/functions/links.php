@@ -71,6 +71,7 @@ function redir($script,$section,$http_status = null,$argument = null,$marker = n
 			case "gallery_index"	: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/gallery/"); break;
 			case "gallery_ajax"	: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/gallery/".$_GET['gallery']."_ajax"); break;
 			case "blog"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/blog/"); break;
+			case "blog_tag"	: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/blog/tag:$section"); break;
 			case "blog_entry"	: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/blog/$section.html$marker"); break;
 			case "tv"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/media_player/"); break;
 			case "playlist"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/media_player/$section/"); break;
@@ -97,6 +98,7 @@ function redir($script,$section,$http_status = null,$argument = null,$marker = n
 			case "gallery_index": header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/gallery.php"); break;
 			case "gallery_ajax"	: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/gallery.php?gallery=".$_GET['gallery']."&ajax"); break;
 			case "blog"			: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/blog.php"); break;
+			case "blog_tag"			: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/blog.php?tag=section"); break;
 			case "blog_entry"	: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/blog.php?entry=$section".$marker); break;
 			case "tv"			: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/tv.php"); break;
 			case "playlist"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/tv.php?playlist=$section".$marker); break;

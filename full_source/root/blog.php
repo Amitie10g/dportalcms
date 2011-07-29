@@ -21,15 +21,44 @@ require_once('config/config.php');
 // Gets the Entry name
 $entry_name = $_GET['entry'];
 
-$page = $_GET['page'];
-if(!is_numeric($page) && $page < 1) $page = 1;
+$tag = mb_strtolower($_GET['tag']);
 
-if(empty($page) && empty($entry_name) && !isset($_GET['FEED']) && !isset($_GET['NEW']) && !isset($_GET['DELETE']) && !isset($_GET['POST_COMMENT']) && !isset($_GET['DELETE_COMMENTS']) && !isset($_GET['EDIT'])){
+
+$page = $_GET['page'];
+
+if(empty($page) && empty($tag) && empty($entry_name) && !isset($_GET['FEED']) && !isset($_GET['NEW']) && !isset($_GET['POST_COMMENT']) && !isset($_GET['POST']) && !isset($_GET['DELETE_COMMENTS'])){
 	if(substr($_SERVER['REQUEST_URI'],-1) != '/' && $use_rewrite){
 		header('HTTP/1.1 301 Moved Permanently');
 		header('location: ' . $_SERVER['REQUEST_URI'] . '/');
 	}
 }
+
+if(!empty($_POST['tag'])){
+	redir('blog_tag',$_POST['tag']);
+	die();
+}
+
+if(!is_numeric($page) && $page < 1) $page = 1;
+
+$year = $_GET['year'];
+$month = $_GET['month'];
+
+$smarty->assign('IS_BLOG', true);
+
+// Get the entries for the Sidebar, and order by Year and date
+$smarty->caching = true;
+if(!$smarty->is_cached('sidebar_blog.tpl')){
+	$entries = get_blog_entries();
+	
+	foreach($entries as $item){
+		$year = date('Y',$item['created']);
+		$month = date('m',$item['created']);
+		$entries_sidebar[$year][$month][] = $item;
+	}
+	
+	$smarty->assign('ENTRIES_SIDEBAR',$entries_sidebar);
+}
+$smarty->caching = false;
 
 // Create new entry
 if(isset($_GET['NEW'])){
@@ -45,7 +74,33 @@ if(isset($_GET['NEW'])){
 	}else{
 		header('HTTP/1.1 404 Not found');
 		$smarty->assign('TITLE',$LANG['not_found']);
+		
+		$smarty->display('header.tpl');
+	
+		$smarty->display('header_title.tpl');
+	
+		$smarty->display('header_more.tpl');
+		$smarty->display('header_close.tpl');
+		$smarty->display('body_h.tpl');
+		$smarty->display('container.tpl');
+		$smarty->display('menu_h.tpl');
+
+		$smarty->display('menu_f.tpl');
+		$smarty->display('header_f.tpl');
+
+		$smarty->display('sidebar_h.tpl');
+
+		$smarty->display('sidebar_user_data.tpl');
+		
+		$smarty->is_cached = 2; $smarty->cache_lifetime = 1296000;
+		$smarty->display('sidebar_blog.tpl');
+		$smarty->caching = false;
+
+		$smarty->display('sidebar_c.tpl');
+		$smarty->display('sidebar_f.tpl');
 		$smarty->display('blog_entry_not_found.tpl');
+		$smarty->display('footer_page.tpl');
+		$smarty->display('footer.tpl');
 	}
 
 // Edit mode
@@ -71,7 +126,6 @@ if(isset($_GET['NEW'])){
 	$smarty->assign('TAGS',$tags);
 	$smarty->assign('TITLE',$title);
 
-	$smarty->assign('IS_BLOG', true);
 	$smarty->assign('BLOG_ENTRY', true);
 
  	$smarty->display('blog_edit.tpl');
@@ -84,6 +138,8 @@ if(isset($_GET['NEW'])){
 	$id = get_post_id($entry);
 
 	if(delete_entry($id)) $_SESSION['blog_entry_deleted'] = true;
+
+	$smarty->clear_cache(null,'blog_index');
 
 	redir('blog','blog'); die();
 	
@@ -145,6 +201,9 @@ if(isset($_GET['NEW'])){
 	// Check if be done successfully
 	if($posting) $_SESSION['blog_entry_saved'] = true;
 	else $_SESSION['blog_entry_error'] = true;
+	
+	$smarty->clear_cache(null,'blog_index');
+	$smarty->clear_cache('blog_entry_content.tpl',$id);
 
 	// Redir to the Entry
 	redir('blog_entry',$name); die();
@@ -375,7 +434,11 @@ if(isset($_GET['NEW'])){
 		$smarty->display('sidebar_h.tpl');
 
 		$smarty->display('sidebar_user_data.tpl');
+		$smarty->display('sidebar_blog_comments.tpl');
+		
+		$smarty->is_cached = 2; $smarty->cache_lifetime = 1296000;
 		$smarty->display('sidebar_blog.tpl');
+		$smarty->caching = false;
 
 		$smarty->display('sidebar_c.tpl');
 		$smarty->display('sidebar_f.tpl');
@@ -384,10 +447,14 @@ if(isset($_GET['NEW'])){
 	if(!empty($get_entry)){
 		if(isset($_GET['PRINT'])) $smarty->display('blog_entry_simple-header.tpl');
 		else $smarty->display('blog_entry_header.tpl');
+		$smarty->caching = 2; $smarty->cache_lifetime = 1296000;
 		$smarty->display('blog_entry_content.tpl',$id);
+		$smarty->caching = false;
 		if(!isset($_GET['PRINT'])){
 			$smarty->display('blog_entry_comments_h.tpl');
+			$smarty->caching = 2; $smarty->cache_lifetime = 1296000;
 			$smarty->display('blog_entry_comments_c.tpl');
+			$smarty->caching = false;
 			$smarty->display('blog_entry_comments_f.tpl');
 			$smarty->display('blog_entry_form.tpl');
 		}
@@ -402,6 +469,9 @@ if(isset($_GET['NEW'])){
 
 // Index mode
 }else{
+	$year = $_GET['year'];
+	$month = $_GET['month'];
+	if(preg_match('/[a-z0-9]+/',$tag) == 0) $tag = null;
 
 	$entries_per_page = 5; // 5 by default. You can modify manually or by Configuration
 
@@ -413,31 +483,39 @@ if(isset($_GET['NEW'])){
 	
 	if(isset($_GET['FEED'])) $limit = $entries_per_page;
 	
-	$entries = get_blog_entries($limit);
-	$total = count($entries);
-
-	$start = (($page - 1) * $entries_per_page);
-	$prev = ($page - 1);
-	$next = ($page + 1);
-
-	if($start > $total){
-		header('HTTP/1.1 307 Redirection');
-		redir('blog','blog'); die();
-	}
-
-
-	$smarty->assign('ENTRIES',$entries);
-	$smarty->assign('IS_BLOG', true);
-
-	$smarty->assign('PAGE',$page);
-	$smarty->assign('START',$start);
-	$smarty->assign('PREV',$prev);
-	$smarty->assign('NEXT',$next);
-	$smarty->assign('EPP',$entries_per_page);
-
-	$smarty->assign('SITENAME',$sitename);
-	$smarty->assign('TITLE','Blog');
+	$smarty->caching = true;
 	
+	if(!$smarty->is_cached('blog_index.tpl',"blog_index|$page|$year|$month|$tag") || (isset($_GET['FEED']) && !$smarty->is_cached('feed_atom_index.tpl'))){
+		$entries = get_blog_entries($limit,$year,$month,$tag);
+		$total = count($entries);
+	
+		$start = (($page - 1) * $entries_per_page);
+		$prev = ($page - 1);
+		$next = ($page + 1);
+		
+		if($start >= $total){
+			$page = ceil(($total) / $entries_per_page);
+		}
+		
+		$smarty->assign('YEAR_CHECKED',$year_checked);
+		$smarty->assign('MONTH_CHECKED',$month_checked);
+	
+		$smarty->assign('TAG',$tag);
+	
+		$smarty->assign('ENTRIES',$entries);
+		$smarty->assign('IS_BLOG', true);
+		$smarty->assign('IS_BLOG_INDEX', true);
+	
+		$smarty->assign('PAGE',$page);
+		$smarty->assign('START',$start);
+		$smarty->assign('PREV',$prev);
+		$smarty->assign('NEXT',$next);
+		$smarty->assign('EPP',$entries_per_page);
+	
+		$smarty->assign('SITENAME',$sitename);
+		$smarty->assign('TITLE','Blog');
+	
+	}
 	// :: Output
 	
 	if(isset($_GET['FEED'])){
@@ -446,8 +524,10 @@ if(isset($_GET['NEW'])){
 		$smarty->display('feed_atom_index.tpl');
 	}else{
 		$smarty->display('header.tpl');
-	
-		$smarty->display('header_title.tpl');
+		
+		$smarty->caching = 2; $smarty->cache_lifetime = 1296000;
+		$smarty->display('header_title.tpl','blog_index');
+		$smarty->caching = false;
 	
 		$smarty->display('header_more.tpl');
 		$smarty->display('header_close.tpl');
@@ -461,11 +541,17 @@ if(isset($_GET['NEW'])){
 		$smarty->display('sidebar_h.tpl');
 
 		$smarty->display('sidebar_user_data.tpl');
+		
+		$smarty->is_cached = 2; $smarty->cache_lifetime = 1296000;
+		$smarty->display('sidebar_blog.tpl');
+		$smarty->caching = false;
 
 		$smarty->display('sidebar_c.tpl');
 		$smarty->display('sidebar_f.tpl');
 		$smarty->display('content_h.tpl');
-		$smarty->display('blog_index.tpl');
+		$smarty->caching = 2; $smarty->cache_lifetime = 1296000;
+		$smarty->display('blog_index.tpl',"blog_index|$page|$year|$month|$tag");
+		$smarty->caching = false;
 		$smarty->display('content_f.tpl');
 		$smarty->display('footer_page.tpl');
 		$smarty->display('footer.tpl');

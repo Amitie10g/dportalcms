@@ -56,7 +56,7 @@ function fetch2($params, &$smarty)
        
     if(!empty($params['truncate'])) $truncate = $params['truncate'];
 	
-	if(!isset($params['truncate_chars'])) $truncate_chars = substr_replace($params['truncate_chars'],'',10);
+	if(!empty($params['truncate_chars'])) $truncate_chars = substr_replace($params['truncate_chars'],'',10);
 	else $truncate_chars = " (...)";
     
     if(!empty($params['page'])) $page = $params['page'];

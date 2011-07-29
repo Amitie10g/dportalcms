@@ -11,8 +11,11 @@ RewriteRule ^([^/]+)_([^/]+)\.html$ ../blog.php?entry=$1&page=$2
 RewriteRule ^([0-9]+)/([0-9]+)/([^/]+)\.html$ ../blog.php?entry=$1/$2/$3
 RewriteRule ^([0-9]+)/([0-9]+)$ ../blog.php?year=$1&month=$2
 RewriteRule ^([0-9]+)/([0-9]+)/$ ../blog.php?year=$1&month=$2
+RewriteRule ^([0-9]+)/([0-9]+)/tag:([\w]+)$ ../blog.php?year=$1&month=$2&tag=$3
 RewriteRule ^([0-9]+)$ ../blog.php?year=$1
 RewriteRule ^([0-9]+)/$ ../blog.php?year=$1
+RewriteRule ^([0-9]+)/tag:([\w]+)$ ../blog.php?year=$1&tag=$2
+RewriteRule ^tag:([\w]+)$ ../blog.php?tag=$1
 RewriteRule ^([^/]+)\.html$ ../blog.php?entry=$1
 RewriteRule ^([^/]+)\.pdf$ ../blog.php?entry=$1&PDF
 RewriteRule ^([^/]+)\.html/([0-9]+)$ ../blog.php?entry=$1&start=$2
