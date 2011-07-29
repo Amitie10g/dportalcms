@@ -1,0 +1,6 @@
+RewriteEngine On
+RewriteRule ^section:([^/]+)/nowysiwyg$ ../edit.php?section=$1&nowysiwyg
+RewriteRule ^section:([^/]+)$ ../edit.php?section=$1
+RewriteRule ^new_section:([^/]+)$ ../edit.php?section=$1&title=$2&NEW
+RewriteRule ^SAVE$ ../edit.php?SAVE
+RewriteRule ^SAVED$ ../edit.php?SAVED
