@@ -1,7 +1,7 @@
 		</div>
 		<div style="margin:10px 0">
 		<a href="#comment">{{$LANG.publish_comment|ucfirst}} </a> | 
-		<a href="{{LINK script='blog'}}">{{$LANG.return|ucfirst}}</a>
+		<a href="{{LINK script='blog'}}">{{$LANG.return|ucfirst}}</a>{{if !empty($TAGS)}} | <span style="font-weight:bold">{{$LANG.tags|ucfirst}}:</span> {{foreach name="tags" item="tag" from=$TAGS}}<a href="{{LINK script="blog" section="tag:$tag" argument="?tag=$tag"}}">{{$tag}}</a>{{if !$smarty.foreach.tags.last}}, {{/if}}{{/foreach}}{{/if}}
 		</div>
 		</div>
 		
