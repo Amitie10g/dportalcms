@@ -473,4 +473,72 @@ function get_post_id($name){
 	else return false;
 }
 
+function cloudtags_write_file($tag){
+	
+	if(!is_readable(ENTRIES_PATH.'.cloudtags_counter') || !is_readable(ENTRIES_PATH.'.cloudtags_db') || !is_writable(ENTRIES_PATH.'.cloudtags_db')) return false;
+
+	$counter = file_get_contents(ENTRIES_PATH.'.cloudtags_counter');
+	if(!is_numeric($counter)) $counter = 0;
+	
+	// Dump the Counter Cache to the Cloudtags counter DB if the Counter num is 100
+	if($counter >= 5){
+		$cloudtags_cache_array = array_count_values(file(ENTRIES_PATH.'.cloudtags_cache',FILE_IGNORE_NEW_LINES));
+		$tags_db = $cloudtags_cache_array;
+
+		$cloudtags_file = fopen(ENTRIES_PATH.'.cloudtags_db','c+b');
+
+		flock($cloudtags_file,LOCK_EX);
+
+		$num = 0;
+		while(($data = fgetcsv($cloudtags_file,10000,';')) !== false){
+			$tag_name = $data[0];
+			$tag_value = $data[1] + $cloudtags_cache_array[$tag_name];
+			$tags_db[$tag_name] = $tag_value;
+		}
+		
+		ksort($tags_db);
+		
+		ftruncate($cloudtags_file,0);
+		foreach($tags_db as $key=>$value){
+			fwrite($cloudtags_file,"$key;$value\n");
+		}
+		fclose($cloudtags_file);
+
+		$truncate = true;
+	}
+	
+	if(cloudtags_write_cache($tag,$truncate)) return true;
+	else return false;
+}
+
+// This function should be called only from cloudtags_write_file()
+function cloudtags_write_cache($tag,$truncate = false){
+
+	if($truncate === true){
+		$cloudtags_cache = fopen(ENTRIES_PATH.'.cloudtags_cache','w');
+		fclose($cloudtags_cache);
+
+		$cloudtags_counter = fopen(ENTRIES_PATH.'.cloudtags_counter','w');
+		fclose($cloudtags_counter);
+	}
+
+	$counter = file_get_contents(ENTRIES_PATH.'.cloudtags_counter');
+	if(is_numeric($counter)) $counter++;
+	else $counter = 1;
+	if((file_put_contents(ENTRIES_PATH.'.cloudtags_cache',"$tag\n",FILE_APPEND) !== false) && (file_put_contents(ENTRIES_PATH.'.cloudtags_counter',$counter,LOCK_EX) !== false)) return true;
+	else return false;
+}
+
+// This Function is Cached!
+function cloudtags_read_file(){
+
+	if (($file = fopen(ENTRIES_PATH.'.cloudtags.csv', 'r')) !== FALSE) {
+		while (($data = fgetcsv($file, 10000, ";")) !== FALSE) {
+			$tags = array('tag'=>$data[0],'value'=>$data[1]);
+		}
+		fclose($gestor);
+	}
+	return $tags;
+}
+
 ?>

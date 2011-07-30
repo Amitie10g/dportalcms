@@ -472,6 +472,8 @@ if(isset($_GET['NEW'])){
 	$year = $_GET['year'];
 	$month = $_GET['month'];
 	if(preg_match('/[a-z0-9]+/',$tag) == 0) $tag = null;
+	
+	if(!empty($tag)) cloudtags_write_file($tag);
 
 	$entries_per_page = 5; // 5 by default. You can modify manually or by Configuration
 
