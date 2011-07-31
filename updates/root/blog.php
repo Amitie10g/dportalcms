@@ -386,7 +386,6 @@ if(isset($_GET['NEW'])){
 		if(!$user_admin) $timestamp_published += get_blog_comment_timestamp_by_ip($id,$_SERVER['REMOTE_ADDR']);
 
 		$time_left = get_left($timestamp_published, $time_left_greace_period);
-		
 
 		if(($time_left === true && !$user_admin) || $user_admin) $smarty->assign('ALLOW_PUBLISH',true);
 		// Time left, in Minutes. Add one minute to the Minutes left, because starts form 14 to 00 minutes
@@ -396,6 +395,13 @@ if(isset($_GET['NEW'])){
 			header('HTTP/1.1 307 Redirection');
 			redir('blog_entry',$name); die();
 		}
+		
+		$smarty->caching = true;
+		if(!$smarty->is_cached("sidebar_blog_cloudtags.tpl")){
+			$cloudtags = cloudtags_read_file();
+			$smarty->assign('CLOUDTAGS',$cloudtags);
+		}
+		$smarty->caching = false;
 	
 		$smarty->assign('PAGE',$page);
 		$smarty->assign('START',$start);
@@ -440,6 +446,7 @@ if(isset($_GET['NEW'])){
 		$smarty->display('sidebar_blog_comments.tpl');
 		
 		$smarty->is_cached = 2; $smarty->cache_lifetime = 1296000;
+		$smarty->display('sidebar_blog_cloudtags.tpl');
 		$smarty->display('sidebar_blog.tpl');
 		$smarty->caching = false;
 
