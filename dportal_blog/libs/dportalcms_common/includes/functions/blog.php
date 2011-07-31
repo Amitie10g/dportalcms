@@ -32,7 +32,7 @@
 */
 
 // array get_blog_entries([int limit])
-function get_blog_entries($limit = 0,$year=null,$month=null){
+function get_blog_entries($limit = 0,$year=null,$month=null,$tag=null){
 
 	if(!is_integer($limit)) $limit = 0;
 
@@ -42,13 +42,15 @@ function get_blog_entries($limit = 0,$year=null,$month=null){
 	// Check the year and the month
 	if(!@checkdate(01,01,$year)) $year = null;
 	if(!@checkdate($month,01,$year)) $month = null;
-
+	
+	if(preg_match('/[w]*/',$tag) == 0) $tag = null;
 
 	$num = 0;
 	$handle = fopen(ENTRIES_PATH.'.entries', "rb") or die('Missing or inaccessible entries file');
 	while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
 		if(!empty($data[0]) && file_exists(ENTRIES_PATH . $data[0])){
-			if((!empty($year) && !empty($month) && $year == date('Y',$data[5]) && $month == date('m',$data[5])) || (empty($month) && !empty($year) && $year == date('Y',$data[5]) ) || (empty($month) && empty($year))) $entries[] = array('id'=>$num,'file' =>ENTRIES_PATH.$data[0],'name'=>$data[1],'title'=>$data[2],'tags'=>$data[3],'user'=>$data[4],'created'=>$data[5],'updated'=>filemtime(ENTRIES_PATH.$data[0]),'atom_id'=>sha1($ents[0]));
+			if(!empty($data[3])) $tags = explode(',',$data[3]);
+			if((!empty($tags) && !empty($tag) && (@in_array($tag,$tags)) || empty($tag)) && ((!empty($year) && !empty($month) && $year == date('Y',$data[5]) && $month == date('m',$data[5])) || (empty($month) && !empty($year) && $year == date('Y',$data[5]) ) || (empty($month) && empty($year)))) $entries[] = array('id'=>$num,'file' =>ENTRIES_PATH.$data[0],'name'=>$data[1],'title'=>$data[2],'tags'=>$tags,'user'=>$data[4],'created'=>$data[5],'updated'=>filemtime(ENTRIES_PATH.$data[0]),'atom_id'=>sha1($ents[0]));
 		}
 		$num++;
 	}	
@@ -57,7 +59,7 @@ function get_blog_entries($limit = 0,$year=null,$month=null){
 	// Reverse the order of Array
 	if($entries != null) rsort($entries);
 	
-	// Eliminates the elements of the Array from the Offset limit.
+	// Delete the elements of the Array from the Offset limit.
 	if($limit > 0) array_splice($entries,$limit);
 	
 	if(!empty($year)){
@@ -91,7 +93,8 @@ function get_blog_entry($entry_name){
 	$handle = fopen(ENTRIES_PATH.'.entries', "rb") or die('Missing or inaccessible entries file');
 	while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
 		if($entry_name == $data[1]){
-			$entry = array('id'=>$data[0],'file'=>ENTRIES_PATH.$data[0],'name'=>$data[1],'title'=>$data[2],'tags'=>$data[3],'user'=>$data[4],'created'=>$data[5],'updated'=>filemtime(ENTRIES_PATH.$data[0]));
+			$tags = explode(',',$data[3]);
+			$entry = array('id'=>$data[0],'file'=>ENTRIES_PATH.$data[0],'name'=>$data[1],'title'=>$data[2],'tags'=>$tags,'user'=>$data[4],'created'=>$data[5],'updated'=>filemtime(ENTRIES_PATH.$data[0]));
 		}
 	}
 	fclose($handle);
@@ -158,6 +161,8 @@ function blog_new_entry($timestamp,$name,$title,$content, $tags = null){
 	$user = PHPBB_USER_ID;
 
 	if($name == null) return false;
+	
+	if(!empty($tags)) $tags = preg_replace('/[^\w,]*/','',$tags);
 	
 	$id = sha1(uniqid($timestamp,true));
 	if(file_exists(ENTRIES_PATH.$id)) return false;
@@ -227,12 +232,15 @@ function blog_update_entry($id,$name,$title,$content,$tags = null){
 // bool blog_post_comment(string entry_id, mixed nick, string comment[, string url[, string url]])
 function blog_post_comment($entry_id,$user,$comment,$email,$url = null){
 
+	global $use_phpbb;
 	global $user_admin;
+	global $loged_in;
 	global $time_left_greace_period;
+	global $use_phpbb;
 	
 	if(is_numeric($user)) $user = +$user; // Convert STRING to INTEGER
 	
-	if($user_admin){
+	if($use_phpbb && $loged_in){
 		// User 53 and later is Norma users. User between 2 and 52 are Bots; 2 is Founder and 1 is Anonymous!
 		if(is_integer($user) && ($user == 2 || $user > 52)) $getusername = get_user_by_id($nick); // Will return FALSE if User does not exist
 	}
@@ -248,7 +256,8 @@ function blog_post_comment($entry_id,$user,$comment,$email,$url = null){
 	// Only Administrator can post messages repetidelly without waiting
 	if($get_left !== true) return false;
 	
-	if($user_admin) $moderated = 2; // Admin or Same user: 2 means special colour in posts
+	if($user_admin || ($user == PHPBB_USER_ID && $getusername !== false)) $moderated = 2; // Admin or Same user: 2 means special colour in posts
+	elseif($loged_in && !$user_admin) $moderated = null; // Registered user: Post inmediatelly
 	else $moderated = 1; // Anonymous user: Moderate comment (Admin will publish them)
 
 	if(preg_match(PREG_URL_STRING,$url) > 0){
@@ -462,6 +471,119 @@ function get_post_id($name){
 	
 	if(!empty($id)) return $id;
 	else return false;
+}
+
+function cloudtags_write_file($tag){
+	
+	if(!is_readable(ENTRIES_PATH.'.cloudtags_counter') || !is_readable(ENTRIES_PATH.'.cloudtags_db') || !is_writable(ENTRIES_PATH.'.cloudtags_db')) return false;
+
+	$counter = file_get_contents(ENTRIES_PATH.'.cloudtags_counter');
+	if(!is_numeric($counter)) $counter = 0;
+	
+	// Dump the Counter Cache to the Cloudtags counter DB if the Counter num is 100
+	if($counter >= 25){
+		$cloudtags_cache_array = array_count_values(file(ENTRIES_PATH.'.cloudtags_cache',FILE_IGNORE_NEW_LINES));
+		$tags_db = $cloudtags_cache_array;
+
+		$cloudtags_file = fopen(ENTRIES_PATH.'.cloudtags_db','c+b');
+
+		flock($cloudtags_file,LOCK_EX);
+
+		$num = 0;
+		while(($data = fgetcsv($cloudtags_file,10000,';')) !== false){
+			$tag_name = $data[0];
+			$tag_value = $data[1] + $cloudtags_cache_array[$tag_name];
+			$tags_db[$tag_name] = $tag_value;
+		}
+		
+		ksort($tags_db);
+		
+		ftruncate($cloudtags_file,0);
+		foreach($tags_db as $key=>$value){
+			fwrite($cloudtags_file,"$key;$value\n");
+		}
+		fclose($cloudtags_file);
+
+		$truncate = true;
+	}
+	
+	if(cloudtags_write_cache($tag,$truncate)) return true;
+	else return false;
+}
+
+// This function should be called only from cloudtags_write_file()
+function cloudtags_write_cache($tag,$truncate = false){
+
+	if($truncate === true){
+		$cloudtags_cache = fopen(ENTRIES_PATH.'.cloudtags_cache','w');
+		fclose($cloudtags_cache);
+
+		$cloudtags_counter = fopen(ENTRIES_PATH.'.cloudtags_counter','w');
+		fclose($cloudtags_counter);
+	}
+
+	$counter = file_get_contents(ENTRIES_PATH.'.cloudtags_counter');
+	if(is_numeric($counter)) $counter++;
+	else $counter = 1;
+	if((file_put_contents(ENTRIES_PATH.'.cloudtags_cache',"$tag\n",FILE_APPEND) !== false) && (file_put_contents(ENTRIES_PATH.'.cloudtags_counter',$counter,LOCK_EX) !== false)) return true;
+	else return false;
+}
+
+// This Function is Cached!
+function cloudtags_read_file(){
+
+	if (($file = fopen(ENTRIES_PATH.'.cloudtags_db', 'r')) !== FALSE) {
+		while (($data = fgetcsv($file, 10000, ";")) !== FALSE) {
+			$tag_name = $data[0];
+			$tag_value = (int)$data[1];
+			$tags[$tag_name] =$tag_value;
+		}
+		fclose($file);
+		
+		$max_qty = max(array_values($tags));
+		$per10 = round(($max_qty *.1));
+		$per20 = round(($max_qty *.2));
+		$per30 = round(($max_qty *.3));
+		$per40 = round(($max_qty *.4));
+		$per50 = round(($max_qty *.5));
+		$per60 = round(($max_qty *.6));
+		$per70 = round(($max_qty *.7));
+		$per80 = round(($max_qty *.8));
+		$per90 = round(($max_qty *.9));
+		
+		foreach ($tags as $key => $value) {
+			
+			$percent=0;
+			$style=0;
+		 
+			$percent=round(($value/$max_qty)*100);
+		 
+			if ($value>=$per90 ){
+			   $style=200;
+		   }else if($style>=$per80 ){
+			   $style=185;
+		   }else if($value>=$per70 ){
+			   $style=170;
+		   }else if($value>=$per60 ){
+			   $style=155;
+		   }else if($value>=$per50 ){
+			   $style=140;
+		   }else if($value>=$per40 ){
+			   $style=125;
+		   }else if($value>=$per30 ){
+			   $style=110;
+		   }else if($value>=$per20 ){
+			   $style=95;
+		   }else if($value>=$per10 ){
+			   $style=80;
+		   }else{
+			   $style=65;
+		   }
+		 
+	 		$tags_font[$key] = $style;
+		}
+	}
+	return $tags_font;
 }
 
 ?>

@@ -29,6 +29,7 @@ function redir($script,$section,$http_status = null,$argument = null,$marker = n
 		switch($script){
 			default				: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH); break;
 			case "blog_entry"	: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/$section.html$marker"); break;
+			case "blog_tag"	: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/blog/tag:$section"); break;
 			case "panel"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/panel/$section$marker"); break;
 		}
 	
@@ -40,6 +41,7 @@ function redir($script,$section,$http_status = null,$argument = null,$marker = n
 		switch($script){
 			default			: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/index.php$argument$marker"); break;
 			case "blog_entry"	: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/index.php?entry=$section".$marker); break;
+			case "blog_tag"			: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/blog.php?tag=section"); break;
 			case "panel"		: header("location: http://".$_SERVER['SERVER_NAME'].DPORTAL_PATH ."/panel.php$argument$marker"); break;
 		}
 	}
@@ -76,6 +78,7 @@ function link_url($params,&$smarty){
 			case 'blog_comments_goto_ajax'	: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/comments:".$section.'_'.$page; break;
 			case 'blog_feed'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/atom.xml"; break;
 			case 'blog_entry_feed'		: $uri = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH."/".$section.'_atom.xml'; break;
+
 		}	
 	}else{
 	

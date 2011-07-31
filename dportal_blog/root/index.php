@@ -21,13 +21,20 @@ require_once('config/config.php');
 // Gets the Entry name
 $entry_name = $_GET['entry'];
 
+$tag = mb_strtolower($_GET['tag']);
+
 $page = $_GET['page'];
 
-if(empty($page) && empty($entry_name) && !isset($_GET['FEED']) && !isset($_GET['NEW']) && !isset($_GET['POST']) && !isset($_GET['POST_COMMENT']) && !isset($_GET['DELETE'])){
+if(empty($page) && empty($tag) && empty($entry_name) && !isset($_GET['FEED']) && !isset($_GET['NEW']) && !isset($_GET['POST_COMMENT']) && !isset($_GET['POST']) && !isset($_GET['DELETE_COMMENTS'])){
 	if(substr($_SERVER['REQUEST_URI'],-1) != '/' && $use_rewrite){
 		header('HTTP/1.1 301 Moved Permanently');
 		header('location: ' . $_SERVER['REQUEST_URI'] . '/');
 	}
+}
+
+if(!empty($_POST['tag'])){
+	redir('blog_tag',$_POST['tag']);
+	die();
 }
 
 if(!is_numeric($page) && $page < 1) $page = 1;
@@ -40,7 +47,6 @@ $smarty->assign('IS_BLOG', true);
 // Get the entries for the Sidebar, and order by Year and date
 $smarty->caching = true;
 if(!$smarty->is_cached('sidebar_blog.tpl')){
-	
 	if(($entries = get_blog_entries()) != null){
 	
 		foreach($entries as $item){
@@ -79,7 +85,6 @@ if(isset($_GET['NEW'])){
 		$smarty->display('container.tpl');
 
 		$smarty->display('sidebar_h.tpl');
-
 		$smarty->display('sidebar_user_data.tpl');
 		
 		$smarty->is_cached = 2; $smarty->cache_lifetime = 1296000;
@@ -113,7 +118,7 @@ if(isset($_GET['NEW'])){
 	$smarty->assign('NAME',$name);
 	$smarty->assign('FILE',$file);
 	$smarty->assign('SITENAME',$sitename);
-	$smarty->assign('TAGS',$tags);
+	$smarty->assign('TAGS',implode(',',$tags));
 	$smarty->assign('TITLE',$title);
 
 	$smarty->assign('BLOG_ENTRY', true);
@@ -289,6 +294,10 @@ if(isset($_GET['NEW'])){
 	$ajax_url = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH.'/index.php?COMMENTS&amp;entry='.$entry_name;
 	$ajax_block = 'getcomments';
 	
+	$cloudtags = cloudtags_read_file();
+	
+	if(!empty($tag)) cloudtags_write_file($tag);
+
 	$smarty->assign('AJAX_URL',$ajax_url);
 	$smarty->assign('AJAX_BLOCK',$ajax_block);
 
@@ -313,7 +322,7 @@ if(isset($_GET['NEW'])){
 		$smarty->assign('NAME',$name);	
 		$smarty->assign('FILE',$file);
 		$smarty->assign('TAGS',$tags);
-		$smarty->assign('TITLE',"$title");
+		$smarty->assign('TITLE',$title);
 		$smarty->assign('USER',$user);
 		$smarty->assign('CREATED',$created);
 		$smarty->assign('UPDATED',$updated);
@@ -373,7 +382,6 @@ if(isset($_GET['NEW'])){
 		if(!$user_admin) $timestamp_published += get_blog_comment_timestamp_by_ip($id,$_SERVER['REMOTE_ADDR']);
 
 		$time_left = get_left($timestamp_published, $time_left_greace_period);
-		
 
 		if(($time_left === true && !$user_admin) || $user_admin) $smarty->assign('ALLOW_PUBLISH',true);
 		// Time left, in Minutes. Add one minute to the Minutes left, because starts form 14 to 00 minutes
@@ -383,6 +391,13 @@ if(isset($_GET['NEW'])){
 			header('HTTP/1.1 307 Redirection');
 			redir('blog_entry',$name); die();
 		}
+
+		$smarty->caching = true;
+		if(!$smarty->is_cached("sidebar_blog_cloudtags.tpl")){
+			$cloudtags = cloudtags_read_file();
+			$smarty->assign('CLOUDTAGS',$cloudtags);
+		}
+		$smarty->caching = false;
 	
 		$smarty->assign('PAGE',$page);
 		$smarty->assign('START',$start);
@@ -423,6 +438,7 @@ if(isset($_GET['NEW'])){
 		$smarty->display('sidebar_blog_comments.tpl');
 		
 		$smarty->is_cached = 2; $smarty->cache_lifetime = 1296000;
+		$smarty->display('sidebar_blog_cloudtags.tpl');
 		$smarty->display('sidebar_blog.tpl');
 		$smarty->caching = false;
 
@@ -458,6 +474,9 @@ if(isset($_GET['NEW'])){
 
 	$year = $_GET['year'];
 	$month = $_GET['month'];
+	if(preg_match('/[a-z0-9]+/',$tag) == 0) $tag = null;
+	
+	if(!empty($tag)) cloudtags_write_file($tag);
 
 	$entries_per_page = 5; // 5 by default. You can modify manually or by Configuration
 
@@ -470,9 +489,14 @@ if(isset($_GET['NEW'])){
 	if(isset($_GET['FEED'])) $limit = $entries_per_page;
 	
 	$smarty->caching = true;
+
+	if(!$smarty->is_cached("sidebar_blog_cloudtags.tpl")){
+		$cloudtags = cloudtags_read_file();
+		$smarty->assign('CLOUDTAGS',$cloudtags);
+	}
 	
-	if(!$smarty->is_cached('blog_index.tpl',"blog_index|$page|$year|$month") || (isset($_GET['FEED']) && !$smarty->is_cached('feed_atom_index.tpl'))){
-		$entries = get_blog_entries($limit,$year,$month);
+	if(!$smarty->is_cached('blog_index.tpl',"blog_index|$page|$year|$month|$tag") || (isset($_GET['FEED']) && !$smarty->is_cached('feed_atom_index.tpl'))){
+		$entries = get_blog_entries($limit,$year,$month,$tag);
 		$total = count($entries);
 	
 		$start = (($page - 1) * $entries_per_page);
@@ -485,13 +509,15 @@ if(isset($_GET['NEW'])){
 		
 		$smarty->assign('YEAR_CHECKED',$year_checked);
 		$smarty->assign('MONTH_CHECKED',$month_checked);
-		
+
+		$smarty->assign('TAG',$tag);
 		if(!empty($year_checked) && empty($month_checked)) $smarty->assign('TITLE',$LANG['entries_of']." $year_checked");
 		if(!empty($year_checked) && !empty($month_checked))$smarty->assign('TITLE',$LANG['entries_of'].' '.month_number_to_locale_string($month_checked)." $year_checked");
 
 		$smarty->assign('ENTRIES',$entries);
 		$smarty->assign('IS_BLOG', true);
-	
+		$smarty->assign('IS_BLOG_INDEX', true);
+
 		$smarty->assign('PAGE',$page);
 		$smarty->assign('START',$start);
 		$smarty->assign('PREV',$prev);
@@ -499,8 +525,9 @@ if(isset($_GET['NEW'])){
 		$smarty->assign('EPP',$entries_per_page);
 	
 		$smarty->assign('SITENAME',$sitename);
+		$smarty->assign('TITLE','Blog');
 	}
-	
+
 	// :: Output
 	
 	if(isset($_GET['FEED'])){
@@ -520,10 +547,10 @@ if(isset($_GET['NEW'])){
 		$smarty->display('container.tpl');
 
 		$smarty->display('sidebar_h.tpl');
-
 		$smarty->display('sidebar_user_data.tpl');
 		
-		$smarty->is_cached = 2; $smarty->cache_lifetime = 1296000;
+		$smarty->caching = 2; $smarty->cache_lifetime = 1296000;
+		$smarty->display('sidebar_blog_cloudtags.tpl');
 		$smarty->display('sidebar_blog.tpl');
 		$smarty->caching = false;
 
@@ -531,7 +558,7 @@ if(isset($_GET['NEW'])){
 		$smarty->display('sidebar_f.tpl');
 		$smarty->display('content_h.tpl');
 		$smarty->caching = 2; $smarty->cache_lifetime = 1296000;
-		$smarty->display('blog_index.tpl',"blog_index|$page$year|$month");
+		$smarty->display('blog_index.tpl',"blog_index|$page|$year|$month|$tag");
 		$smarty->caching = false;
 		$smarty->display('content_f.tpl');
 		$smarty->display('footer_page.tpl');
