@@ -8,7 +8,7 @@
 		#  Copyright (c) Davod.                        #
 		#                                              #
 		#  This program is published under the         #
-		#  GNU general Public License                  #
+		#  GNU General Public License                  #
 		#                                              #
 		#  Please see README and LICENSE for details   #
 		#                                              #
@@ -47,15 +47,16 @@ $smarty->assign('IS_BLOG', true);
 // Get the entries for the Sidebar, and order by Year and date
 $smarty->caching = true;
 if(!$smarty->is_cached('sidebar_blog.tpl')){
-	$entries = get_blog_entries();
+	if(($entries = get_blog_entries()) != null){
 	
-	foreach($entries as $item){
-		$year = date('Y',$item['created']);
-		$month = date('m',$item['created']);
-		$entries_sidebar[$year][$month][] = $item;
+		foreach($entries as $item){
+			$year = date('Y',$item['created']);
+			$month = date('m',$item['created']);
+			$entries_sidebar[$year][$month][] = $item;
+		}
+		
+		$smarty->assign('ENTRIES_SIDEBAR',$entries_sidebar);
 	}
-	
-	$smarty->assign('ENTRIES_SIDEBAR',$entries_sidebar);
 }
 $smarty->caching = false;
 
@@ -301,7 +302,7 @@ if(isset($_GET['NEW'])){
 	$cloudtags = cloudtags_read_file();
 	
 	if(!empty($tag)) cloudtags_write_file($tag);
-	
+
 	$smarty->assign('AJAX_URL',$ajax_url);
 	$smarty->assign('AJAX_BLOCK',$ajax_block);
 
@@ -395,7 +396,7 @@ if(isset($_GET['NEW'])){
 			header('HTTP/1.1 307 Redirection');
 			redir('blog_entry',$name); die();
 		}
-		
+
 		$smarty->caching = true;
 		if(!$smarty->is_cached("sidebar_blog_cloudtags.tpl")){
 			$cloudtags = cloudtags_read_file();
@@ -479,6 +480,7 @@ if(isset($_GET['NEW'])){
 
 // Index mode
 }else{
+
 	$year = $_GET['year'];
 	$month = $_GET['month'];
 	if(preg_match('/[a-z0-9]+/',$tag) == 0) $tag = null;
@@ -516,13 +518,15 @@ if(isset($_GET['NEW'])){
 		
 		$smarty->assign('YEAR_CHECKED',$year_checked);
 		$smarty->assign('MONTH_CHECKED',$month_checked);
-	
+
 		$smarty->assign('TAG',$tag);
-	
+		if(!empty($year_checked) && empty($month_checked)) $smarty->assign('TITLE',$LANG['entries_of']." $year_checked");
+		if(!empty($year_checked) && !empty($month_checked))$smarty->assign('TITLE',$LANG['entries_of'].' '.month_number_to_locale_string($month_checked)." $year_checked");
+
 		$smarty->assign('ENTRIES',$entries);
 		$smarty->assign('IS_BLOG', true);
 		$smarty->assign('IS_BLOG_INDEX', true);
-	
+
 		$smarty->assign('PAGE',$page);
 		$smarty->assign('START',$start);
 		$smarty->assign('PREV',$prev);
@@ -531,8 +535,8 @@ if(isset($_GET['NEW'])){
 	
 		$smarty->assign('SITENAME',$sitename);
 		$smarty->assign('TITLE','Blog');
-	
 	}
+
 	// :: Output
 	
 	if(isset($_GET['FEED'])){
@@ -543,7 +547,7 @@ if(isset($_GET['NEW'])){
 		$smarty->display('header.tpl');
 		
 		$smarty->caching = 2; $smarty->cache_lifetime = 1296000;
-		$smarty->display('header_title.tpl','blog_index');
+		$smarty->display('header_title.tpl','blog_index|$year|$month');
 		$smarty->caching = false;
 	
 		$smarty->display('header_more.tpl');
