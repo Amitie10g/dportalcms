@@ -65,5 +65,4 @@ window.google_analytics_uacct = "UA-353598-9";
 
 <meta name="google-site-verification" content="0nLVjqmsSFrsbEYRPaW8GaO7s8XBSdBRdJM-1Jeb4HQ" />
 
-{{* Place your own code here *}}
-
+<script type="text/javascript" src="{{$smarty.const.DPORTAL_PATH}}/resize.js"></script>

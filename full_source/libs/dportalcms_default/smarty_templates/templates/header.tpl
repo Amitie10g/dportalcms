@@ -5,6 +5,6 @@
 <meta name="description" content="{{$SITE_DESCRIPTION}}" />
 <meta name="google-site-verification" content="IsydVc5mTJ4ibrM2InR8LyOPw4F22PDnAVsamEWx-X4" />
 <link rel="stylesheet" type="text/css" href="{{LINK script="stylesheet"}}" />
-{{DYNAMIC}}{{if !empty($smarty.get.page)}}<meta name="ROBOTS" content="NOINDEX, FOLLOW" />
+{{DYNAMIC}}{{if !empty($smarty.get.page) || !empty($smarty.get.tag)}}<meta name="ROBOTS" content="NOINDEX, FOLLOW" />
 {{/if}}{{/DYNAMIC}}
 
