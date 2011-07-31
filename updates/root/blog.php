@@ -122,7 +122,7 @@ if(isset($_GET['NEW'])){
 	$smarty->assign('NAME',$name);
 	$smarty->assign('FILE',$file);
 	$smarty->assign('SITENAME',$sitename);
-	$smarty->assign('TAGS',$tags);
+	$smarty->assign('TAGS',implode(',',$tags));
 	$smarty->assign('TITLE',$title);
 
 	$smarty->assign('BLOG_ENTRY', true);
