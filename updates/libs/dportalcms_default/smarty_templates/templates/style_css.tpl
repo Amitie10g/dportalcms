@@ -55,7 +55,7 @@ a:link{
 	/*margin:5px auto;*/
 }h1{
 	font-size:{{$STYLE_CONF.h1_font_size.value}};
-	margin:0;
+	margin:0 0 10px 0;
 	text-align:center;
 	
 }h2{
@@ -220,7 +220,7 @@ font-weight:bold;
 position:relative !important;
 height: 40px !important;
 background: {{$STYLE_CONF.search_control_backgorund.value}};
-z-index:1 !important;
+z-index:10 !important;
 padding: 5px !important;
 }
 
@@ -257,8 +257,8 @@ color: #55AA11;
 .gsc-resultsRoot {
 width:400px !important;
 position:relative !important;
-right:281px !important;
-top:-2px !important;
+right:{{$STYLE_CONF.sidebar_width.value.width+55}}px !important;
+top:-5px !important;
 background: #FFFFFF !important;
 border-left:1px #000000 dashed !important;
 border-bottom:1px #000000 dashed !important;
@@ -312,7 +312,7 @@ color:#11AA88 !important;
 }
 
 .gsc-input {
-width: 95px !important;
+width: {{$STYLE_CONF.sidebar_width.value.width-40}}px !important;
 }
 
 .gsc-search-button {

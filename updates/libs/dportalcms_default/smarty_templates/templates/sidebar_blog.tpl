@@ -1,13 +1,4 @@
 <div style="padding:0 2px">
-<div style="text-align:center">
-<form method="post" action="{{$link script="blog" section="tag" argument="tag"}}">
-<span>{{$LANG.find_by_tag}}</span>
-<input type="text" name="tag" style="width:85%" />
-<input type="submit" />
-</form>
-</div>
-<hr />
-
 <h3 style="text-align:center;font-weight:bold;margin:0;padding:0">{{$LANG.entries|ucfirst}}</h3>
 
 {{foreach from=$ENTRIES_SIDEBAR item="MONTH" key="YEAR"}}
@@ -30,4 +21,3 @@
 {{/foreach}}
 </div>
 <hr />
-

@@ -481,7 +481,7 @@ function cloudtags_write_file($tag){
 	if(!is_numeric($counter)) $counter = 0;
 	
 	// Dump the Counter Cache to the Cloudtags counter DB if the Counter num is 100
-	if($counter >= 5){
+	if($counter >= 25){
 		$cloudtags_cache_array = array_count_values(file(ENTRIES_PATH.'.cloudtags_cache',FILE_IGNORE_NEW_LINES));
 		$tags_db = $cloudtags_cache_array;
 
@@ -532,13 +532,58 @@ function cloudtags_write_cache($tag,$truncate = false){
 // This Function is Cached!
 function cloudtags_read_file(){
 
-	if (($file = fopen(ENTRIES_PATH.'.cloudtags.csv', 'r')) !== FALSE) {
+	if (($file = fopen(ENTRIES_PATH.'.cloudtags_db', 'r')) !== FALSE) {
 		while (($data = fgetcsv($file, 10000, ";")) !== FALSE) {
-			$tags = array('tag'=>$data[0],'value'=>$data[1]);
+			$tag_name = $data[0];
+			$tag_value = (int)$data[1];
+			$tags[$tag_name] =$tag_value;
 		}
-		fclose($gestor);
+		fclose($file);
+		
+		$max_qty = max(array_values($tags));
+		$per10 = round(($max_qty *.1));
+		$per20 = round(($max_qty *.2));
+		$per30 = round(($max_qty *.3));
+		$per40 = round(($max_qty *.4));
+		$per50 = round(($max_qty *.5));
+		$per60 = round(($max_qty *.6));
+		$per70 = round(($max_qty *.7));
+		$per80 = round(($max_qty *.8));
+		$per90 = round(($max_qty *.9));
+		
+		foreach ($tags as $key => $value) {
+			
+			$percent=0;
+			$style=0;
+		 
+			$percent=round(($value/$max_qty)*100);
+		 
+			if ($value>=$per90 ){
+			   $style=200;
+		   }else if($style>=$per80 ){
+			   $style=185;
+		   }else if($value>=$per70 ){
+			   $style=170;
+		   }else if($value>=$per60 ){
+			   $style=155;
+		   }else if($value>=$per50 ){
+			   $style=140;
+		   }else if($value>=$per40 ){
+			   $style=125;
+		   }else if($value>=$per30 ){
+			   $style=110;
+		   }else if($value>=$per20 ){
+			   $style=95;
+		   }else if($value>=$per10 ){
+			   $style=80;
+		   }else{
+			   $style=65;
+		   }
+		 
+	 		$tags_font[$key] = $style;
+		}
 	}
-	return $tags;
+	return $tags_font;
 }
 
 ?>

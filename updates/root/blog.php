@@ -23,7 +23,6 @@ $entry_name = $_GET['entry'];
 
 $tag = mb_strtolower($_GET['tag']);
 
-
 $page = $_GET['page'];
 
 if(empty($page) && empty($tag) && empty($entry_name) && !isset($_GET['FEED']) && !isset($_GET['NEW']) && !isset($_GET['POST_COMMENT']) && !isset($_GET['POST']) && !isset($_GET['DELETE_COMMENTS'])){
@@ -299,6 +298,10 @@ if(isset($_GET['NEW'])){
 	$ajax_url = 'http://'.$_SERVER['SERVER_NAME'].DPORTAL_PATH.'/blog.php?COMMENTS&amp;entry='.$entry_name;
 	$ajax_block = 'getcomments';
 	
+	$cloudtags = cloudtags_read_file();
+	
+	if(!empty($tag)) cloudtags_write_file($tag);
+	
 	$smarty->assign('AJAX_URL',$ajax_url);
 	$smarty->assign('AJAX_BLOCK',$ajax_block);
 
@@ -486,6 +489,11 @@ if(isset($_GET['NEW'])){
 	if(isset($_GET['FEED'])) $limit = $entries_per_page;
 	
 	$smarty->caching = true;
+
+	if(!$smarty->is_cached("sidebar_blog_cloudtags.tpl")){
+		$cloudtags = cloudtags_read_file();
+		$smarty->assign('CLOUDTAGS',$cloudtags);
+	}
 	
 	if(!$smarty->is_cached('blog_index.tpl',"blog_index|$page|$year|$month|$tag") || (isset($_GET['FEED']) && !$smarty->is_cached('feed_atom_index.tpl'))){
 		$entries = get_blog_entries($limit,$year,$month,$tag);
@@ -544,7 +552,8 @@ if(isset($_GET['NEW'])){
 
 		$smarty->display('sidebar_user_data.tpl');
 		
-		$smarty->is_cached = 2; $smarty->cache_lifetime = 1296000;
+		$smarty->caching = 2; $smarty->cache_lifetime = 1296000;
+		$smarty->display('sidebar_blog_cloudtags.tpl');
 		$smarty->display('sidebar_blog.tpl');
 		$smarty->caching = false;
 
