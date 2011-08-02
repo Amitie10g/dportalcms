@@ -4,7 +4,7 @@
    {{foreach key="section_key" item="section" from=$category}}
    <url>
       <loc>{{LINK section=$section.name}}</loc>
-      <lastmod>{{$section.name.timestamp|date_format:"%Y-%m-%d"}}</lastmod>
+      <lastmod>{{$section.timestamp|date_format:"%Y-%m-%d"}}</lastmod>
       <changefreq>monthly</changefreq>
       <priority>{{$section.priority|default:"0.5"}}</priority>
    </url>

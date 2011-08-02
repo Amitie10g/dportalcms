@@ -15,9 +15,14 @@
 		#                                              #
 		################################################
 		
-if($_SERVER['REMOTE_ADDR'] == "186.78.227.211") error_reporting(E_ALL);
-
 if(file_exists('install')) header('location: install');
+
+// Remove the ?sid= from URL when user logs in to phpBB
+if(strpos($_SERVER['REQUEST_URI'],'?sid=')){
+	header('HTTP/1.1 307 Temporary redirection');	
+	header('location: ' . preg_replace("/(\?sid=[\w=]+)/",'',$_SERVER['REQUEST_URI']));
+	die();
+}
 
 if(!defined('DPORTAL')) die();
 
